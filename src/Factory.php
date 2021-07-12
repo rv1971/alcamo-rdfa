@@ -14,8 +14,7 @@ class Factory extends AbstractStaticNamespaceFactory
     public const NAMESPACE = __NAMESPACE__;
 
     /**
-     * @copybrief
-     * alcamo::object_creation::FactoryInterface::createFromClassName()
+     * @copybrief alcamo::object_creation::FactoryInterface::createFromClassName()
      *
      * @return
      * - If $value is an object of the class $className, return it unchanged.

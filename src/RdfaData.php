@@ -19,7 +19,7 @@ class RdfaData extends ReadonlyCollection
     /**
      * @brief Create from map of property CURIEs to objects
      *
-     * @param $data Map of property CURIEs to objects. @copydetail
+     * @param $data Map of property CURIEs to objects. @copydetails
      * alcamo::object_creation::createArray()
      *
      * @param $factory RDFa factory used to create RDFa data by calling

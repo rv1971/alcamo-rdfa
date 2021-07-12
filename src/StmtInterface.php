@@ -5,6 +5,12 @@ namespace alcamo\rdfa;
 use alcamo\xml_creation\Nodes;
 
 /**
+ * @namespace alcamo::rdfa
+ *
+ * @brief Classes to store RDFa statements
+ */
+
+/**
  * @brief RDFa statement
  *
  * @sa [RDFa Primer](https://www.w3.org/TR/rdfa-primer/)
