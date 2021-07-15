@@ -30,8 +30,20 @@ abstract class AbstractStmt implements StmtInterface
         'header' => 'tag:https://github.com/rv1971/alcamo-core,2021:rdfa:header#'
     ];
 
-    /// Label for the indiated resource object
+    /// Default label returned by getResourceLabel()
     public const RESOURCE_LABEL = null;
+
+    /// Header name for use in toHttpHeaders()
+    public const HTTP_HEADER = null;
+
+    /// Value for the `rel` HTML attribute in links
+    public const LINK_REL = null;
+
+    /// Value for the `name` HTML attribute in \<meta> elements
+    public const META_NAME = null;
+
+    /// Object class returned by getObjectClass()
+    public const OBJECT_CLASS = null;
 
     private $object_; ///< any type
 
@@ -39,7 +51,7 @@ abstract class AbstractStmt implements StmtInterface
 
     public static function getObjectClass(): ?string
     {
-        return defined('static::OBJECT_CLASS') ? static::OBJECT_CLASS : null;
+        return static::OBJECT_CLASS;
     }
 
     /**
@@ -134,7 +146,7 @@ abstract class AbstractStmt implements StmtInterface
         if ($this->resourceInfo_) {
             $rel = static::PROPERTY_CURIE;
 
-            if (defined('static::LINK_REL')) {
+            if (static::LINK_REL !== null) {
                 $rel .= ' ' . static::LINK_REL;
             }
 
@@ -145,7 +157,7 @@ abstract class AbstractStmt implements StmtInterface
                 'content' => (string)$this
             ];
 
-            if (defined('static::META_NAME')) {
+            if (static::META_NAME !== null) {
                 $attrs['name'] = static::META_NAME;
             }
         }
@@ -202,7 +214,7 @@ abstract class AbstractStmt implements StmtInterface
     /// @copydoc StmtInterface::toHttpHeaders()
     public function toHttpHeaders(): ?array
     {
-        return defined('static::HTTP_HEADER')
+        return static::HTTP_HEADER !== null
             ? [ static::HTTP_HEADER => [ (string)$this ] ]
             : null;
     }

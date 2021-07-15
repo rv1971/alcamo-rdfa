@@ -36,9 +36,7 @@ class Factory extends AbstractStaticNamespaceFactory
             return new $className(...$value);
         }
 
-        $objectClass = defined("$className::OBJECT_CLASS")
-            ? $className::OBJECT_CLASS
-            : null;
+        $objectClass = $className::OBJECT_CLASS;
 
         if (isset($objectClass)) {
             if ($value instanceof $objectClass) {

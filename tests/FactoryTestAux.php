@@ -51,7 +51,7 @@ class FactoryTestAux extends TestCase
 
         $this->assertInstanceOf($expectedItemClass, $item);
 
-        if (defined("$expectedItemClass::OBJECT_CLASS")) {
+        if ($expectedItemClass::OBJECT_CLASS !== null) {
             $this->assertInstanceOf(
                 $expectedItemClass::OBJECT_CLASS,
                 $item->getObject()
