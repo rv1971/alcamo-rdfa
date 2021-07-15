@@ -3,13 +3,14 @@
 namespace alcamo\rdfa;
 
 use PHPUnit\Framework\TestCase;
+use alcamo\ietf\Uri as AlcamoUri;
 use GuzzleHttp\Psr7\Uri;
 
 class RelHomeTest extends TestCase
 {
     public function testBasics()
     {
-        $uri = new Uri('https://home.example.org');
+        $uri = 'https://home.example.org';
 
         $relHome = new RelHome($uri);
 
@@ -28,7 +29,7 @@ class RelHomeTest extends TestCase
             $relHome->getPrefixMap()
         );
 
-        $this->assertSame($uri, $relHome->getObject());
+        $this->assertEquals(new Uri($uri), $relHome->getObject());
 
         $this->assertTrue($relHome->isResource());
 
@@ -42,6 +43,13 @@ class RelHomeTest extends TestCase
                 'href' => (string)$uri
             ],
             $relHome->toHtmlAttrs()
+        );
+
+        $relHome2 = new RelHome(new AlcamoUri($uri));
+
+        $this->assertEquals(
+            new AlcamoUri($uri),
+            $relHome2->getObject()
         );
     }
 }

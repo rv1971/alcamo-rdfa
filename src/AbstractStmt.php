@@ -4,6 +4,8 @@ namespace alcamo\rdfa;
 
 use alcamo\html_creation\element\{A, Link, Meta, Span};
 use alcamo\xml_creation\Nodes;
+use GuzzleHttp\Psr7\Uri;
+use Psr\Http\Message\UriInterface;
 
 /**
  * @brief RDFa statement where property is a class constant
@@ -75,7 +77,9 @@ abstract class AbstractStmt implements StmtInterface
      */
     public function __construct($object, $resourceInfo)
     {
-        $this->object_ = $object;
+        $this->object_ = $resourceInfo
+            ? ($object instanceof UriInterface ? $object : new Uri($object))
+            : $object;
         $this->resourceInfo_ = $resourceInfo;
     }
 
