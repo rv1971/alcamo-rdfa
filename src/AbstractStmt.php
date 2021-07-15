@@ -26,8 +26,9 @@ abstract class AbstractStmt implements StmtInterface
     public const PREFIX_MAP = [
         'dc'  => 'http://purl.org/dc/terms/',
         'owl' => 'http://www.w3.org/2002/07/owl#',
+        'header' => 'tag:https://github.com/rv1971/alcamo-rdfa,2021:ns:header#',
         'meta' => 'tag:https://github.com/rv1971/alcamo-rdfa,2021:ns:meta#',
-        'header' => 'tag:https://github.com/rv1971/alcamo-rdfa,2021:ns:header#'
+        'rel' => 'tag:https://github.com/rv1971/alcamo-rdfa,2021:ns:rel#'
     ];
 
     /// Default label returned by getResourceLabel()
