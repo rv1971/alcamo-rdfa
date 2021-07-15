@@ -50,6 +50,15 @@ abstract class AbstractStmt implements StmtInterface
 
     private $resourceInfo_; ///< see $resourceInfo parameter of __construct()
 
+    /**
+     * @copydoc StmtInterface::getObjectClass()
+     *
+     * @warning The default constructor does not enforce that an object is of
+     * this class. This is rather a hint tro Factory::createFromClassName()
+     * that a valkue must be converted to this type before feeding it to a
+     * constructor. Derived classes should provide constructors that enforce
+     * the correct types on their value parameter.
+     */
     public static function getObjectClass(): ?string
     {
         return static::OBJECT_CLASS;
