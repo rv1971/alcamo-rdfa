@@ -19,5 +19,6 @@ class RelUp extends AbstractStmt
     use ResourceObjectTrait;
 
     public const PROPERTY_CURIE = 'rel:up';
+    public const LINK_REL       = 'up';
     public const RESOURCE_LABEL = 'Up';
 }

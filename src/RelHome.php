@@ -16,5 +16,6 @@ class RelHome extends AbstractStmt
     use ResourceObjectTrait;
 
     public const PROPERTY_CURIE = 'rel:home';
+    public const LINK_REL       = 'home';
     public const RESOURCE_LABEL = 'Home';
 }
