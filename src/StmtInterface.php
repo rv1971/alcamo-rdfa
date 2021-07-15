@@ -42,6 +42,9 @@ interface StmtInterface
     /// String representation of the object
     public function __toString();
 
+    /// Resource label, if any
+    public function getResourceLabel(): ?string;
+
     /// Array of attributes needed in XML representation, if any
     public function toXmlAttrs(): ?array;
 
