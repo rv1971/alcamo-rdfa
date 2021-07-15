@@ -139,7 +139,7 @@ class FactoryTest extends TestCase
               'class' => DcCreator::class,
               'propertyCurie' => 'dc:creator',
               'isResource' => true,
-              'label' => null,
+              'label' => 'Creator',
               'string' => 'https://dilbert.example.org',
               'xmlAttrs' => [
                 'property' => 'dc:creator',
@@ -149,7 +149,7 @@ class FactoryTest extends TestCase
               '<link rel="dc:creator author" href="https://dilbert.example.org"/>',
               'visibleHtml' =>
               '<a rel="dc:creator author" href="https://dilbert.example.org">'
-              . 'https://dilbert.example.org</a>',
+              . 'Creator</a>',
               'httpHeaders' => null
             ]
           ],
@@ -281,7 +281,7 @@ class FactoryTest extends TestCase
               'class' => DcPublisher::class,
               'propertyCurie' => 'dc:publisher',
               'isResource' => true,
-              'label' => null,
+              'label' => 'Publisher',
               'string' => 'http://jerry.example.org',
               'xmlAttrs' => [
                 'property' => 'dc:publisher',
@@ -290,7 +290,7 @@ class FactoryTest extends TestCase
               'html' =>
               '<link rel="dc:publisher" href="http://jerry.example.org"/>',
               'visibleHtml' =>
-              '<a rel="dc:publisher" href="http://jerry.example.org">http://jerry.example.org</a>',
+              '<a rel="dc:publisher" href="http://jerry.example.org">Publisher</a>',
               'httpHeaders' => null
             ]
           ],
@@ -300,7 +300,7 @@ class FactoryTest extends TestCase
             'class' => DcSource::class,
             'propertyCurie' => 'dc:source',
             'isResource' => true,
-            'label' => null,
+            'label' => 'Source',
             'string' => 'https://factory.test.example.com',
             'xmlAttrs' => [
               'property' => 'dc:source',
@@ -309,7 +309,7 @@ class FactoryTest extends TestCase
             'html' =>
             '<link rel="dc:source canonical" href="https://factory.test.example.com"/>',
             'visibleHtml' =>
-            '<a rel="dc:source canonical" href="https://factory.test.example.com">https://factory.test.example.com</a>',
+            '<a rel="dc:source canonical" href="https://factory.test.example.com">Source</a>',
             'httpHeaders' => [
               'Link' => [ '<https://factory.test.example.com>; rel="canonical"' ]
             ]
@@ -548,7 +548,7 @@ class FactoryTest extends TestCase
               'class' => DcCreator::class,
               'propertyCurie' => 'dc:creator',
               'isResource' => true,
-              'label' => null,
+              'label' => 'Creator',
               'string' => 'https://dilbert.example.org',
               'xmlAttrs' => [
                 'property' => 'dc:creator',
@@ -557,7 +557,7 @@ class FactoryTest extends TestCase
               'html' =>
               '<link rel="dc:creator author" href="https://dilbert.example.org"/>',
               'visibleHtml' =>
-              '<a rel="dc:creator author" href="https://dilbert.example.org">https://dilbert.example.org</a>',
+              '<a rel="dc:creator author" href="https://dilbert.example.org">Creator</a>',
               'httpHeaders' => null
             ]
           ]
@@ -659,7 +659,7 @@ class FactoryTest extends TestCase
               'class' => DcPublisher::class,
               'propertyCurie' => 'dc:publisher',
               'isResource' => true,
-              'label' => null,
+              'label' => 'Publisher',
               'string' => 'http://garfield.example.org',
               'xmlAttrs' => [
                 'property' => 'dc:publisher',
@@ -668,7 +668,7 @@ class FactoryTest extends TestCase
               'html' =>
               '<link rel="dc:publisher" href="http://garfield.example.org"/>',
               'visibleHtml' =>
-              '<a rel="dc:publisher" href="http://garfield.example.org">http://garfield.example.org</a>',
+              '<a rel="dc:publisher" href="http://garfield.example.org">Publisher</a>',
               'httpHeaders' => null
             ],
             [
@@ -691,7 +691,7 @@ class FactoryTest extends TestCase
               'class' => DcPublisher::class,
               'propertyCurie' => 'dc:publisher',
               'isResource' => true,
-              'label' => null,
+              'label' => 'Publisher',
               'string' => 'http://jerry.example.org',
               'xmlAttrs' => [
                 'property' => 'dc:publisher',
@@ -700,7 +700,7 @@ class FactoryTest extends TestCase
               'html' =>
               '<link rel="dc:publisher" href="http://jerry.example.org"/>',
               'visibleHtml' =>
-              '<a rel="dc:publisher" href="http://jerry.example.org">http://jerry.example.org</a>',
+              '<a rel="dc:publisher" href="http://jerry.example.org">Publisher</a>',
               'httpHeaders' => null
             ]
           ]
@@ -729,7 +729,7 @@ class FactoryTest extends TestCase
             'class' => DcSource::class,
             'propertyCurie' => 'dc:source',
             'isResource' => true,
-            'label' => null,
+            'label' => 'Source',
             'string' => 'https://factory.test.example.com',
             'xmlAttrs' => [
               'property' => 'dc:source',
@@ -738,7 +738,7 @@ class FactoryTest extends TestCase
             'html' =>
             '<link rel="dc:source canonical" href="https://factory.test.example.com"/>',
             'visibleHtml' =>
-            '<a rel="dc:source canonical" href="https://factory.test.example.com">https://factory.test.example.com</a>',
+            '<a rel="dc:source canonical" href="https://factory.test.example.com">Source</a>',
             'httpHeaders' => [
                 'Link' => [ '<https://factory.test.example.com>; rel="canonical"' ]
             ]

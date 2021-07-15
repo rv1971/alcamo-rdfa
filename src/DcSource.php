@@ -16,6 +16,7 @@ class DcSource extends AbstractStmt
     public const PROPERTY_CURIE = 'dc:source';
     public const HTTP_HEADER    = 'Link';
     public const LINK_REL       = 'canonical';
+    public const RESOURCE_LABEL = 'Source';
 
     public function toHttpHeaders(): array
     {

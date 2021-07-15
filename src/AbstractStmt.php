@@ -30,6 +30,9 @@ abstract class AbstractStmt implements StmtInterface
         'header' => 'tag:https://github.com/rv1971/alcamo-core,2021:rdfa:header#'
     ];
 
+    /// Label for the indiated resource object
+    public const RESOURCE_LABEL = null;
+
     private $object_; ///< any type
 
     private $resourceInfo_; ///< see $resourceInfo parameter of __construct()
@@ -88,12 +91,24 @@ abstract class AbstractStmt implements StmtInterface
         return (bool)$this->resourceInfo_;
     }
 
-    /// Resource label, if any
+    /// @copydoc StmtInterface::getResourceLabel()
     public function getResourceLabel(): ?string
     {
-        return is_bool($this->resourceInfo_)
-            ? null
-            : (string)$this->resourceInfo_;
+        /** If $resourceInfo given to the constructor is
+         * - `false`: return `null`
+         * - `true`: return RESOURCE_LABEL (which may be `null`)
+         * - anything else: return $resourceInfo converted to string. */
+
+        switch (true) {
+            case $this->resourceInfo_ === false:
+                return null;
+
+            case $this->resourceInfo_ === true:
+                return static::RESOURCE_LABEL;
+
+            default:
+                return $this->resourceInfo_;
+        }
     }
 
     /// @copydoc StmtInterface::__toString()
@@ -165,7 +180,7 @@ abstract class AbstractStmt implements StmtInterface
             return new Nodes(
                 new A(
                     ($this->resourceInfo_ === true
-                     ? (string)$this
+                     ? ($this->getResourceLabel() ?? (string)$this)
                      : $this->resourceInfo_),
                     ($includeRdfaAttrs
                      ? $this->toHtmlAttrs()

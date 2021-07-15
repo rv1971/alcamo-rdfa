@@ -116,7 +116,7 @@ class RdfaDataTest extends TestCase
                         'propertyUri' => self::DC_NS . 'source',
                         'prefixMap' => [ 'dc' => self::DC_NS ],
                         'isResource' => true,
-                        'label' => null,
+                        'label' => 'Source',
                         'string' => 'https://factory.test.example.com',
                         'xmlAttrs' => [
                             'property' => 'dc:source',
@@ -126,10 +126,10 @@ class RdfaDataTest extends TestCase
                         '<link rel="dc:source canonical" href="https://factory.test.example.com"/>',
                         'visibleHtml' =>
                         '<a rel="dc:source canonical" href="https://factory.test.example.com">'
-                        . 'https://factory.test.example.com</a>',
+                        . 'Source</a>',
                         'visibleHtmlWithoutRdfa' =>
                         '<a href="https://factory.test.example.com">'
-                        . 'https://factory.test.example.com</a>',
+                        . 'Source</a>',
                         'httpHeaders' => [
                             'Link' => [ '<https://factory.test.example.com>; rel="canonical"' ]
                         ]

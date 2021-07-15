@@ -16,4 +16,5 @@ class DcPublisher extends AbstractStmt
     use LiteralContentOrLinkTrait;
 
     public const PROPERTY_CURIE = 'dc:publisher';
+    public const RESOURCE_LABEL = 'Publisher';
 }
