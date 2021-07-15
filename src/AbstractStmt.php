@@ -145,10 +145,15 @@ abstract class AbstractStmt implements StmtInterface
     public function toHtmlAttrs(): ?array
     {
         if ($this->resourceInfo_) {
-            $rel = static::PROPERTY_CURIE;
+            // do not include proprietary rel values into HTML code
+            if (substr($this->getPropertyUri(), 0, 4) == 'tag:') {
+                $rel = static::LINK_REL;
+            } else {
+                $rel = static::PROPERTY_CURIE;
 
-            if (static::LINK_REL !== null) {
-                $rel .= ' ' . static::LINK_REL;
+                if (static::LINK_REL !== null) {
+                    $rel .= ' ' . static::LINK_REL;
+                }
             }
 
             return [ 'rel' => $rel, 'href' => (string)$this ];

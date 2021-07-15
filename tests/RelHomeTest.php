@@ -35,5 +35,13 @@ class RelHomeTest extends TestCase
         $this->assertSame('Home', $relHome->getResourceLabel());
 
         $this->assertSame((string)$uri, (string)$relHome);
+
+        $this->assertSame(
+            [
+                'rel' => 'home',
+                'href' => (string)$uri
+            ],
+            $relHome->toHtmlAttrs()
+        );
     }
 }
