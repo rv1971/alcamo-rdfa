@@ -138,7 +138,7 @@ abstract class AbstractStmt implements StmtInterface
     }
 
     /// @copydoc StmtInterface::__toString()
-    public function __toString()
+    public function __toString(): string
     {
         return (string)$this->getObject();
     }

@@ -40,7 +40,7 @@ interface StmtInterface
     public function isResource(): bool;
 
     /// String representation of the object
-    public function __toString();
+    public function __toString(): string;
 
     /// Resource label, if any
     public function getResourceLabel(): ?string;

@@ -26,7 +26,7 @@ abstract class AbstractDateTimeContentStmt extends AbstractStmt
     }
 
     /// Return content using @ref DEFAULT_FORMAT
-    public function __toString()
+    public function __toString(): string
     {
         return $this->format(static::DEFAULT_FORMAT);
     }
