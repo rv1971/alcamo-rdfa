@@ -9,8 +9,8 @@ namespace alcamo\rdfa;
  */
 trait ResourceObjectTrait
 {
-    public function __construct($conformsTo, $resourceLabel = null)
+    public function __construct($uri, $resourceLabel = null)
     {
-        parent::__construct($conformsTo, $resourceLabel ?? true);
+        parent::__construct($uri, $resourceLabel ?? true);
     }
 }
