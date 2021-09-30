@@ -26,11 +26,11 @@ abstract class AbstractStmt implements StmtInterface
 {
     /// Prefix map for property CURIEs
     public const PREFIX_MAP = [
-        'dc'  => 'http://purl.org/dc/terms/',
-        'owl' => 'http://www.w3.org/2002/07/owl#',
-        'header' => 'tag:https://github.com/rv1971/alcamo-rdfa,2021:ns:header#',
-        'meta' => 'tag:https://github.com/rv1971/alcamo-rdfa,2021:ns:meta#',
-        'rel' => 'tag:https://github.com/rv1971/alcamo-rdfa,2021:ns:rel#'
+        'dc'     => 'http://purl.org/dc/terms/',
+        'owl'    => 'http://www.w3.org/2002/07/owl#',
+        'header' => 'tag:rv1971@web.de,2021:alcamo-rdfa:ns:header#',
+        'meta  ' => 'tag:rv1971@web.de,2021:alcamo-rdfa:ns:meta#',
+        'rel'    => 'tag:rv1971@web.de,2021:alcamo-rdfa:ns:rel#'
     ];
 
     /// Default label returned by getResourceLabel()

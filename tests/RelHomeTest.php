@@ -17,14 +17,13 @@ class RelHomeTest extends TestCase
         $this->assertSame('rel:home', $relHome->getPropertyCurie());
 
         $this->assertSame(
-            'tag:https://github.com/rv1971/alcamo-rdfa,2021:ns:rel#home',
+            'tag:rv1971@web.de,2021:alcamo-rdfa:ns:rel#home',
             $relHome->getPropertyUri()
         );
 
         $this->assertSame(
             [
-                'rel'
-                => 'tag:https://github.com/rv1971/alcamo-rdfa,2021:ns:rel#'
+                'rel' => 'tag:rv1971@web.de,2021:alcamo-rdfa:ns:rel#'
             ],
             $relHome->getPrefixMap()
         );
