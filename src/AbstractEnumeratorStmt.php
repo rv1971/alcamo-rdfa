@@ -21,7 +21,12 @@ abstract class AbstractEnumeratorStmt extends AbstractStmt
         if (!in_array($value, static::VALUES)) {
             /** @throw alcamo::exception::InvalidEnumerator if the $value is
              *  not a valid enumerator. */
-            throw new InvalidEnumerator($value, static::VALUES);
+            throw (new InvalidEnumerator())->setMessageContext(
+                [
+                    'value' => $value,
+                    'expectedOneOf' => static::VALUES
+                ]
+            );
         }
 
         parent::__construct($value, false);
