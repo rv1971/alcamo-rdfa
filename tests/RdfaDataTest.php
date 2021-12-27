@@ -270,27 +270,29 @@ class RdfaDataTest extends TestCase
     public function replaceProvider()
     {
         return [
-        'simple' => [
-        [
-          'dc:title' => 'Lorem ipsum',
-          'dc:creator' => 'Dilbert',
-          'dc:publisher' => [
-            'Garfield',
-            [ 'http://bob.example.org', true ]
-          ]
-        ],
-        [
-          'dc:identifier' => 'foo.bar.baz',
-          'dc:creator' => 'Tom',
-          'dc:publisher' => 'Alice'
-        ],
-        [
-          'dc:identifier' => 'foo.bar.baz',
-          'dc:creator' => 'Tom',
-          'dc:publisher' => 'Alice',
-          'dc:title' => 'Lorem ipsum',
-        ]
-        ]
+            'simple' => [
+                [
+                    'dc:title' => 'Lorem ipsum',
+                    'dc:creator' => 'Dilbert',
+                    'dc:publisher' => [
+                        'Garfield',
+                        [ 'http://bob.example.org', true ]
+                    ],
+                    'dc:audience' => 'World'
+                ],
+                [
+                    'dc:identifier' => 'foo.bar.baz',
+                    'dc:creator' => 'Tom',
+                    'dc:publisher' => 'Alice'
+                ],
+                [
+                    'dc:identifier' => 'foo.bar.baz',
+                    'dc:creator' => 'Tom',
+                    'dc:publisher' => 'Alice',
+                    'dc:title' => 'Lorem ipsum',
+                    'dc:audience' => 'World'
+                ]
+            ]
         ];
     }
 
