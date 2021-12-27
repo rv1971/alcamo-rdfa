@@ -2,8 +2,6 @@
 
 namespace alcamo\rdfa;
 
-use alcamo\html_creation\element\Creator;
-
 /**
  * @brief dc:creator RDFa statement
  *

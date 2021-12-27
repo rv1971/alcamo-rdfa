@@ -2,8 +2,6 @@
 
 namespace alcamo\rdfa;
 
-use alcamo\html_creation\element\Type;
-
 /**
  * @brief dc:type RDFa statement
  *
