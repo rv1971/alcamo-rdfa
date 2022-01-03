@@ -278,7 +278,8 @@ class RdfaDataTest extends TestCase
                         'Garfield',
                         [ 'http://bob.example.org', true ]
                     ],
-                    'dc:audience' => 'World'
+                    'dc:audience' => 'World',
+                    'dc:accessRights' => 'public'
                 ],
                 [
                     'dc:identifier' => 'foo.bar.baz',
@@ -290,7 +291,8 @@ class RdfaDataTest extends TestCase
                     'dc:creator' => 'Tom',
                     'dc:publisher' => 'Alice',
                     'dc:title' => 'Lorem ipsum',
-                    'dc:audience' => 'World'
+                    'dc:audience' => 'World',
+                    'dc:accessRights' => 'public'
                 ]
             ]
         ];
