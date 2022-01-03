@@ -28,7 +28,7 @@ class Factory extends AbstractStaticNamespaceFactory
      */
     public function createFromClassName($className, $value): object
     {
-        if ($value instanceof $className) {
+        if ($value instanceof StmtInterface) {
             return $value;
         }
 
