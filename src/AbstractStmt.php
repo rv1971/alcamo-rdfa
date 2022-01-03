@@ -29,7 +29,7 @@ abstract class AbstractStmt implements StmtInterface
         'dc'     => 'http://purl.org/dc/terms/',
         'owl'    => 'http://www.w3.org/2002/07/owl#',
         'header' => 'tag:rv1971@web.de,2021:alcamo-rdfa:ns:header#',
-        'meta  ' => 'tag:rv1971@web.de,2021:alcamo-rdfa:ns:meta#',
+        'meta'   => 'tag:rv1971@web.de,2021:alcamo-rdfa:ns:meta#',
         'rel'    => 'tag:rv1971@web.de,2021:alcamo-rdfa:ns:rel#'
     ];
 
