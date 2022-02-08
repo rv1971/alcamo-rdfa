@@ -8,7 +8,7 @@
         "alcamo/core": "^0.4",
         "alcamo/exception": "^0.1",
         "alcamo/xml-creation": "^0.4",
-        "alcamo/html-creation": "^0.4"
+        "alcamo/html-creation": "^0.5"
     },
     "autoload": {
 	"psr-4": {
