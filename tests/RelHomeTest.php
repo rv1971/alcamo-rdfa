@@ -3,7 +3,6 @@
 namespace alcamo\rdfa;
 
 use PHPUnit\Framework\TestCase;
-use alcamo\ietf\Uri as AlcamoUri;
 use GuzzleHttp\Psr7\Uri;
 
 class RelHomeTest extends TestCase
@@ -44,11 +43,8 @@ class RelHomeTest extends TestCase
             $relHome->toHtmlAttrs()
         );
 
-        $relHome2 = new RelHome(new AlcamoUri($uri));
+        $relHome2 = new RelHome(new Uri($uri));
 
-        $this->assertEquals(
-            new AlcamoUri($uri),
-            $relHome2->getObject()
-        );
+        $this->assertEquals(new Uri($uri), $relHome2->getObject());
     }
 }
