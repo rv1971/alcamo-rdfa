@@ -9,18 +9,14 @@ use alcamo\exception\InvalidEnumerator;
  *
  * @attention Each derived class must define a class constant VALUES which
  * must be an array of legal values.
- *
- * An enumerator is always a literal value, not a resource.
- *
- * @date Last reviewed 2021-06-18
  */
-abstract class AbstractEnumeratorStmt extends AbstractStmt
+abstract class AbstractEnumeratorObjectStmt extends AbstractLiteralObjectStmt
 {
-    public function __construct($value)
+    public function __construct(string $value)
     {
         if (!in_array($value, static::VALUES)) {
-            /** @throw alcamo::exception::InvalidEnumerator if the $value is
-             *  not a valid enumerator. */
+            /** @throw alcamo::exception::InvalidEnumerator if $value is not a
+             *  valid enumerator. */
             throw (new InvalidEnumerator())->setMessageContext(
                 [
                     'value' => $value,
@@ -29,6 +25,6 @@ abstract class AbstractEnumeratorStmt extends AbstractStmt
             );
         }
 
-        parent::__construct($value, false);
+        parent::__construct($value);
     }
 }

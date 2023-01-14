@@ -9,8 +9,7 @@ namespace alcamo\rdfa;
  */
 class DcAccessRights extends AbstractStmt
 {
-    use LiteralContentOrLinkTrait;
+    public const PROPERTY_URI = self::DC_NS . 'accessRights';
 
-    public const PROPERTY_CURIE = 'dc:accessRights';
-    public const RESOURCE_LABEL = 'Access rights';
+    public const CANONICAL_PROPERTY_CURIE = 'dc:accessRights';
 }

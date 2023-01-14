@@ -6,12 +6,10 @@ namespace alcamo\rdfa;
  * @brief dc:conformsTo RDFa statement
  *
  * @sa [dc:conformsTo](http://purl.org/dc/terms/conformsTo).
- *
- * @date Last reviewed 2021-06-18
  */
-class DcConformsTo extends AbstractStmt
+class DcConformsTo extends AbstractResourceObjectStmt
 {
-    use ResourceObjectTrait;
+    public const PROPERTY_URI = self::DC_NS . 'conformsTo';
 
-    public const PROPERTY_CURIE = 'dc:conformsTo';
+    public const CANONICAL_PROPERTY_CURIE = 'dc:conformsTo';
 }

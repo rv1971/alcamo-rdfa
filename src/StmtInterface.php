@@ -2,8 +2,6 @@
 
 namespace alcamo\rdfa;
 
-use alcamo\xml_creation\Nodes;
-
 /**
  * @namespace alcamo::rdfa
  *
@@ -24,14 +22,11 @@ interface StmtInterface
     /// Class the object must have, or null if there is no constraint
     public static function getObjectClass(): ?string;
 
-    /// Property as a CURIE
-    public function getPropertyCurie(): string;
-
     /// Property as a URI
-    public function getPropertyUri();
+    public function getPropertyUri(): string;
 
-    /// One-element map of the CURIE prefix to the URI it translates to
-    public function getPrefixMap(): array;
+    /// Property as a CURIE using the canonical prefix
+    public function getCanonicalPropertyCurie(): string;
 
     /// Object of the RDFa statement
     public function getObject();
@@ -41,19 +36,4 @@ interface StmtInterface
 
     /// String representation of the object
     public function __toString(): string;
-
-    /// Resource label, if any
-    public function getResourceLabel(): ?string;
-
-    /// Array of attributes needed in XML representation, if any
-    public function toXmlAttrs(): ?array;
-
-    /// Array of attributes needed in HTML representation, if any
-    public function toHtmlAttrs(): ?array;
-
-    /// HTML representation, if any
-    public function toHtmlNodes(): ?Nodes;
-
-    /// Map of HTTP headers to arrays of values, if any
-    public function toHttpHeaders(): ?array;
 }

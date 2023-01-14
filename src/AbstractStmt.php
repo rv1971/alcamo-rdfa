@@ -2,107 +2,60 @@
 
 namespace alcamo\rdfa;
 
-use alcamo\html_creation\element\{A, Link, Meta, Span};
-use alcamo\xml_creation\Nodes;
-use GuzzleHttp\Psr7\Uri;
-use Psr\Http\Message\UriInterface;
-
 /**
  * @brief RDFa statement where property is a class constant
  *
- * @attention Each derived class must define a class constant PROPERTY_CURIE
- * and ensure that the CURIE's prefix is found in @ref PREFIX_MAP defined or
- * inherited in the class.
- *
- * A derived class may define class constants as follows:
- * - HTTP_HEADER will be used in toHttpHeaders()
- * - LINK_REL will be used as an additional `rel` value in toHtmlAttrs()
- * - META_NAME will be used as the `name` attribute in toHtmlAttrs()
- * - OBJECT_CLASS which will be returned by getObjectClass()
- *
- * @date Last reviewed 2021-06-18
+ * @attention Each derived class *must* define the class constants
+ * PROP_URI and CANONICAL_PROP_CURIE.
  */
 abstract class AbstractStmt implements StmtInterface
 {
-    /// Prefix map for property CURIEs
-    public const PREFIX_MAP = [
-        'dc'     => 'http://purl.org/dc/terms/',
-        'owl'    => 'http://www.w3.org/2002/07/owl#',
-        'header' => 'tag:rv1971@web.de,2021:alcamo-rdfa:ns:header#',
-        'meta'   => 'tag:rv1971@web.de,2021:alcamo-rdfa:ns:meta#',
-        'rel'    => 'tag:rv1971@web.de,2021:alcamo-rdfa:ns:rel#'
-    ];
+    public const DS_NS = 'http://purl.org/dc/terms/';
 
-    /// Default label returned by getResourceLabel()
-    public const RESOURCE_LABEL = null;
+    public const OWL_NS = 'http://www.w3.org/2002/07/owl#';
 
-    /// Header name for use in toHttpHeaders()
-    public const HTTP_HEADER = null;
+    public const HTTP_NS = 'tag:rv1971@web.de,2021:alcamo-rdfa:ns:http#';
 
-    /// Value for the `rel` HTML attribute in links
-    public const LINK_REL = null;
+    public const META_NS = 'tag:rv1971@web.de,2021:alcamo-rdfa:ns:meta#';
 
-    /// Value for the `name` HTML attribute in \<meta> elements
-    public const META_NAME = null;
+    /// Property as a URI
+    public const PROP_URI = null;
 
-    /// Object class returned by getObjectClass()
-    public const OBJECT_CLASS = null;
+    /// Property as a CURIE using the canonical prefix
+    public const CANONICAL_PROP_CURIE = null;
 
-    private $object_; ///< any type
-
-    private $resourceInfo_; ///< see $resourceInfo parameter of __construct()
+    private $object_;     ///< any type
+    private $isResource_; ///< bool
 
     /**
      * @copydoc StmtInterface::getObjectClass()
-     *
-     * @warning The default constructor does not enforce that an object is of
-     * this class. This is rather a hint tro Factory::createFromClassName()
-     * that a valkue must be converted to this type before feeding it to a
-     * constructor. Derived classes should provide constructors that enforce
-     * the correct types on their value parameter.
      */
     public static function getObjectClass(): ?string
     {
-        return static::OBJECT_CLASS;
+        return null;
     }
 
     /**
      * @param $object Object of the RDFa statement.
      *
-     * @param $resourceInfo Indicates whether the object is a resource and
-     * potentially its label
-     * - if `false`: object is not a resource
-     * - if `true`: object is a resource without label
-     * - else: label of the object resource, any type convertible to string
+     * @param $isResource whether the object is the URI of a resource
      */
-    public function __construct($object, $resourceInfo)
+    public function __construct($object, bool $isResource)
     {
-        $this->object_ = $resourceInfo
-            ? ($object instanceof UriInterface ? $object : new Uri($object))
-            : $object;
-        $this->resourceInfo_ = $resourceInfo;
-    }
-
-    /// @copydoc StmtInterface::getPropertyCurie()
-    public function getPropertyCurie(): string
-    {
-        return static::PROPERTY_CURIE;
+        $this->object_ = $object;
+        $this->isResource_ = $isResource;
     }
 
     /// @copydoc StmtInterface::getPropertyUri()
-    public function getPropertyUri()
+    public function getPropertyUri(): string
     {
-        [ $prefix, $reference ] = explode(':', static::PROPERTY_CURIE, 2);
-
-        return static::PREFIX_MAP[$prefix] . $reference;
+        return static::PROPERTY_URI;
     }
 
-    /// @copydoc StmtInterface::getPrefixMap()
-    public function getPrefixMap(): array
+    /// @copydoc StmtInterface::getPropertyCurie()
+    public function getCanonicalPropertyCurie(): string
     {
-        $prefix = explode(':', static::PROPERTY_CURIE, 2)[0];
-
-        return [ $prefix => static::PREFIX_MAP[$prefix] ];
+        return static::CANONICAL_PROPERTY_CURIE;
     }
 
     /// @copydoc StmtInterface::getObject()
@@ -114,127 +67,12 @@ abstract class AbstractStmt implements StmtInterface
     /// @copydoc StmtInterface::isResource()
     public function isResource(): bool
     {
-        return (bool)$this->resourceInfo_;
-    }
-
-    /// @copydoc StmtInterface::getResourceLabel()
-    public function getResourceLabel(): ?string
-    {
-        /** If $resourceInfo given to the constructor is
-         * - `false`: return `null`
-         * - `true`: return RESOURCE_LABEL (which may be `null`)
-         * - anything else: return $resourceInfo converted to string. */
-
-        switch (true) {
-            case $this->resourceInfo_ === false:
-                return null;
-
-            case $this->resourceInfo_ === true:
-                return static::RESOURCE_LABEL;
-
-            default:
-                return $this->resourceInfo_;
-        }
+        return (bool)$this->isResource_;
     }
 
     /// @copydoc StmtInterface::__toString()
     public function __toString(): string
     {
         return (string)$this->getObject();
-    }
-
-    /// @copydoc StmtInterface::toXmlAttrs()
-    public function toXmlAttrs(): ?array
-    {
-        return [
-            'property'
-            => static::PROPERTY_CURIE,
-            ($this->resourceInfo_ ? 'resource' : 'content')
-            => (string)$this
-        ];
-    }
-
-    /// @copydoc StmtInterface::toHtmlAttrs()
-    public function toHtmlAttrs(): ?array
-    {
-        if ($this->resourceInfo_) {
-            // do not include proprietary rel values into HTML code
-            if (substr($this->getPropertyUri(), 0, 4) == 'tag:') {
-                $rel = static::LINK_REL;
-            } else {
-                $rel = static::PROPERTY_CURIE;
-
-                if (static::LINK_REL !== null) {
-                    $rel .= ' ' . static::LINK_REL;
-                }
-            }
-
-            return [ 'rel' => $rel, 'href' => (string)$this ];
-        } else {
-            $attrs = [
-                'property' => static::PROPERTY_CURIE,
-                'content' => (string)$this
-            ];
-
-            if (static::META_NAME !== null) {
-                $attrs['name'] = static::META_NAME;
-            }
-        }
-
-        return $attrs;
-    }
-
-    /// @copydoc StmtInterface::toHtmlNodes()
-    public function toHtmlNodes(): ?Nodes
-    {
-        return new Nodes(
-            $this->resourceInfo_
-            ? new Link(null, $this->toHtmlAttrs())
-            : new Meta($this->toHtmlAttrs())
-        );
-    }
-
-    /**
-     * @brief Representation as visible HTML nodes
-     *
-     * @brief $includeRdfaAttrs Whether to include RDFa attributes. This makes
-     * sense if the RDFa data is not contained in the header, in particular if
-     * the subject of the RDFa statement is not the entire HTML page but a
-     * part of it.
-     *
-     * While toHtmlNodes() generates HTML code for use in the header, this
-     * method generates HTML code for use in the body.
-     */
-    public function toVisibleHtmlNodes(?bool $includeRdfaAttrs = null): ?Nodes
-    {
-        if ($this->resourceInfo_) {
-            return new Nodes(
-                new A(
-                    ($this->resourceInfo_ === true
-                     ? ($this->getResourceLabel() ?? (string)$this)
-                     : $this->resourceInfo_),
-                    ($includeRdfaAttrs
-                     ? $this->toHtmlAttrs()
-                     : [ 'href' => (string)$this ])
-                )
-            );
-        } else {
-            return new Nodes(
-                $includeRdfaAttrs
-                ? new Span(
-                    (string)$this,
-                    [ 'property' => static::PROPERTY_CURIE ]
-                )
-                : (string)$this
-            );
-        }
-    }
-
-    /// @copydoc StmtInterface::toHttpHeaders()
-    public function toHttpHeaders(): ?array
-    {
-        return static::HTTP_HEADER !== null
-            ? [ static::HTTP_HEADER => [ (string)$this ] ]
-            : null;
     }
 }

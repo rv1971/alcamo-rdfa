@@ -11,11 +11,9 @@ namespace alcamo\rdfa;
  *
  * @sa [rel="home"](https://microformats.org/wiki/rel-home).
  */
-class RelHome extends AbstractStmt
+class RelHome extends AbstractRelStmt
 {
-    use ResourceObjectTrait;
+    public const PROPERTY_URI = self::REL_NS . 'home';
 
-    public const PROPERTY_CURIE = 'rel:home';
-    public const LINK_REL       = 'home';
-    public const RESOURCE_LABEL = 'Home';
+    public const CANONICAL_PROPERTY_CURIE = 'rel:home';
 }

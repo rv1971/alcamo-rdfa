@@ -3,7 +3,6 @@
 namespace alcamo\rdfa;
 
 use alcamo\collection\ReadonlyCollection;
-use alcamo\xml_creation\Nodes;
 
 /**
  * @brief Collection of RDFa statements
@@ -11,8 +10,6 @@ use alcamo\xml_creation\Nodes;
  * Readonly map of properties to objects.
  *
  * @invariant Immutable class.
- *
- * @date Last reviewed 2021-06-23
  */
 class RdfaData extends ReadonlyCollection
 {
@@ -51,77 +48,6 @@ class RdfaData extends ReadonlyCollection
 
             if (isset($charset)) {
                 $this->data_['meta:charset'] = new MetaCharset($charset);
-            }
-        }
-    }
-
-    /// Key-sorted map of all used CURIE prefixes to their bindings
-    public function getPrefixMap(): array
-    {
-        $map = [];
-
-        foreach ($this->data_ as $key => $value) {
-            $map += is_array($value)
-                ? reset($value)->getPrefixMap()
-                : $value->getPrefixMap();
-        }
-
-        ksort($map);
-
-        return $map;
-    }
-
-    /// Create HTML nodes for the document head
-    public function toHtmlNodes(): ?Nodes
-    {
-        $result = [];
-
-        /** If `meta:charset` is present, output it first. */
-        if (isset($this->data_['meta:charset'])) {
-            $result[] = $this->data_['meta:charset']->toHtmlNodes();
-        }
-
-        foreach ($this->data_ as $key => $value) {
-            if ($key == 'meta:charset') {
-                continue;
-            }
-
-            if (is_array($value)) {
-                foreach ($value as $item) {
-                    $result[] = $item->toHtmlNodes();
-                }
-            } else {
-                $result[] = $value->toHtmlNodes();
-            }
-        }
-
-        return new Nodes($result);
-    }
-
-    /**
-     * @warning The implementation does not support:
-     * - RDFa data with multiple values for one property that generates HTTP
-     *   headers.
-     * - Multiple RDFa properties which generate the same header.
-     */
-    public function toHttpHeaders(): ?array
-    {
-        $result = [];
-
-        foreach ($this->data_ as $stmt) {
-            if (!is_array($stmt)) {
-                $result += (array)$stmt->toHttpHeaders();
-            }
-        }
-
-        return $result;
-    }
-
-    public function alterSession()
-    {
-        foreach ($this->data_ as $value) {
-            if (method_exists($value, 'alterSession')) {
-                $value->alterSession();
             }
         }
     }

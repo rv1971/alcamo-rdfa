@@ -6,12 +6,10 @@ namespace alcamo\rdfa;
  * @brief dc:identifier RDFa statement
  *
  * @sa [dc:identifier](http://purl.org/dc/terms/identifier).
- *
- * @date Last reviewed 2021-06-21
  */
-class DcIdentifier extends AbstractStmt
+class DcIdentifier extends AbstractLiteralObjectStmt
 {
-    use LiteralContentTrait;
+    public const PROPERTY_URI = self::DC_NS . 'identifier';
 
     public const PROPERTY_CURIE = 'dc:identifier';
 }

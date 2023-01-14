@@ -6,13 +6,10 @@ namespace alcamo\rdfa;
  * @brief dc:abstract RDFa statement
  *
  * @sa [dc:abstract](http://purl.org/dc/terms/abstract).
- *
- * @date Last reviewed 2021-06-18
  */
-class DcAbstract extends AbstractStmt
+class DcAbstract extends AbstractLiteralObjectStmt
 {
-    use LiteralContentTrait;
+    public const PROPERTY_URI = self::DC_NS . 'abstract';
 
-    public const PROPERTY_CURIE = 'dc:abstract';
-    public const META_NAME      = 'description';
+    public const CANONICAL_PROPERTY_CURIE = 'dc:abstract';
 }

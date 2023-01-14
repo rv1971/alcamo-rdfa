@@ -8,17 +8,17 @@ use alcamo\ietf\Lang;
  * @brief dc:language RDFa statement
  *
  * @sa [dc:language](http://purl.org/dc/terms/language).
- *
- * @date Last reviewed 2021-06-21
  */
-class DcLanguage extends AbstractStmt
+class DcLanguage extends AbstractLiteralObjectStmt
 {
-    public const PROPERTY_CURIE = 'dc:language';
-    public const HTTP_HEADER    = 'Content-Language';
+    public const PROPERTY_URI = self::DC_NS . 'language';
+
+    public const CANONICAL_PROPERTY_CURIE = 'dc:language';
+
     public const OBJECT_CLASS   = Lang::class;
 
     public function __construct(Lang $lang)
     {
-        parent::__construct($lang, false);
+        parent::__construct($lang);
     }
 }

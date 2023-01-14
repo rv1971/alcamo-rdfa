@@ -14,11 +14,9 @@ namespace alcamo\rdfa;
  *
  * @sa [Link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types)
  */
-class RelUp extends AbstractStmt
+class RelUp extends AbstractRelStmt
 {
-    use ResourceObjectTrait;
+    public const PROPERTY_URI = self::REL_NS . 'up';
 
     public const PROPERTY_CURIE = 'rel:up';
-    public const LINK_REL       = 'up';
-    public const RESOURCE_LABEL = 'Up';
 }

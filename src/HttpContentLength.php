@@ -6,17 +6,12 @@ namespace alcamo\rdfa;
  * @brief content-length RDFa statement
  *
  * @sa [Content-Length](http://tools.ietf.org/html/rfc2616#section-14.13)
- *
- * @date Last reviewed 2021-06-21
  */
-class HeaderContentLength extends AbstractStmt
+class HttpContentLength extends AbstractLiteralObjectStmt
 {
-    use LiteralContentTrait;
-    use NoHtmlTrait;
-    use NoPrefixMapTrait;
+    public const PROPERTY_URI = self::HTTP_NS . 'content-length';
 
-    public const PROPERTY_CURIE = 'header:content-length';
-    public const HTTP_HEADER    = 'Content-Length';
+    public const CANONICAL_PROPERTY_CURIE = 'http:content-length';
 
     /// Create as size of file
     public static function newFromFilename($filename)

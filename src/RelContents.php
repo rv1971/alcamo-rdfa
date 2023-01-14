@@ -11,11 +11,9 @@ namespace alcamo\rdfa;
  *
  * @sa [Link types](https://www.w3.org/TR/html4/types.html#h-6.12)
  */
-class RelContents extends AbstractStmt
+class RelContents extends AbstractRelStmt
 {
-    use ResourceObjectTrait;
+    public const PROPERTY_URI = self::REL_NS . 'contents';
 
     public const PROPERTY_CURIE = 'rel:contents';
-    public const LINK_REL       = 'contents';
-    public const RESOURCE_LABEL = 'Contents';
 }

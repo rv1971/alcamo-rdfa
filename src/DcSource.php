@@ -6,24 +6,10 @@ namespace alcamo\rdfa;
  * @brief dc:source RDFa statement
  *
  * @sa [dc:source](http://purl.org/dc/terms/source).
- *
- * @date Last reviewed 2021-06-21
  */
-class DcSource extends AbstractStmt
+class DcSource extends AbstractResourceObjectStmt
 {
-    use ResourceObjectTrait;
+    public const PROPERTY_URI = self::DC_NS . 'source';
 
-    public const PROPERTY_CURIE = 'dc:source';
-    public const HTTP_HEADER    = 'Link';
-    public const LINK_REL       = 'canonical';
-    public const RESOURCE_LABEL = 'Source';
-
-    public function toHttpHeaders(): array
-    {
-        return [
-            static::HTTP_HEADER => [
-                "<{$this}>; rel=\"" . static::LINK_REL . '"'
-            ]
-        ];
-    }
+    public const CANONICAL_PROPERTY_CURIE = 'dc:source';
 }

@@ -6,12 +6,10 @@ namespace alcamo\rdfa;
  * @brief owl:versionInfo RDFa statement
  *
  * @sa [owl:versionInfo](https://www.w3.org/TR/owl-ref/#versionInfo-def).
- *
- * @date Last reviewed 2021-06-21
  */
-class OwlVersionInfo extends AbstractStmt
+class OwlVersionInfo extends AbstractLiteralObjectStmt
 {
-    use LiteralContentTrait;
+    public const PROPERTY_URI = self::OWL_NS . 'versionInfo';
 
-    public const PROPERTY_CURIE = 'owl:versionInfo';
+    public const CANONICAL_PROPERTY_CURIE = 'owl:versionInfo';
 }

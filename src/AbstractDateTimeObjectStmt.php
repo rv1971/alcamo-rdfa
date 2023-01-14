@@ -4,13 +4,9 @@ namespace alcamo\rdfa;
 
 /**
  * @brief RDFa statement whose object is a DateTime object
- *
- * @date Last reviewed 2021-06-21
  */
-abstract class AbstractDateTimeContentStmt extends AbstractStmt
+abstract class AbstractDateTimeObjectStmt extends AbstractLiteralObjectStmt
 {
-    use LiteralContentTrait;
-
     public const OBJECT_CLASS   = \DateTime::class;
 
     /**
