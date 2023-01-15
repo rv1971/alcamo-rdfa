@@ -10,9 +10,16 @@ namespace alcamo\rdfa;
  * If used, the statement object is the filename suggested for saving the
  * attachment.
  */
-class HttpContentDisposition extends AbstractLiteralObjectStmt
+class HttpContentDisposition extends AbstractLiteralStmt
 {
-    public const PROPERTY_URI = self::HTTP_NS . 'content-disposition';
+    public const PROP_NS_NAME = self::HTTP_NS;
 
-    public const CANONICAL_PROPERTY_CURIE = 'http:content-disposition';
+    public const PROP_NS_PREFIX = 'http';
+
+    public const PROP_LOCAL_NAME = 'content-disposition';
+
+    public const PROP_URI = self::PROP_NS_NAME . self::PROP_LOCAL_NAME;
+
+    public const PROP_CURIE =
+        self::PROP_NS_PREFIX . ':' . self::PROP_LOCAL_NAME;
 }

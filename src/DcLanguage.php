@@ -2,23 +2,30 @@
 
 namespace alcamo\rdfa;
 
-use alcamo\ietf\Lang;
-
 /**
  * @brief dc:language RDFa statement
  *
  * @sa [dc:language](http://purl.org/dc/terms/language).
  */
-class DcLanguage extends AbstractLiteralObjectStmt
+class DcLanguage extends AbstractLiteralStmt
 {
-    public const PROPERTY_URI = self::DC_NS . 'language';
+    public const PROP_NS_NAME = self::DC_NS;
 
-    public const CANONICAL_PROPERTY_CURIE = 'dc:language';
+    public const PROP_NS_PREFIX = 'dc';
 
-    public const OBJECT_CLASS   = Lang::class;
+    public const PROP_LOCAL_NAME = 'language';
 
-    public function __construct(Lang $lang)
+    public const PROP_URI = self::PROP_NS_NAME . self::PROP_LOCAL_NAME;
+
+    public const PROP_CURIE =
+        self::PROP_NS_PREFIX . ':' . self::PROP_LOCAL_NAME;
+
+    public function __construct($lang)
     {
-        parent::__construct($lang);
+        parent::__construct(
+            $lang instanceof \Lang
+            ? $lang
+            : Lang::newFromString($lang)
+        );
     }
 }

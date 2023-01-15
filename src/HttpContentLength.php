@@ -9,9 +9,21 @@ namespace alcamo\rdfa;
  */
 class HttpContentLength extends AbstractLiteralObjectStmt
 {
-    public const PROPERTY_URI = self::HTTP_NS . 'content-length';
+    public const PROP_NS_NAME = self::HTTP_NS;
 
-    public const CANONICAL_PROPERTY_CURIE = 'http:content-length';
+    public const PROP_NS_PREFIX = 'http';
+
+    public const PROP_LOCAL_NAME = 'content-length';
+
+    public const PROP_URI = self::PROP_NS_NAME . self::PROP_LOCAL_NAME;
+
+    public const PROP_CURIE =
+        self::PROP_NS_PREFIX . ':' . self::PROP_LOCAL_NAME;
+
+    public function __construct(int $length)
+    {
+        parent::__construct($length);
+    }
 
     /// Create as size of file
     public static function newFromFilename($filename)

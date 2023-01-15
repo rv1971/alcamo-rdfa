@@ -2,23 +2,30 @@
 
 namespace alcamo\rdfa;
 
-use alcamo\iana\MediaType;
-
 /**
  * @brief dc:format RDFa statement
  *
  * @sa [dc:format](http://purl.org/dc/terms/format).
  */
-class DcFormat extends AbstractStmt
+class DcFormat extends AbstractLiteralStmt
 {
-    public const PROPERTY_URI = self::DC_NS . 'format';
+    public const PROP_NS_NAME = self::DC_NS;
 
-    public const CANONICAL_PROPERTY_CURIE = 'dc:format';
+    public const PROP_NS_PREFIX = 'dc';
 
-    public const OBJECT_CLASS = MediaType::class;
+    public const PROP_LOCAL_NAME = 'format';
 
-    public function __construct(MediaType $mediaType)
+    public const PROP_URI = self::PROP_NS_NAME . self::PROP_LOCAL_NAME;
+
+    public const PROP_CURIE =
+        self::PROP_NS_PREFIX . ':' . self::PROP_LOCAL_NAME;
+
+    public function __construct($mediaType)
     {
-        parent::__construct($mediaType);
+        parent::__construct(
+            $mediaType instanceof MediaType
+            ? $mediaType
+            : MediaType::newFromString($mediaType)
+        );
     }
 }

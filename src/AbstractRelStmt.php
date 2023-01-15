@@ -5,7 +5,9 @@ namespace alcamo\rdfa;
 /**
  * @brief RDFa statement expressing an HTML relation
  */
-abstract class AbstractRelStmt extends AbstractResourceObjectStmt
+abstract class AbstractRelStmt extends AbstractNodeUriStmt
 {
-    public const REL_NS = 'tag:rv1971@web.de,2021:alcamo-rdfa:ns:rel#';
+    public const PROP_NS_NAME = self::REL_NS;
+
+    public const PROP_NS_PREFIX = 'rel';
 }

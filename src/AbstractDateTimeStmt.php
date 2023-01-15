@@ -5,10 +5,8 @@ namespace alcamo\rdfa;
 /**
  * @brief RDFa statement whose object is a DateTime object
  */
-abstract class AbstractDateTimeObjectStmt extends AbstractLiteralObjectStmt
+abstract class AbstractDateTimeStmt extends AbstractLiteralStmt
 {
-    public const OBJECT_CLASS   = \DateTime::class;
-
     /**
      * @brief Format used in __toString().
      *
@@ -16,9 +14,13 @@ abstract class AbstractDateTimeObjectStmt extends AbstractLiteralObjectStmt
      */
     public const DEFAULT_FORMAT = 'c';
 
-    public function __construct(\DateTime $timestamp)
+    public function __construct($timestamp)
     {
-        parent::__construct($timestamp, false);
+        parent::__construct(
+            $timestamp instanceof \DateTime
+            ? $timestamp
+            : new \DateTime($timestamp)
+        );
     }
 
     /// Return content using @ref DEFAULT_FORMAT

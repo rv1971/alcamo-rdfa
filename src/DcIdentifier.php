@@ -7,9 +7,16 @@ namespace alcamo\rdfa;
  *
  * @sa [dc:identifier](http://purl.org/dc/terms/identifier).
  */
-class DcIdentifier extends AbstractLiteralObjectStmt
+class DcIdentifier extends AbstractLiteralStmt
 {
-    public const PROPERTY_URI = self::DC_NS . 'identifier';
+    public const PROP_NS_NAME = self::DC_NS;
 
-    public const PROPERTY_CURIE = 'dc:identifier';
+    public const PROP_NS_PREFIX = 'dc';
+
+    public const PROP_LOCAL_NAME = 'identifier';
+
+    public const PROP_URI = self::PROP_NS_NAME . self::PROP_LOCAL_NAME;
+
+    public const PROP_CURIE =
+        self::PROP_NS_PREFIX . ':' . self::PROP_LOCAL_NAME;
 }

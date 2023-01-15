@@ -16,7 +16,9 @@ namespace alcamo\rdfa;
  */
 class RelUp extends AbstractRelStmt
 {
-    public const PROPERTY_URI = self::REL_NS . 'up';
+    public const PROP_LOCAL_NAME = 'up';
 
-    public const PROPERTY_CURIE = 'rel:up';
+    public const PROP_URI = self::PROP_NS_NAME . self::PROP_LOCAL_NAME;
+
+    public const PROP_CURIE = self::PROP_NS_PREFIX . ':' . self::PROP_LOCAL_NAME;
 }

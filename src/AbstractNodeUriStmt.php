@@ -3,9 +3,9 @@
 namespace alcamo\rdfa;
 
 /**
- * @brief RDFa statement whose object is always a resource
+ * @brief RDFa statement whose object is always a URI of a node
  */
-abstract class AbstractResourceObjectStmt extends AbstractStmt
+abstract class AbstractNodeUriStmt extends AbstractStmt
 {
     public function __construct($uri)
     {

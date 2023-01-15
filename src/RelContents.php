@@ -13,7 +13,9 @@ namespace alcamo\rdfa;
  */
 class RelContents extends AbstractRelStmt
 {
-    public const PROPERTY_URI = self::REL_NS . 'contents';
+    public const PROP_LOCAL_NAME = 'contents';
 
-    public const PROPERTY_CURIE = 'rel:contents';
+    public const PROP_URI = self::PROP_NS_NAME . self::PROP_LOCAL_NAME;
+
+    public const PROP_CURIE = self::PROP_NS_PREFIX . ':' . self::PROP_LOCAL_NAME;
 }

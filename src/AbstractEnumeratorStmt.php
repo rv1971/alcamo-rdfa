@@ -7,10 +7,10 @@ use alcamo\exception\InvalidEnumerator;
 /**
  * @brief RDFa statement whose object is an enumerator
  *
- * @attention Each derived class must define a class constant VALUES which
- * must be an array of legal values.
+ * @attention Each derived class *must* define a class constant VALUES which
+ * must be an array of legal value strings.
  */
-abstract class AbstractEnumeratorObjectStmt extends AbstractLiteralObjectStmt
+abstract class AbstractEnumeratorStmt extends AbstractLiteralStmt
 {
     public function __construct(string $value)
     {

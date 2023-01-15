@@ -13,7 +13,9 @@ namespace alcamo\rdfa;
  */
 class RelHome extends AbstractRelStmt
 {
-    public const PROPERTY_URI = self::REL_NS . 'home';
+    public const PROP_LOCAL_NAME = 'home';
 
-    public const CANONICAL_PROPERTY_CURIE = 'rel:home';
+    public const PROP_URI = self::PROP_NS_NAME . self::PROP_LOCAL_NAME;
+
+    public const PROP_CURIE = self::PROP_NS_PREFIX . ':' . self::PROP_LOCAL_NAME;
 }

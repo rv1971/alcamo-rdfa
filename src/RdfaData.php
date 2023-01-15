@@ -14,30 +14,31 @@ use alcamo\collection\ReadonlyCollection;
 class RdfaData extends ReadonlyCollection
 {
     /**
-     * @brief Create from map of property CURIEs to objects
+     * @brief Create from map of property CURIEs to object data
      *
-     * @param $data Map of property CURIEs to objects. @copydetails
-     * alcamo::object_creation::createArray()
+     * @param $map Map of property CURIE to one of
+     * - instance of StmtInterface
+     * - statement object
+     * - array of one or the other
      *
      * @param $factory RDFa factory used to create RDFa data by calling
-     * Factory::createArray(). Defaults to a new instance of Factory.
+     * Factory::createStmtArrayFromPropCurieMap(). Defaults to a new instance
+     * of Factory.
      */
     public static function newFromIterable(
-        iterable $data,
+        iterable $map,
         ?Factory $factory = null
     ) {
-        if (!isset($factory)) {
-            $factory = new Factory();
-        }
-
-        return new self($factory->createArray($data));
+        return new self(($factory ?? new Factory())
+            ->createStmtArrayFromPropCurieMap($map));
     }
 
-    private function __construct(array $data)
+    private function __construct(array $map)
     {
-        parent::__construct($data);
+        parent::__construct($map);
 
-        /** Add `meta:charset` from dc:format if appropriate. */
+        /** If `meta:charset` is not provided, add it from `dc:format` if
+         *  possible. */
         if (
             !isset($this->data_['meta:charset'])
             && isset($this->data_['dc:format'])
