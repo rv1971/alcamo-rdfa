@@ -30,9 +30,9 @@ class Lang
         return new self(\Locale::parseLocale($lang));
     }
 
-    public static function newFromDefaultLocale(): self
+    public static function newFromCurrentLocale(): self
     {
-        return new self(\Locale::parseLocale(\Locale::getDefault()));
+        return new self(\Locale::parseLocale(setlocale(LC_ALL, 0)));
     }
 
     private function __construct($subtags)
@@ -59,8 +59,8 @@ class Lang
     }
 
     /// Region subtag
-    public function getRegion(): string
+    public function getRegion(): ?string
     {
-        return $this->subtags_['region'];
+        return $this->subtags_['region'] ?? null;
     }
 }
