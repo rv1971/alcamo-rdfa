@@ -2,6 +2,8 @@
 
 namespace alcamo\rdfa;
 
+use alcamo\exception\InvalidEnumerator;
+use alcamo\time\Duration;
 use PHPUnit\Framework\TestCase;
 
 class AbstractStmtTest extends TestCase
@@ -170,7 +172,188 @@ class AbstractStmtTest extends TestCase
                 new MediaType('application', 'xml'),
                 false,
                 'application/xml'
+            ],
+            'DcIdentifier' => [
+                new DcIdentifier('foo-bar'),
+                self::DC_NS,
+                'dc',
+                'identifier',
+                'foo-bar',
+                false,
+                'foo-bar'
+            ],
+            'DcLanguage' => [
+                new DcLanguage('es-MX'),
+                self::DC_NS,
+                'dc',
+                'language',
+                Lang::newFromPrimaryAndRegion('es', 'MX'),
+                false,
+                'es-MX'
+            ],
+            'DcModified' => [
+                new DcModified('2023-01-18Z'),
+                self::DC_NS,
+                'dc',
+                'modified',
+                new \DateTime('2023-01-18Z'),
+                false,
+                '2023-01-18T00:00:00+00:00'
+            ],
+            'DcPublisher-literal' => [
+                new DcPublisher('Bob', false),
+                self::DC_NS,
+                'dc',
+                'publisher',
+                'Bob',
+                false,
+                'Bob'
+            ],
+            'DcPublisher-node' => [
+                new DcPublisher('https://bob.example.org', true),
+                self::DC_NS,
+                'dc',
+                'publisher',
+                'https://bob.example.org',
+                true,
+                'https://bob.example.org'
+            ],
+            'DcRights-literal' => [
+                new DcRights('(C) Example ltd. 2023', false),
+                self::DC_NS,
+                'dc',
+                'rights',
+                '(C) Example ltd. 2023',
+                false,
+                '(C) Example ltd. 2023'
+            ],
+            'DcRights-node' => [
+                new DcRights('https://example.org/rights', true),
+                self::DC_NS,
+                'dc',
+                'rights',
+                'https://example.org/rights',
+                true,
+                'https://example.org/rights'
+            ],
+            'DcSource' => [
+                new DcSource('https://example.com/42'),
+                self::DC_NS,
+                'dc',
+                'source',
+                'https://example.com/42',
+                true,
+                'https://example.com/42'
+            ],
+            'DcTitle' => [
+                new DcTitle('Lorem ipsum'),
+                self::DC_NS,
+                'dc',
+                'title',
+                'Lorem ipsum',
+                false,
+                'Lorem ipsum'
+            ],
+            'DcType' => [
+                new DcType('Sound'),
+                self::DC_NS,
+                'dc',
+                'type',
+                'Sound',
+                false,
+                'Sound'
+            ],
+            'HttpCacheControl' => [
+                new HttpCacheControl('public'),
+                self::HTTP_NS,
+                'http',
+                'cache-control',
+                'public',
+                false,
+                'public'
+            ],
+            'HttpContentDisposition' => [
+                new HttpContentDisposition('qux.json'),
+                self::HTTP_NS,
+                'http',
+                'content-disposition',
+                'qux.json',
+                false,
+                'qux.json'
+            ],
+            'HttpContentLength' => [
+                new HttpContentLength(1024),
+                self::HTTP_NS,
+                'http',
+                'content-length',
+                1024,
+                false,
+                '1024'
+            ],
+            'HttpExpires' => [
+                new HttpExpires('P40D'),
+                self::HTTP_NS,
+                'http',
+                'expires',
+                new Duration('P40D'),
+                false,
+                'P40D'
+            ],
+            'MetaCharset' => [
+                new MetaCharset('ASCII'),
+                self::META_NS,
+                'meta',
+                'charset',
+                'ASCII',
+                false,
+                'ASCII'
+            ],
+            'OwlVersionInfo' => [
+                new OwlVersionInfo('1.2.3'),
+                self::OWL_NS,
+                'owl',
+                'versionInfo',
+                '1.2.3',
+                false,
+                '1.2.3'
+            ],
+            'RelContents' => [
+                new RelContents('index.php'),
+                self::REL_NS,
+                'rel',
+                'contents',
+                'index.php',
+                true,
+                'index.php'
+            ],
+            'RelHome' => [
+                new RelHome('../..'),
+                self::REL_NS,
+                'rel',
+                'home',
+                '../..',
+                true,
+                '../..'
+            ],
+            'RelUp' => [
+                new RelUp('..'),
+                self::REL_NS,
+                'rel',
+                'up',
+                '..',
+                true,
+                '..'
             ]
         ];
+    }
+
+    public function testDcTypeException(): void
+    {
+        $this->expectException(InvalidEnumerator::class);
+        $this->expectExceptionMessage(
+            'Invalid value "foo", expected one of ["Collection", "Dataset", '
+        );
+
+        new DcType('foo');
     }
 }
