@@ -3,6 +3,7 @@
 namespace alcamo\rdfa;
 
 use alcamo\collection\ReadonlyCollection;
+use alcamo\exception\DataValidationFailed;
 
 /**
  * @brief Collection of RDFa statements
@@ -86,5 +87,35 @@ class RdfaData extends ReadonlyCollection
     public function replace(self $rdfaData): self
     {
         return new self($rdfaData->data_ + $this->data_);
+    }
+
+    /// Return map of namespaces prefixes to namespaces
+    public function createNamespaceMap(): array
+    {
+        $map = [];
+
+        foreach ($this as $stmt) {
+            if (is_array($stmt)) {
+                $nsPrefix = current($stmt)->getPropNsPrefix();
+                $nsName = current($stmt)->getPropNsName();
+            } else {
+                $nsPrefix = $stmt->getPropNsPrefix();
+                $nsName = $stmt->getPropNsName();
+            }
+
+            if (isset($map[$nsPrefix])) {
+                if ($map[$nsPrefix] != $nsName) {
+                    throw (new DataValidationFailed())->setMessageContext(
+                        [
+                            'extraMessage' => "namespace prefix \"$nsPrefix\" dnenotes different namespaces \"$map[$nsPrefix]\" and \"{$nsName}\""
+                        ]
+                    );
+                }
+            } else {
+                $map[$nsPrefix] = $nsName;
+            }
+        }
+
+        return $map;
     }
 }

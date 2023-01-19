@@ -2,6 +2,7 @@
 
 namespace alcamo\rdfa;
 
+use alcamo\exception\DataValidationFailed;
 use PHPUnit\Framework\TestCase;
 
 class RdfaDataTest extends TestCase
@@ -154,5 +155,53 @@ class RdfaDataTest extends TestCase
                 ]
             ]
         ];
+    }
+
+    /**
+     * @dataProvider createNamespaceMapProvider
+     */
+    public function testCreateNamespaceMap($inputData, $expectedMap): void
+    {
+        $rdfaData = RdfaData::newFromIterable($inputData);
+
+        $this->assertSame($expectedMap, $rdfaData->createNamespaceMap());
+    }
+
+    public function createNamespaceMapProvider(): array
+    {
+        return [
+            [
+                [
+                    'dc:title' => 'Lorem ipsum',
+                    'dc:creator' => [ 'Alice', 'Bob' ],
+                    'meta:charset' => 'UTF-8',
+                    'dc:type' => 'Text',
+                    'http:expires' => 'P1D'
+                ],
+                [
+                    'dc' => AbstractStmt::DC_NS,
+                    'meta' => AbstractStmt::META_NS,
+                    'http' => AbstractStmt::HTTP_NS
+                ]
+            ]
+        ];
+    }
+
+    public function testCreateNamespaceMapException(): void
+    {
+        $rdfaData = RdfaData::newFromIterable(
+            [
+                'dc:bar' =>
+                new SimpleStmt('https://example.com', 'dc', 'bar', 'qux'),
+                'dc:title' => [ 'Conflict' ]
+            ]
+        );
+
+        $this->expectException(DataValidationFailed::class);
+        $this->expectExceptionMessage(
+            'namespace prefix "dc" dnenotes different namespaces "https://example.com" and "http://purl.org/dc/terms/"'
+        );
+
+        $rdfaData->createNamespaceMap();
     }
 }
