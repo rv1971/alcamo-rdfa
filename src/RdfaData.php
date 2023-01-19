@@ -14,6 +14,8 @@ use alcamo\exception\DataValidationFailed;
  */
 class RdfaData extends ReadonlyCollection
 {
+    public const PROP_CURIE2CLASS = Factory::PROP_CURIE2CLASS;
+
     /**
      * @brief Create from map of property CURIEs to object data
      *
@@ -64,7 +66,7 @@ class RdfaData extends ReadonlyCollection
                 /** If a property is already present and is unique, leave it
                  *  unchanged. */
 
-                $class = Factory::PROP_CURIE2CLASS[$curie] ?? null;
+                $class = static::PROP_CURIE2CLASS[$curie] ?? null;
 
                 if (isset($class) && $class::UNIQUE) {
                     continue;
@@ -103,13 +105,13 @@ class RdfaData extends ReadonlyCollection
     {
         $map = [];
 
-        foreach ($this as $stmt) {
-            if (is_array($stmt)) {
-                $nsPrefix = current($stmt)->getPropNsPrefix();
-                $nsName = current($stmt)->getPropNsName();
+        foreach ($this as $stmts) {
+            if (is_array($stmts)) {
+                $nsPrefix = current($stmts)->getPropNsPrefix();
+                $nsName = current($stmts)->getPropNsName();
             } else {
-                $nsPrefix = $stmt->getPropNsPrefix();
-                $nsName = $stmt->getPropNsName();
+                $nsPrefix = $stmts->getPropNsPrefix();
+                $nsName = $stmts->getPropNsName();
             }
 
             if (isset($map[$nsPrefix])) {
