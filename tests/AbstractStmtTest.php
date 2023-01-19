@@ -27,7 +27,6 @@ class AbstractStmtTest extends TestCase
         $expectedPropNsPrefix,
         $expectedPropLocalName,
         $expectedObject,
-        $expectedIsNodeUri,
         $expectedString
     ): void {
         $this->assertSame($expectedPropNsName, $stmt->getPropNsName());
@@ -57,8 +56,6 @@ class AbstractStmtTest extends TestCase
             $this->assertSame($expectedObject, $stmt->getObject());
         }
 
-        $this->assertSame($expectedIsNodeUri, $stmt->isNodeUri());
-
         $this->assertSame($expectedString, (string)$stmt);
     }
 
@@ -66,39 +63,37 @@ class AbstractStmtTest extends TestCase
     {
         return [
             'DcAbstract-literal' => [
-                new DcAbstract('Lorem ipsum.', false),
+                new DcAbstract('Lorem ipsum.'),
                 self::DC_NS,
                 'dc',
                 'abstract',
                 'Lorem ipsum.',
-                false,
                 'Lorem ipsum.'
             ],
             'DcAbstract-node' => [
-                new DcAbstract('https://example.org/summary', true),
+                new DcAbstract(new Node('https://example.org/summary')),
                 self::DC_NS,
                 'dc',
                 'abstract',
-                'https://example.org/summary',
-                true,
+                new Node('https://example.org/summary'),
                 'https://example.org/summary'
             ],
             'DcAccessRights-literal' => [
-                new DcAccessRights('confidential', false),
+                new DcAccessRights('confidential'),
                 self::DC_NS,
                 'dc',
                 'accessRights',
                 'confidential',
-                false,
                 'confidential'
             ],
             'DcAccessRights-node' => [
-                new DcAccessRights('https://example.org/access-rights', true),
+                new DcAccessRights(
+                    new Node('https://example.org/access-rights')
+                ),
                 self::DC_NS,
                 'dc',
                 'accessRights',
-                'https://example.org/access-rights',
-                true,
+                new Node('https://example.org/access-rights'),
                 'https://example.org/access-rights'
             ],
             'DcAlternative' => [
@@ -107,25 +102,22 @@ class AbstractStmtTest extends TestCase
                 'dc',
                 'alternative',
                 'At vero eos',
-                false,
                 'At vero eos'
             ],
             'DcAudience-literal' => [
-                new DcAudience('customers', false),
+                new DcAudience('customers'),
                 self::DC_NS,
                 'dc',
                 'audience',
                 'customers',
-                false,
                 'customers'
             ],
             'DcAudience-node' => [
-                new DcAudience('https://example.info/public', true),
+                new DcAudience(new Node('https://example.info/public')),
                 self::DC_NS,
                 'dc',
                 'audience',
-                'https://example.info/public',
-                true,
+                new Node('https://example.info/public'),
                 'https://example.info/public'
             ],
             'DcConformsTo' => [
@@ -133,8 +125,7 @@ class AbstractStmtTest extends TestCase
                 self::DC_NS,
                 'dc',
                 'conformsTo',
-                'https://example.com/standards',
-                true,
+                new Node('https://example.com/standards'),
                 'https://example.com/standards'
             ],
             'DcCreated' => [
@@ -143,25 +134,22 @@ class AbstractStmtTest extends TestCase
                 'dc',
                 'created',
                 new \DateTime('2023-01-17T15:52:00+01:00'),
-                false,
                 '2023-01-17T15:52:00+01:00'
             ],
             'DcCreator-literal' => [
-                new DcCreator('Alice', false),
+                new DcCreator('Alice'),
                 self::DC_NS,
                 'dc',
                 'creator',
                 'Alice',
-                false,
                 'Alice'
             ],
             'DcCreator-node' => [
-                new DcCreator('https://alice.example.org', true),
+                new DcCreator(new Node('https://alice.example.org')),
                 self::DC_NS,
                 'dc',
                 'creator',
-                'https://alice.example.org',
-                true,
+                new Node('https://alice.example.org'),
                 'https://alice.example.org'
             ],
             'DcFormat' => [
@@ -170,7 +158,6 @@ class AbstractStmtTest extends TestCase
                 'dc',
                 'format',
                 new MediaType('application', 'xml'),
-                false,
                 'application/xml'
             ],
             'DcIdentifier' => [
@@ -179,7 +166,6 @@ class AbstractStmtTest extends TestCase
                 'dc',
                 'identifier',
                 'foo-bar',
-                false,
                 'foo-bar'
             ],
             'DcLanguage' => [
@@ -188,7 +174,6 @@ class AbstractStmtTest extends TestCase
                 'dc',
                 'language',
                 Lang::newFromPrimaryAndRegion('es', 'MX'),
-                false,
                 'es-MX'
             ],
             'DcModified' => [
@@ -197,43 +182,38 @@ class AbstractStmtTest extends TestCase
                 'dc',
                 'modified',
                 new \DateTime('2023-01-18Z'),
-                false,
                 '2023-01-18T00:00:00+00:00'
             ],
             'DcPublisher-literal' => [
-                new DcPublisher('Bob', false),
+                new DcPublisher('Bob'),
                 self::DC_NS,
                 'dc',
                 'publisher',
                 'Bob',
-                false,
                 'Bob'
             ],
             'DcPublisher-node' => [
-                new DcPublisher('https://bob.example.org', true),
+                new DcPublisher(new Node('https://bob.example.org')),
                 self::DC_NS,
                 'dc',
                 'publisher',
-                'https://bob.example.org',
-                true,
+                new Node('https://bob.example.org'),
                 'https://bob.example.org'
             ],
             'DcRights-literal' => [
-                new DcRights('(C) Example ltd. 2023', false),
+                new DcRights('(C) Example ltd. 2023'),
                 self::DC_NS,
                 'dc',
                 'rights',
                 '(C) Example ltd. 2023',
-                false,
                 '(C) Example ltd. 2023'
             ],
             'DcRights-node' => [
-                new DcRights('https://example.org/rights', true),
+                new DcRights(new Node('https://example.org/rights')),
                 self::DC_NS,
                 'dc',
                 'rights',
-                'https://example.org/rights',
-                true,
+                new Node('https://example.org/rights'),
                 'https://example.org/rights'
             ],
             'DcSource' => [
@@ -241,8 +221,7 @@ class AbstractStmtTest extends TestCase
                 self::DC_NS,
                 'dc',
                 'source',
-                'https://example.com/42',
-                true,
+                new Node('https://example.com/42'),
                 'https://example.com/42'
             ],
             'DcTitle' => [
@@ -251,7 +230,6 @@ class AbstractStmtTest extends TestCase
                 'dc',
                 'title',
                 'Lorem ipsum',
-                false,
                 'Lorem ipsum'
             ],
             'DcType' => [
@@ -260,7 +238,6 @@ class AbstractStmtTest extends TestCase
                 'dc',
                 'type',
                 'Sound',
-                false,
                 'Sound'
             ],
             'HttpCacheControl' => [
@@ -269,7 +246,6 @@ class AbstractStmtTest extends TestCase
                 'http',
                 'cache-control',
                 'public',
-                false,
                 'public'
             ],
             'HttpContentDisposition' => [
@@ -278,7 +254,6 @@ class AbstractStmtTest extends TestCase
                 'http',
                 'content-disposition',
                 'qux.json',
-                false,
                 'qux.json'
             ],
             'HttpContentLength' => [
@@ -287,7 +262,6 @@ class AbstractStmtTest extends TestCase
                 'http',
                 'content-length',
                 1024,
-                false,
                 '1024'
             ],
             'HttpExpires' => [
@@ -296,7 +270,6 @@ class AbstractStmtTest extends TestCase
                 'http',
                 'expires',
                 new Duration('P40D'),
-                false,
                 'P40D'
             ],
             'MetaCharset' => [
@@ -305,7 +278,6 @@ class AbstractStmtTest extends TestCase
                 'meta',
                 'charset',
                 'ASCII',
-                false,
                 'ASCII'
             ],
             'OwlVersionInfo' => [
@@ -314,7 +286,6 @@ class AbstractStmtTest extends TestCase
                 'owl',
                 'versionInfo',
                 '1.2.3',
-                false,
                 '1.2.3'
             ],
             'RelContents' => [
@@ -322,8 +293,7 @@ class AbstractStmtTest extends TestCase
                 self::REL_NS,
                 'rel',
                 'contents',
-                'index.php',
-                true,
+                new Node('index.php'),
                 'index.php'
             ],
             'RelHome' => [
@@ -331,8 +301,7 @@ class AbstractStmtTest extends TestCase
                 self::REL_NS,
                 'rel',
                 'home',
-                '../..',
-                true,
+                new Node('../..'),
                 '../..'
             ],
             'RelUp' => [
@@ -340,8 +309,7 @@ class AbstractStmtTest extends TestCase
                 self::REL_NS,
                 'rel',
                 'up',
-                '..',
-                true,
+                new Node('..'),
                 '..'
             ]
         ];

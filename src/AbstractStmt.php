@@ -38,17 +38,13 @@ abstract class AbstractStmt implements StmtInterface
     public const PROP_CURIE = null;
 
     private $object_;     ///< any type
-    private $isNodeUri_; ///< bool
 
     /**
      * @param $object Object of the RDFa statement.
-     *
-     * @param $isNodeUri whether the object is the URI of a resource
      */
-    public function __construct($object, bool $isNodeUri)
+    public function __construct($object)
     {
         $this->object_ = $object;
-        $this->isNodeUri_ = $isNodeUri;
     }
 
     /// @copydoc StmtInterface::getPropNsName()
@@ -85,12 +81,6 @@ abstract class AbstractStmt implements StmtInterface
     public function getObject()
     {
         return $this->object_;
-    }
-
-    /// @copydoc StmtInterface::isNodeUri()
-    public function isNodeUri(): bool
-    {
-        return (bool)$this->isNodeUri_;
     }
 
     /// @copydoc StmtInterface::__toString()

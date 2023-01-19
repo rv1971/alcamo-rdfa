@@ -7,7 +7,7 @@ namespace alcamo\rdfa;
  *
  * @sa [dc:conformsTo](http://purl.org/dc/terms/conformsTo).
  */
-class DcConformsTo extends AbstractNodeUriStmt
+class DcConformsTo extends AbstractNodeStmt
 {
     public const PROP_NS_NAME = self::DC_NS;
 

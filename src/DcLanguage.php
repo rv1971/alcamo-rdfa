@@ -7,7 +7,7 @@ namespace alcamo\rdfa;
  *
  * @sa [dc:language](http://purl.org/dc/terms/language).
  */
-class DcLanguage extends AbstractLiteralStmt
+class DcLanguage extends AbstractStmt
 {
     public const PROP_NS_NAME = self::DC_NS;
 

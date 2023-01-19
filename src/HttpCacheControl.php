@@ -7,7 +7,7 @@ namespace alcamo\rdfa;
  *
  * @sa [Caching](https://tools.ietf.org/html/rfc7234)
  */
-class HttpCacheControl extends AbstractLiteralStmt
+class HttpCacheControl extends AbstractStmt
 {
     public const PROP_NS_NAME = self::HTTP_NS;
 

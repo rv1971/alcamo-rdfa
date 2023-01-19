@@ -5,7 +5,7 @@ namespace alcamo\rdfa;
 /**
  * @brief RDFa statement whose object is a DateTime object
  */
-abstract class AbstractDateTimeStmt extends AbstractLiteralStmt
+abstract class AbstractDateTimeStmt extends AbstractStmt
 {
     /**
      * @brief Format used in __toString().

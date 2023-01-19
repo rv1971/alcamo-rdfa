@@ -7,7 +7,7 @@ namespace alcamo\rdfa;
  *
  * @sa [dc:alternative](http://purl.org/dc/terms/alternative).
  */
-class DcAlternative extends AbstractLiteralStmt
+class DcAlternative extends AbstractStmt
 {
     public const PROP_NS_NAME = self::DC_NS;
 

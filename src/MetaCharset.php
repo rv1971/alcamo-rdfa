@@ -7,7 +7,7 @@ namespace alcamo\rdfa;
  *
  * @sa [\<meta> charset attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta#attr-charset)
  */
-class MetaCharset extends AbstractLiteralStmt
+class MetaCharset extends AbstractStmt
 {
     public const PROP_NS_NAME = self::META_NS;
 

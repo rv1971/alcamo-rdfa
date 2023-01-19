@@ -35,9 +35,6 @@ interface StmtInterface
     /// Object of the RDFa statement
     public function getObject();
 
-    /// Whether the object is the URI of a node rather than a literal content
-    public function isNodeUri(): bool;
-
     /// String representation of the object
     public function __toString(): string;
 }

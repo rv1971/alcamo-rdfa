@@ -7,7 +7,7 @@ namespace alcamo\rdfa;
  *
  * @sa [owl:versionInfo](https://www.w3.org/TR/owl-ref/#versionInfo-def).
  */
-class OwlVersionInfo extends AbstractLiteralStmt
+class OwlVersionInfo extends AbstractStmt
 {
     public const PROP_NS_NAME = self::OWL_NS;
 

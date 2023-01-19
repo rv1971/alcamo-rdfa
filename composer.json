@@ -6,7 +6,7 @@
     "require": {
         "php": "7.3 - 8.0",
         "php-ds/php-ds": "^1.4",
-        "alcamo/exception": "^0.1",
+        "alcamo/collection": "^0.1",
         "alcamo/time": "^0.1"
     },
     "autoload": {

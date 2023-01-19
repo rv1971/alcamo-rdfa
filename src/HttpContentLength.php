@@ -7,7 +7,7 @@ namespace alcamo\rdfa;
  *
  * @sa [Content-Length](http://tools.ietf.org/html/rfc2616#section-14.13)
  */
-class HttpContentLength extends AbstractLiteralStmt
+class HttpContentLength extends AbstractStmt
 {
     public const PROP_NS_NAME = self::HTTP_NS;
 

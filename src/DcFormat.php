@@ -7,7 +7,7 @@ namespace alcamo\rdfa;
  *
  * @sa [dc:format](http://purl.org/dc/terms/format).
  */
-class DcFormat extends AbstractLiteralStmt
+class DcFormat extends AbstractStmt
 {
     public const PROP_NS_NAME = self::DC_NS;
 

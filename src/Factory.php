@@ -11,6 +11,7 @@ class Factory
     public const PROP_CURIE2CLASS = [
         DcAbstract::PROP_CURIE             => DcAbstract::class,
         DcAccessRights::PROP_CURIE         => DcAccessRights::class,
+        DcAlternative::PROP_CURIE          => DcAlternative::class,
         DcAudience::PROP_CURIE             => DcAudience::class,
         DcConformsTo::PROP_CURIE           => DcConformsTo::class,
         DcCreated::PROP_CURIE              => DcCreated::class,
@@ -73,9 +74,9 @@ class Factory
                             [
                                 'inData' => (string)$data,
                                 'extraMessage' =>
-                                "object property CURIE "
+                                "object property CURIE \""
                                 . $data->getPropCurie()
-                                . " does not match key $curie"
+                                . "\" does not match key \"$curie\""
                             ]
                         );
                     }
@@ -94,9 +95,9 @@ class Factory
                                         [
                                             'inData' => (string)$item,
                                             'extraMessage' =>
-                                            "object item property CURIE "
+                                            "object item property CURIE \""
                                             . $item->getPropCurie()
-                                            . " does not match key $curie"
+                                            . "\" does not match key \"$curie\""
                                         ]
                                     );
                             }

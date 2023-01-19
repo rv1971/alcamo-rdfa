@@ -7,7 +7,7 @@ namespace alcamo\rdfa;
  *
  * @sa [dc:title](http://purl.org/dc/terms/title).
  */
-class DcTitle extends AbstractLiteralStmt
+class DcTitle extends AbstractStmt
 {
     public const PROP_NS_NAME = self::DC_NS;
 

@@ -10,7 +10,7 @@ use alcamo\exception\InvalidEnumerator;
  * @attention Each derived class *must* define a class constant VALUES which
  * must be an array of legal value strings.
  */
-abstract class AbstractEnumeratorStmt extends AbstractLiteralStmt
+abstract class AbstractEnumeratorStmt extends AbstractStmt
 {
     public function __construct(string $value)
     {

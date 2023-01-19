@@ -7,7 +7,7 @@ namespace alcamo\rdfa;
  *
  * @sa [dc:identifier](http://purl.org/dc/terms/identifier).
  */
-class DcIdentifier extends AbstractLiteralStmt
+class DcIdentifier extends AbstractStmt
 {
     public const PROP_NS_NAME = self::DC_NS;
 

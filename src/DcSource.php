@@ -7,7 +7,7 @@ namespace alcamo\rdfa;
  *
  * @sa [dc:source](http://purl.org/dc/terms/source).
  */
-class DcSource extends AbstractNodeUriStmt
+class DcSource extends AbstractNodeStmt
 {
     public const PROP_NS_NAME = self::DC_NS;
 
