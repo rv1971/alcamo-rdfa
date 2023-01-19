@@ -89,7 +89,8 @@ class RdfaDataTest extends TestCase
                     'dc:creator' => 'Charles',
                     'dc:accessRights' => [ 'publish', 'delete' ],
                     'dc:alternative' => 'Consetetur sadipscing elitr',
-                    'dc:conformsTo' => [ 'Rulebook 2', 'Rulebook 3' ]
+                    'dc:conformsTo' => [ 'Rulebook 2', 'Rulebook 3' ],
+                    'dc:title' => 'Lorem ipsum again'
                 ],
                 [
                     'dc:title' => 'Lorem ipsum',
@@ -193,13 +194,13 @@ class RdfaDataTest extends TestCase
             [
                 'dc:bar' =>
                 new SimpleStmt('https://example.com', 'dc', 'bar', 'qux'),
-                'dc:title' => [ 'Conflict' ]
+                'dc:title' => 'Conflict'
             ]
         );
 
         $this->expectException(DataValidationFailed::class);
         $this->expectExceptionMessage(
-            'namespace prefix "dc" dnenotes different namespaces "https://example.com" and "http://purl.org/dc/terms/"'
+            'namespace prefix "dc" denotes different namespaces "https://example.com" and "http://purl.org/dc/terms/"'
         );
 
         $rdfaData->createNamespaceMap();

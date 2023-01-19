@@ -59,24 +59,33 @@ class RdfaData extends ReadonlyCollection
     {
         $newData = $this->data_;
 
-        foreach ($rdfaData->data_ as $key => $value) {
-            if (isset($newData[$key])) {
-                /** If a key is already present, add new data to its
-                 *  values. In all cases, the result is an array indexed by
-                 *  the string representations of the values. */
-                $data = $newData[$key];
+        foreach ($rdfaData->data_ as $curie => $value) {
+            if (isset($newData[$curie])) {
+                /** If a property is already present and is unique, leave it
+                 *  unchanged. */
+
+                $class = Factory::PROP_CURIE2CLASS[$curie] ?? null;
+
+                if (isset($class) && $class::UNIQUE) {
+                    continue;
+                }
+
+                /** Otherwise, add new data to its values. The result is an
+                 *  array indexed by the string representations of the
+                 *  values. */
+                $data = $newData[$curie];
 
                 if (!is_array($data)) {
-                    $newData[$key] = [ (string)$data => $data ];
+                    $newData[$curie] = [ (string)$data => $data ];
                 }
 
                 if (is_array($value)) {
-                    $newData[$key] += $value;
+                    $newData[$curie] += $value;
                 } else {
-                    $newData[$key] += [ (string)$value => $value ];
+                    $newData[$curie] += [ (string)$value => $value ];
                 }
             } else {
-                $newData[$key] = $value;
+                $newData[$curie] = $value;
             }
         }
 
@@ -107,7 +116,10 @@ class RdfaData extends ReadonlyCollection
                 if ($map[$nsPrefix] != $nsName) {
                     throw (new DataValidationFailed())->setMessageContext(
                         [
-                            'extraMessage' => "namespace prefix \"$nsPrefix\" dnenotes different namespaces \"$map[$nsPrefix]\" and \"{$nsName}\""
+                            'extraMessage' =>
+                            "namespace prefix \"$nsPrefix\" denotes "
+                            . "different namespaces \"$map[$nsPrefix]\" "
+                            . "and \"{$nsName}\""
                         ]
                     );
                 }

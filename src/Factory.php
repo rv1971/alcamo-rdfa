@@ -1,10 +1,15 @@
 <?php
 
 namespace alcamo\rdfa;
+
 use alcamo\exception\DataValidationFailed;
 
 /**
  * @brief Factory that creates RDFa statements from property CURIEs and values
+ *
+ * @attention Each class listed in @ref PROP_CURIE2CLASS must define a
+ * boolean class constant `UNIQUE` which tells whether this property can only
+ * have a unique value or may have an array of values.
  */
 class Factory
 {
@@ -44,8 +49,6 @@ class Factory
         string $propCurie,
         $object
     ): StmtInterface {
-        $class = static::PROP_CURIE2CLASS[$propCurie];
-
         return new $class($object);
     }
 
@@ -85,6 +88,22 @@ class Factory
                     break;
 
                 case is_array($data):
+                    $class = static::PROP_CURIE2CLASS[$curie];
+
+                    if ($class::UNIQUE) {
+                        /** @throw alcamo::exception::DataValidationFailed if
+                         *  an array is given as a value for a unique
+                         *  property. */
+                        throw (new DataValidationFailed())
+                            ->setMessageContext(
+                                [
+                                    'inData' => (string)$curie,
+                                    'extraMessage' =>
+                                    "array given for unique $class"
+                                ]
+                            );
+                    }
+
                     $objects = [];
 
                     foreach ($data as $item) {
@@ -104,8 +123,7 @@ class Factory
 
                             $objects[(string)$item] = $item;
                         } else {
-                            $object =
-                                static::createStmtFromPropCurie($curie, $item);
+                            $object = new $class($item);
 
                             $objects[(string)$object] = $object;
                         }
@@ -115,8 +133,9 @@ class Factory
                     break;
 
                 default:
-                    $rdfaData[$curie] =
-                        static::createStmtFromPropCurie($curie, $data);
+                    $class = static::PROP_CURIE2CLASS[$curie];
+
+                    $rdfaData[$curie] = new $class($data);
             }
         }
 

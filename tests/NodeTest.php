@@ -4,7 +4,7 @@ namespace alcamo\rdfa;
 
 use PHPUnit\Framework\TestCase;
 
-class Nodetest extends TestCase
+class NodeTest extends TestCase
 {
     /**
      * @dataProvider basicsProvider

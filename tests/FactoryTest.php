@@ -78,4 +78,20 @@ class FactoryTest extends TestCase
             ]
         );
     }
+
+    public function testCreateStmtArrayFromPropCurieMapException3(): void
+    {
+        $this->expectException(DataValidationFailed::class);
+        $this->expectExceptionMessage(
+            'array given for unique ' . DcTitle::class
+        );
+
+        $factory = new Factory();
+
+        $factory->createStmtArrayFromPropCurieMap(
+            [
+                'dc:title' => [ new DcTitle('Ipsum') ]
+            ]
+        );
+    }
 }
