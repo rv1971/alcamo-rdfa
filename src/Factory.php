@@ -7,13 +7,13 @@ use alcamo\exception\DataValidationFailed;
 /**
  * @brief Factory that creates RDFa statements from property CURIEs and values
  *
- * @attention Each class listed in @ref PROP_CURIE2CLASS must define a
+ * @attention Each class listed in @ref PROP_CURIE_TO_CLASS must define a
  * boolean class constant `UNIQUE` which tells whether this property can only
  * have a unique value or may have an array of values.
  */
 class Factory
 {
-    public const PROP_CURIE2CLASS = [
+    public const PROP_CURIE_TO_CLASS = [
         DcAbstract::PROP_CURIE             => DcAbstract::class,
         DcAccessRights::PROP_CURIE         => DcAccessRights::class,
         DcAlternative::PROP_CURIE          => DcAlternative::class,
@@ -88,7 +88,7 @@ class Factory
                     break;
 
                 case is_array($data):
-                    $class = static::PROP_CURIE2CLASS[$curie];
+                    $class = static::PROP_CURIE_TO_CLASS[$curie];
 
                     if ($class::UNIQUE) {
                         /** @throw alcamo::exception::DataValidationFailed if
@@ -133,7 +133,7 @@ class Factory
                     break;
 
                 default:
-                    $class = static::PROP_CURIE2CLASS[$curie];
+                    $class = static::PROP_CURIE_TO_CLASS[$curie];
 
                     $rdfaData[$curie] = new $class($data);
             }

@@ -14,7 +14,7 @@ use alcamo\exception\DataValidationFailed;
  */
 class RdfaData extends ReadonlyCollection
 {
-    public const PROP_CURIE2CLASS = Factory::PROP_CURIE2CLASS;
+    public const PROP_CURIE_TO_CLASS = Factory::PROP_CURIE_TO_CLASS;
 
     /**
      * @brief Create from map of property CURIEs to object data
@@ -66,7 +66,7 @@ class RdfaData extends ReadonlyCollection
                 /** If a property is already present and is unique, leave it
                  *  unchanged. */
 
-                $class = static::PROP_CURIE2CLASS[$curie] ?? null;
+                $class = static::PROP_CURIE_TO_CLASS[$curie] ?? null;
 
                 if (isset($class) && $class::UNIQUE) {
                     continue;
