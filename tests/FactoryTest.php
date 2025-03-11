@@ -31,7 +31,8 @@ class FactoryTest extends TestCase
                         'https://semver.org/spec/v2.0.0.html',
                         'https://example.org/strict'
                     ],
-                    'dc:created' => '2023-01-18T18:34+03:00'
+                    'dc:created' => '2023-01-18T18:34+03:00',
+                    'dc:publisher' => null
                 ],
                 [
                     'dc:title' => new DcTitle('Lorem ipsum dolorsit amet'),

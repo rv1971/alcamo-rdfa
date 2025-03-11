@@ -57,10 +57,11 @@ class Factory
      * - instance of StmtInterface
      * - statement object
      * - array of one or the other
+     * - null
      *
      * @return Map of property CURIE to either instance of StmtInterface or
      * array thereof, the latter indexed by string representation of the
-     * object.
+     * object. Ignore entis with value null.
      *
      * @throw alcamo::exception::DataValidationFailed if the input contains an
      * RDFa statement not matching its key CURIE.
@@ -71,6 +72,9 @@ class Factory
 
         foreach ($map as $curie => $data) {
             switch (true) {
+                case !isset($data):
+                    continue 2;
+
                 case $data instanceof StmtInterface:
                     if ($data->getPropCurie() != $curie) {
                         throw (new DataValidationFailed())->setMessageContext(
