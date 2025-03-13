@@ -19,6 +19,7 @@ class Factory
         DcAlternative::PROP_CURIE          => DcAlternative::class,
         DcAudience::PROP_CURIE             => DcAudience::class,
         DcConformsTo::PROP_CURIE           => DcConformsTo::class,
+        DcCoverage::PROP_CURIE             => DcCoverage::class,
         DcCreated::PROP_CURIE              => DcCreated::class,
         DcCreator::PROP_CURIE              => DcCreator::class,
         DcFormat::PROP_CURIE               => DcFormat::class,

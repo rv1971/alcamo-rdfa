@@ -128,6 +128,14 @@ class AbstractStmtTest extends TestCase
                 new Node('https://example.com/standards'),
                 'https://example.com/standards'
             ],
+            'DcCoverage' => [
+                new DcCoverage('Akureyri'),
+                self::DC_NS,
+                'dc',
+                'coverage',
+                'Akureyri',
+                'Akureyri'
+            ],
             'DcCreated' => [
                 new DcCreated('2023-01-17T15:52:00+01:00'),
                 self::DC_NS,
