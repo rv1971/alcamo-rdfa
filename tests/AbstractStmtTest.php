@@ -160,6 +160,14 @@ class AbstractStmtTest extends TestCase
                 new Node('https://alice.example.org'),
                 'https://alice.example.org'
             ],
+            'DcDate' => [
+                new DcDate('2025-03-16T22:13:16+01:00'),
+                self::DC_NS,
+                'dc',
+                'date',
+                new \DateTime('2025-03-16T22:13:16+01:00'),
+                '2025-03-16T22:13:16+01:00'
+            ],
             'DcFormat' => [
                 new DcFormat('application/xml'),
                 self::DC_NS,

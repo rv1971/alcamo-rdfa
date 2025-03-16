@@ -22,6 +22,7 @@ class Factory
         DcCoverage::PROP_CURIE             => DcCoverage::class,
         DcCreated::PROP_CURIE              => DcCreated::class,
         DcCreator::PROP_CURIE              => DcCreator::class,
+        DcDate::PROP_CURIE                 => DcDate::class,
         DcFormat::PROP_CURIE               => DcFormat::class,
         DcIdentifier::PROP_CURIE           => DcIdentifier::class,
         DcLanguage::PROP_CURIE             => DcLanguage::class,
