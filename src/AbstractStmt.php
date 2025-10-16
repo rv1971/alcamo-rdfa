@@ -3,12 +3,18 @@
 namespace alcamo\rdfa;
 
 /**
- * @brief RDFa statement where property is a class constant
+ * @brief Base class of RDFa statement classes ruled by class constants
  *
- * @attention Each derived class *must* define the class constants
+ * @attention Each derived class *must* redefine the class constants
  * - PROP_NS_NAME
  * - PROP_NS_PREFIX
  * - PROP_LOCAL_NAME
+ * - PROP_URI (as `self::PROP_NS_NAME . self::PROP_LOCAL_NAME`)
+ * - PROP_CURIE (as `self::PROP_NS_PREFIX . ':' . self::PROP_LOCAL_NAME`)
+ * Furthermore, a derived class *may* redefine the class constant `UNIQUE` as
+ * `true` to indicate that this property may have one value only.
+ *
+ * @date Last reviewed 2025-10-15
  */
 abstract class AbstractStmt implements StmtInterface
 {
@@ -36,6 +42,9 @@ abstract class AbstractStmt implements StmtInterface
 
     /// Property as a CURIE using the canonical prefix
     public const PROP_CURIE = null;
+
+    /// Whether a subject may have only one value for the given property
+    public const UNIQUE = false;
 
     private $object_;     ///< any type
 

@@ -4,11 +4,13 @@ namespace alcamo\rdfa;
 
 /**
  * @brief RDFa statement whose object is a DateTime object
+ *
+ * @date Last reviewed 2025-10-15
  */
 abstract class AbstractDateTimeStmt extends AbstractStmt
 {
     /**
-     * @brief Format used in __toString().
+     * @brief Default format used in __toString().
      *
      * @sa [DateTime::format()](https://www.php.net/manual/en/datetime.format)
      */
@@ -26,7 +28,7 @@ abstract class AbstractDateTimeStmt extends AbstractStmt
     /// Return content using @ref DEFAULT_FORMAT
     public function __toString(): string
     {
-        return $this->format(static::DEFAULT_FORMAT);
+        return $this->getObject()->format(static::DEFAULT_FORMAT);
     }
 
     /**

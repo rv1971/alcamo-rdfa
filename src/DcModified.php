@@ -6,6 +6,8 @@ namespace alcamo\rdfa;
  * @brief dc:modified RDFa statement
  *
  * @sa [dc:modified](http://purl.org/dc/terms/modified).
+ *
+ * @date Last reviewed 2025-10-15
  */
 class DcModified extends AbstractDateTimeStmt
 {

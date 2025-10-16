@@ -14,6 +14,8 @@ namespace alcamo\rdfa;
  * @sa [RDFa Primer](https://www.w3.org/TR/rdfa-primer/)
  *
  * @sa [CURIE Syntax](https://www.w3.org/TR/curie/)
+ *
+ * @date Last reviewed 2025-10-15
  */
 interface StmtInterface
 {
@@ -29,7 +31,7 @@ interface StmtInterface
     /// Property as a URI
     public function getPropUri(): string;
 
-    /// Property as a CURIE using a canonical prefix
+    /// Property as a CURIE using the canonical prefix
     public function getPropCurie(): string;
 
     /// Object of the RDFa statement

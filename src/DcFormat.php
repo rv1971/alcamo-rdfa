@@ -6,6 +6,8 @@ namespace alcamo\rdfa;
  * @brief dc:format RDFa statement
  *
  * @sa [dc:format](http://purl.org/dc/terms/format).
+ *
+ * @date Last reviewed 2025-10-16
  */
 class DcFormat extends AbstractStmt
 {

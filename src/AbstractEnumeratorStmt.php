@@ -9,9 +9,14 @@ use alcamo\exception\InvalidEnumerator;
  *
  * @attention Each derived class *must* define a class constant VALUES which
  * must be an array of legal value strings.
+ *
+ * @date Last reviewed 2025-10-15
  */
 abstract class AbstractEnumeratorStmt extends AbstractStmt
 {
+    /// Array of valid values
+    public const VALUES = null;
+
     public function __construct(string $value)
     {
         if (!in_array($value, static::VALUES)) {

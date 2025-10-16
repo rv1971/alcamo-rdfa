@@ -7,6 +7,8 @@ namespace alcamo\rdfa;
  *
  * @sa [dc:type](http://purl.org/dc/terms/type)
  * @sa [DCMIType](http://purl.org/dc/terms/DCMIType)
+ *
+ * @date Last reviewed 2025-10-15
  */
 class DcType extends AbstractEnumeratorStmt
 {

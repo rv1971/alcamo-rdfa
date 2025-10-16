@@ -6,6 +6,8 @@ namespace alcamo\rdfa;
  * @brief dc:created RDFa statement
  *
  * @sa [dc:created](http://purl.org/dc/terms/created).
+ *
+ * @date Last reviewed 2025-10-15
  */
 class DcCreated extends AbstractDateTimeStmt
 {

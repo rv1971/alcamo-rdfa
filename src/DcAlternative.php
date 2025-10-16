@@ -6,6 +6,8 @@ namespace alcamo\rdfa;
  * @brief dc:alternative RDFa statement
  *
  * @sa [dc:alternative](http://purl.org/dc/terms/alternative).
+ *
+ * @date Last reviewed 2025-10-16
  */
 class DcAlternative extends AbstractStmt
 {
@@ -19,6 +21,4 @@ class DcAlternative extends AbstractStmt
 
     public const PROP_CURIE =
         self::PROP_NS_PREFIX . ':' . self::PROP_LOCAL_NAME;
-
-    public const UNIQUE = false;
 }

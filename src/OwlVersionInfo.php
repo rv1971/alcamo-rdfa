@@ -6,6 +6,8 @@ namespace alcamo\rdfa;
  * @brief owl:versionInfo RDFa statement
  *
  * @sa [owl:versionInfo](https://www.w3.org/TR/owl-ref/#versionInfo-def).
+ *
+ * @date Last reviewed 2025-10-15
  */
 class OwlVersionInfo extends AbstractStmt
 {

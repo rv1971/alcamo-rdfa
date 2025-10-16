@@ -8,10 +8,14 @@ namespace alcamo\rdfa;
  * @sa [RFC4646](http://tools.ietf.org/html/rfc4646).
  *
  * @invariant Immutable class.
+ *
+ * @date Last reviewed 2025-10-16
+ *
+ * @date Last reviewed 2025-10-16
  */
 class Lang
 {
-    private $subtags_;
+    private $subtags_; ///< array
 
     public static function newFromPrimary(string $primary): self
     {
@@ -20,9 +24,13 @@ class Lang
 
     public static function newFromPrimaryAndRegion(
         string $primary,
-        string $region
+        ?string $region
     ): self {
-        return new self([ 'language' => $primary, 'region' => $region ]);
+        return new self(
+            isset($region)
+                ? [ 'language' => $primary, 'region' => $region ]
+                : [ 'language' => $primary ]
+        );
     }
 
     public static function newFromString(string $lang): self
@@ -35,7 +43,7 @@ class Lang
         return new self(\Locale::parseLocale(setlocale(LC_ALL, 0)));
     }
 
-    private function __construct($subtags)
+    private function __construct(array $subtags)
     {
         $this->subtags_ = $subtags;
     }

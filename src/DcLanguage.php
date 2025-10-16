@@ -6,6 +6,8 @@ namespace alcamo\rdfa;
  * @brief dc:language RDFa statement
  *
  * @sa [dc:language](http://purl.org/dc/terms/language).
+ *
+ * @date Last reviewed 2025-10-16
  */
 class DcLanguage extends AbstractStmt
 {
@@ -19,8 +21,6 @@ class DcLanguage extends AbstractStmt
 
     public const PROP_CURIE =
         self::PROP_NS_PREFIX . ':' . self::PROP_LOCAL_NAME;
-
-    public const UNIQUE = true;
 
     public function __construct($lang)
     {

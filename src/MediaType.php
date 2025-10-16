@@ -13,6 +13,8 @@ use alcamo\exception\{FileNotFound, InvalidEnumerator, SyntaxError};
  * @sa [RFC 2046](https://tools.ietf.org/html/rfc2046)
  * @sa [RFC 6838](https://tools.ietf.org/html/rfc6838)
  * @sa [RFC 6839](https://tools.ietf.org/html/rfc6839)
+ *
+ * @date Last reviewed 2025-10-16
  */
 class MediaType
 {

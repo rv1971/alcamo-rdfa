@@ -6,6 +6,8 @@ namespace alcamo\rdfa;
  * @brief dc:coverage RDFa statement
  *
  * @sa [dc:coverage](http://purl.org/dc/terms/coverage).
+ *
+ * @date Last reviewed 2025-10-15
  */
 class DcCoverage extends AbstractStmt
 {

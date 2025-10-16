@@ -6,6 +6,8 @@ namespace alcamo\rdfa;
  * @brief dc:title RDFa statement
  *
  * @sa [dc:title](http://purl.org/dc/terms/title).
+ *
+ * @date Last reviewed 2025-10-15
  */
 class DcTitle extends AbstractStmt
 {
