@@ -28,15 +28,6 @@ abstract class AbstractDateTimeStmt extends AbstractStmt
     /// Return content using @ref DEFAULT_FORMAT
     public function __toString(): string
     {
-        return $this->getObject()->format(static::DEFAULT_FORMAT);
-    }
-
-    /**
-     * @param $format See
-     * [DateTime::format()](https://www.php.net/manual/en/datetime.format).
-     */
-    public function format(string $format): string
-    {
-        return $this->getObject()->format($format);
+        return $this->format(static::DEFAULT_FORMAT);
     }
 }

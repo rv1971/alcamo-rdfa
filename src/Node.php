@@ -2,20 +2,23 @@
 
 namespace alcamo\rdfa;
 
-/// RDFa node
+/**
+ * @brief RDFa node
+ *
+ * @date Last reviewed 2025-10-18
+ */
 class Node
 {
-    private $uri_;       ///< string
+    private $uri_;      ///< string or convertible to string
     private $rdfaData_; ///< ?RdfaData
 
-    public function __construct(string $uri, ?RdfaData $rdfaData = null)
+    public function __construct($uri, ?RdfaData $rdfaData = null)
     {
         $this->uri_ = $uri;
-
         $this->rdfaData_ = $rdfaData;
     }
 
-    public function getUri(): string
+    public function getUri()
     {
         return $this->uri_;
     }

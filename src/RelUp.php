@@ -13,12 +13,19 @@ namespace alcamo\rdfa;
  * @sa [rel="up"](https://microformats.org/wiki/rel-up).
  *
  * @sa [Link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types)
+ *
+ * @date Last reviewed 2025-10-18
  */
-class RelUp extends AbstractRelStmt
+class RelUp extends AbstractNodeStmt
 {
+    public const PROP_NS_NAME = self::REL_NS;
+
+    public const PROP_NS_PREFIX = 'rel';
+
     public const PROP_LOCAL_NAME = 'up';
 
     public const PROP_URI = self::PROP_NS_NAME . self::PROP_LOCAL_NAME;
 
-    public const PROP_CURIE = self::PROP_NS_PREFIX . ':' . self::PROP_LOCAL_NAME;
+    public const PROP_CURIE =
+        self::PROP_NS_PREFIX . ':' . self::PROP_LOCAL_NAME;
 }

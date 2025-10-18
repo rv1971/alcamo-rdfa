@@ -97,4 +97,9 @@ abstract class AbstractStmt implements StmtInterface
     {
         return (string)$this->object_;
     }
+
+    public function __call(string $name, array $params)
+    {
+        return call_user_func_array([ $this->object_, $name ], $params);
+    }
 }

@@ -6,6 +6,8 @@ namespace alcamo\rdfa;
  * @brief dc:source RDFa statement
  *
  * @sa [dc:source](http://purl.org/dc/terms/source).
+ *
+ * @date Last reviewed 2025-10-18
  */
 class DcSource extends AbstractNodeStmt
 {
