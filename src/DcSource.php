@@ -7,13 +7,11 @@ namespace alcamo\rdfa;
  *
  * @sa [dc:source](http://purl.org/dc/terms/source).
  *
- * @date Last reviewed 2025-10-18
+ * @date Last reviewed 2025-10-19
  */
-class DcSource extends AbstractNodeStmt
+class DcSource extends AbstractDcStmt
 {
-    public const PROP_NS_NAME = self::DC_NS;
-
-    public const PROP_NS_PREFIX = 'dc';
+    use NodeStmtTrait;
 
     public const PROP_LOCAL_NAME = 'source';
 

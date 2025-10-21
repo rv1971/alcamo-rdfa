@@ -2,13 +2,18 @@
 
 namespace alcamo\rdfa;
 
-/// Simple statement
+/**
+ * @brief Simple RDFa statement
+ *
+ * @date Last reviewed 2025-10-19
+ */
 class SimpleStmt implements StmtInterface
 {
+    use ObjectTrait;
+
     private $propNsName_;    ///< string
     private $propNsPrefix_;  ///< string
     private $propLocalName_; ///< string
-    private $object_;        ///< any type
 
     public function __construct(
         string $propNsName,
@@ -43,24 +48,17 @@ class SimpleStmt implements StmtInterface
     /// @copydoc StmtInterface::getPropUri()
     public function getPropUri(): string
     {
-        return $this->propNsName_ . $this->propLocalName_;
+        return "{$this->propNsName_}{$this->propLocalName_}";
     }
 
     /// @copydoc StmtInterface::getPropCurie()
     public function getPropCurie(): string
     {
-        return $this->propNsPrefix_ . ':' . $this->propLocalName_;
+        return "{$this->propNsPrefix_}:{$this->propLocalName_}";
     }
 
-    /// @copydoc StmtInterface::getObject()
-    public function getObject()
+    public function isOnceOnly(): bool
     {
-        return $this->object_;
-    }
-
-    /// @copydoc StmtInterface::__toString()
-    public function __toString(): string
-    {
-        return (string)$this->object_;
+        return false;
     }
 }

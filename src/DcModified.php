@@ -7,13 +7,11 @@ namespace alcamo\rdfa;
  *
  * @sa [dc:modified](http://purl.org/dc/terms/modified).
  *
- * @date Last reviewed 2025-10-15
+ * @date Last reviewed 2025-10-19
  */
-class DcModified extends AbstractDateTimeStmt
+class DcModified extends AbstractDcStmt
 {
-    public const PROP_NS_NAME = self::DC_NS;
-
-    public const PROP_NS_PREFIX = 'dc';
+    use DateTimeStmtTrait;
 
     public const PROP_LOCAL_NAME = 'modified';
 
@@ -22,5 +20,5 @@ class DcModified extends AbstractDateTimeStmt
     public const PROP_CURIE =
         self::PROP_NS_PREFIX . ':' . self::PROP_LOCAL_NAME;
 
-    public const UNIQUE = true;
+    public const IS_ONCE_ONLY = true;
 }

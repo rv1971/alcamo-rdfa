@@ -8,13 +8,11 @@ namespace alcamo\rdfa;
  * @sa [dc:type](http://purl.org/dc/terms/type)
  * @sa [DCMIType](http://purl.org/dc/terms/DCMIType)
  *
- * @date Last reviewed 2025-10-15
+ * @date Last reviewed 2025-10-19
  */
-class DcType extends AbstractEnumeratorStmt
+class DcType extends AbstractDcStmt
 {
-    public const PROP_NS_NAME = self::DC_NS;
-
-    public const PROP_NS_PREFIX = 'dc';
+    use EnumeratorStmtTrait;
 
     public const PROP_LOCAL_NAME = 'type';
 
@@ -23,7 +21,7 @@ class DcType extends AbstractEnumeratorStmt
     public const PROP_CURIE =
         self::PROP_NS_PREFIX . ':' . self::PROP_LOCAL_NAME;
 
-    public const UNIQUE = true;
+    public const IS_ONCE_ONLY = true;
 
     public const VALUES = [
         'Collection',

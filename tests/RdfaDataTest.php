@@ -16,13 +16,10 @@ class RdfaDataTest extends TestCase
 
         $rdfaData = RdfaData::newFromIterable($inputData);
 
-        $expectedArray =
-            $factory->createStmtArrayFromPropCurieMap($expectedData);
+        $this->assertSame(count($expectedData), count($rdfaData));
 
-        $this->assertSame(count($expectedArray), count($rdfaData));
-
-        foreach ($expectedArray as $key => $value) {
-            $this->assertEquals($expectedArray[$key], $rdfaData[$key]);
+        foreach ($expectedData as $key => $value) {
+            $this->assertEquals($expectedData[$key], $rdfaData[$key]);
         }
     }
 
@@ -30,25 +27,11 @@ class RdfaDataTest extends TestCase
     {
         return [
             [
-                [ 'dc:format' => 'application/xml' ],
-                [ 'dc:format' => 'application/xml' ]
-            ],
-            [
-                [ 'dc:format' => 'application/xml; charset=US-ASCII' ],
                 [
-                    'dc:format' => 'application/xml; charset=US-ASCII',
-                    'meta:charset' => 'US-ASCII'
-                ]
-            ],
-            [
-                [
-                    'dc:format' => 'application/xml; charset=US-ASCII',
-                    'meta:charset' => 'UTF-8'
+                    [ 'dc:format', 'application/xml' ],
+                    [ 'dc:creator', null ]
                 ],
-                [
-                    'dc:format' => 'application/xml; charset=US-ASCII',
-                    'meta:charset' => 'UTF-8'
-                ]
+                [ 'dc:format' => 'application/xml' ]
             ]
         ];
     }
@@ -64,7 +47,7 @@ class RdfaDataTest extends TestCase
             ->add(RdfaData::newFromIterable($inputData2));
 
         $expectedArray =
-            $factory->createStmtArrayFromPropCurieMap($expectedData);
+            $factory->createStmtArrayFromIterable($expectedData);
 
         $this->assertSame(count($expectedArray), count($rdfaData));
 
@@ -78,30 +61,40 @@ class RdfaDataTest extends TestCase
         return [
             [
                 [
-                    'dc:title' => 'Lorem ipsum',
-                    'dc:alternative' => 'Dolor sit amet',
-                    'dc:conformsTo' => 'Rulebook 1',
-                    'dc:creator' => [ 'Alice', 'Bob' ],
-                    'dc:accessRights' => [ 'read', 'modify' ]
+                    [ 'dc:title', 'Lorem ipsum' ],
+                    [ 'dc:alternative', 'Dolor sit amet' ],
+                    [ 'dc:conformsTo', 'Rulebook 1' ],
+                    [ 'dc:creator', 'Alice' ],
+                    [ 'dc:accessRights', 'read' ],
+                    [ 'dc:accessRights', 'modify' ],
+                    [ 'dc:creator', 'Bob' ]
                 ],
                 [
-                    'dc:type' => 'Software',
-                    'dc:creator' => 'Charles',
-                    'dc:accessRights' => [ 'publish', 'delete' ],
-                    'dc:alternative' => 'Consetetur sadipscing elitr',
-                    'dc:conformsTo' => [ 'Rulebook 2', 'Rulebook 3' ],
-                    'dc:title' => 'Lorem ipsum again'
+                    [ 'dc:type', 'Software' ],
+                    [ 'dc:creator', 'Charles' ],
+                    [ 'dc:accessRights', 'publish' ],
+                    [ 'dc:conformsTo', 'Rulebook 2' ],
+                    [ 'dc:accessRights', 'delete' ],
+                    [ 'dc:alternative', 'Consetetur sadipscing elitr' ],
+                    [ 'dc:conformsTo', 'Rulebook 3' ],
+                    [ 'dc:title', 'Lorem ipsum again' ]
                 ],
                 [
-                    'dc:title' => 'Lorem ipsum',
-                    'dc:alternative' =>
-                    [ 'Dolor sit amet', 'Consetetur sadipscing elitr' ],
-                    'dc:conformsTo' =>
-                    [ 'Rulebook 1', 'Rulebook 2', 'Rulebook 3' ],
-                    'dc:creator' => [ 'Alice', 'Bob', 'Charles' ],
-                    'dc:accessRights' =>
-                    [ 'read', 'modify', 'publish', 'delete' ],
-                    'dc:type' => 'Software'
+                    [ 'dc:title', 'Lorem ipsum' ],
+                    [ 'dc:title', 'Lorem ipsum again' ],
+                    [ 'dc:alternative', 'Dolor sit amet' ],
+                    [ 'dc:alternative', 'Consetetur sadipscing elitr' ],
+                    [ 'dc:conformsTo', 'Rulebook 1' ],
+                    [ 'dc:conformsTo', 'Rulebook 2' ],
+                    [ 'dc:conformsTo', 'Rulebook 3' ],
+                    [ 'dc:creator', 'Alice' ],
+                    [ 'dc:creator', 'Bob' ],
+                    [ 'dc:creator', 'Charles' ],
+                    [ 'dc:accessRights', 'read' ],
+                    [ 'dc:accessRights', 'modify' ],
+                    [ 'dc:accessRights', 'publish' ],
+                    [ 'dc:accessRights', 'delete' ],
+                    [ 'dc:type', 'Software' ]
                 ],
 
             ]
@@ -119,7 +112,7 @@ class RdfaDataTest extends TestCase
             ->replace(RdfaData::newFromIterable($inputData2));
 
         $expectedArray =
-            $factory->createStmtArrayFromPropCurieMap($expectedData);
+            $factory->createStmtArrayFromIterable($expectedData);
 
         $this->assertSame(count($expectedArray), count($rdfaData));
 
@@ -133,26 +126,32 @@ class RdfaDataTest extends TestCase
         return [
             [
                 [
-                    'dc:title' => 'Lorem ipsum',
-                    'dc:alternative' => 'Dolor sit amet',
-                    'dc:conformsTo' => 'Rulebook 1',
-                    'dc:creator' => [ 'Alice', 'Bob' ],
-                    'dc:accessRights' => [ 'read', 'modify' ]
+                    [ 'dc:title', 'Lorem ipsum' ],
+                    [ 'dc:alternative', 'Dolor sit amet' ],
+                    [ 'dc:conformsTo', 'Rulebook 1' ],
+                    [ 'dc:creator', 'Alice' ],
+                    [ 'dc:accessRights', 'read' ],
+                    [ 'dc:accessRights', 'modify' ],
+                    [ 'dc:creator', 'Bob' ]
                 ],
                 [
-                    'dc:type' => 'Software',
-                    'dc:creator' => 'Charles',
-                    'dc:accessRights' => [ 'publish', 'delete' ],
-                    'dc:alternative' => 'Consetetur sadipscing elitr',
-                    'dc:conformsTo' => [ 'Rulebook 2', 'Rulebook 3' ]
+                    [ 'dc:type', 'Software' ],
+                    [ 'dc:creator', 'Charles' ],
+                    [ 'dc:accessRights', 'publish' ],
+                    [ 'dc:conformsTo', 'Rulebook 2' ],
+                    [ 'dc:accessRights', 'delete' ],
+                    [ 'dc:alternative', 'Consetetur sadipscing elitr' ],
+                    [ 'dc:conformsTo', 'Rulebook 3' ],
                 ],
                 [
-                    'dc:title' => 'Lorem ipsum',
-                    'dc:alternative' => 'Consetetur sadipscing elitr',
-                    'dc:conformsTo' => [ 'Rulebook 2', 'Rulebook 3' ],
-                    'dc:creator' => 'Charles',
-                    'dc:accessRights' => [ 'publish', 'delete' ],
-                    'dc:type' => 'Software'
+                    [ 'dc:title', 'Lorem ipsum' ],
+                    [ 'dc:alternative', 'Consetetur sadipscing elitr' ],
+                    [ 'dc:conformsTo', 'Rulebook 2' ],
+                    [ 'dc:conformsTo', 'Rulebook 3' ],
+                    [ 'dc:creator', 'Charles' ],
+                    [ 'dc:accessRights', 'publish' ],
+                    [ 'dc:accessRights', 'delete' ],
+                    [ 'dc:type', 'Software' ]
                 ]
             ]
         ];
@@ -173,16 +172,15 @@ class RdfaDataTest extends TestCase
         return [
             [
                 [
-                    'dc:title' => 'Lorem ipsum',
-                    'dc:creator' => [ 'Alice', 'Bob' ],
-                    'meta:charset' => 'UTF-8',
-                    'dc:type' => 'Text',
-                    'http:expires' => 'P1D'
+                    [ 'dc:title', 'Lorem ipsum' ],
+                    [ 'dc:creator', 'Alice' ],
+                    [ 'dc:creator', 'Bob' ],
+                    [ 'dc:type', 'Text' ],
+                    [ 'http:expires', 'P1D' ]
                 ],
                 [
-                    'dc' => AbstractStmt::DC_NS,
-                    'meta' => AbstractStmt::META_NS,
-                    'http' => AbstractStmt::HTTP_NS
+                    'dc' => AbstractDcStmt::DC_NS,
+                    'http' => AbstractHttpStmt::HTTP_NS
                 ]
             ]
         ];
@@ -192,9 +190,11 @@ class RdfaDataTest extends TestCase
     {
         $rdfaData = RdfaData::newFromIterable(
             [
-                'dc:bar' =>
-                new SimpleStmt('https://example.com', 'dc', 'bar', 'qux'),
-                'dc:title' => 'Conflict'
+                [
+                    'dc:bar',
+                    new SimpleStmt('https://example.com', 'dc', 'bar', 'qux')
+                ],
+                [ 'dc:title', 'Conflict' ]
             ]
         );
 

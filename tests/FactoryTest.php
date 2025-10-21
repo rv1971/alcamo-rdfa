@@ -8,47 +8,65 @@ use PHPUnit\Framework\TestCase;
 class FactoryTest extends TestCase
 {
   /**
-   * @dataProvider createStmtArrayFromPropCurieMapProvider
+   * @dataProvider createStmtArrayFromIterableProvider
    */
-    public function testCreateStmtArrayFromPropCurieMap(
+    public function testCreateStmtArrayFromIterable(
         $inputData,
         $expectedData
     ): void {
         $factory = new Factory();
 
-        $data = $factory->createStmtArrayFromPropCurieMap($inputData);
+        $data = $factory->createStmtArrayFromIterable($inputData);
 
         $this->assertEquals($expectedData, $data);
     }
 
-    public function createStmtArrayFromPropCurieMapProvider(): array
+    public function createStmtArrayFromIterableProvider(): array
     {
         return [
             [
                 [
-                    'dc:title' => new DcTitle('Lorem ipsum dolorsit amet'),
-                    'dc:conformsTo' => [
-                        'https://semver.org/spec/v2.0.0.html',
-                        'https://example.org/strict'
+                    [ 'dc:title', new DcTitle('Lorem ipsum dolor sit amet') ],
+                    [
+                        'dc:conformsTo',
+                        [
+                            'https://semver.org/spec/v2.0.0.html',
+                            [ [ 'dc:title', 'Semantic Versioning' ] ]
+                        ]
                     ],
-                    'dc:created' => '2023-01-18T18:34+03:00',
-                    'dc:publisher' => null
+                    [ 'dc:publisher', null ],
+                    [ 'dc:created', '2023-01-18T18:34+03:00' ],
+                    [ 'dc:conformsTo', 'https://example.org/strict' ],
+                    [ 'dc:created', '2025-10-21T17:17+02:00' ]
                 ],
                 [
-                    'dc:title' => new DcTitle('Lorem ipsum dolorsit amet'),
+                    'dc:title' => [
+                        'Lorem ipsum dolor sit amet'
+                            => new DcTitle('Lorem ipsum dolor sit amet')
+                    ],
                     'dc:conformsTo' => [
                         'https://semver.org/spec/v2.0.0.html'
-                        => new DcConformsTo('https://semver.org/spec/v2.0.0.html'),
+                            => new DcConformsTo(
+                                'https://semver.org/spec/v2.0.0.html',
+                                new RdfaData(
+                                    [
+                                        'dc:title' => [
+                                            'Semantic Versioning'
+                                                => new DcTitle('Semantic Versioning')
+                                        ]
+                                    ]
+                                )
+                            ),
                         'https://example.org/strict'
                         => new DcConformsTo('https://example.org/strict')
                     ],
-                    'dc:created' => new DcCreated('2023-01-18T18:34+03:00')
+                    'dc:created' => new DcCreated('2025-10-21T17:17+02:00')
                 ]
             ]
         ];
     }
 
-    public function testCreateStmtArrayFromPropCurieMapException1(): void
+    public function testCreateStmtArrayFromIterableException1(): void
     {
         $this->expectException(DataValidationFailed::class);
         $this->expectExceptionMessage(
@@ -57,42 +75,22 @@ class FactoryTest extends TestCase
 
         $factory = new Factory();
 
-        $factory->createStmtArrayFromPropCurieMap(
-            [
-                'dc:tittle' => new DcTitle('Lorem')
-            ]
+        $factory->createStmtArrayFromIterable(
+            [ [ 'dc:tittle', new DcTitle('Lorem') ] ]
         );
     }
 
-    public function testCreateStmtArrayFromPropCurieMapException2(): void
+    public function testCreateStmtArrayFromIterableException2(): void
     {
         $this->expectException(DataValidationFailed::class);
         $this->expectExceptionMessage(
-            'item property CURIE "dc:title" does not match key "dc:alternative"'
+            'object property CURIE "dc:title" does not match key "dc:alternative"'
         );
 
         $factory = new Factory();
 
-        $factory->createStmtArrayFromPropCurieMap(
-            [
-                'dc:alternative' => [ new DcTitle('Ipsum') ]
-            ]
-        );
-    }
-
-    public function testCreateStmtArrayFromPropCurieMapException3(): void
-    {
-        $this->expectException(DataValidationFailed::class);
-        $this->expectExceptionMessage(
-            'array given for unique ' . DcTitle::class
-        );
-
-        $factory = new Factory();
-
-        $factory->createStmtArrayFromPropCurieMap(
-            [
-                'dc:title' => [ new DcTitle('Ipsum') ]
-            ]
+        $factory->createStmtArrayFromIterable(
+            [ [ 'dc:alternative', new DcTitle('Ipsum') ] ]
         );
     }
 }

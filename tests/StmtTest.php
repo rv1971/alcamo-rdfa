@@ -6,17 +6,15 @@ use alcamo\exception\InvalidEnumerator;
 use alcamo\time\Duration;
 use PHPUnit\Framework\TestCase;
 
-class AbstractStmtTest extends TestCase
+class StmtTest extends TestCase
 {
     public const DC_NS = 'http://purl.org/dc/terms/';
 
     public const OWL_NS = 'http://www.w3.org/2002/07/owl#';
 
+    public const XHV_NS  = 'https://www.w3.org/1999/xhtml/vocab#';
+
     public const HTTP_NS = 'tag:rv1971@web.de,2021:alcamo-rdfa:ns:http#';
-
-    public const META_NS = 'tag:rv1971@web.de,2021:alcamo-rdfa:ns:meta#';
-
-    public const REL_NS  = 'tag:rv1971@web.de,2021:alcamo-rdfa:ns:rel#';
 
     /**
      * @dataProvider basicsProvider
@@ -71,11 +69,19 @@ class AbstractStmtTest extends TestCase
                 'Lorem ipsum.'
             ],
             'DcAbstract-node' => [
-                new DcAbstract(new Node('https://example.org/summary')),
+                new DcAbstract(
+                    new Node(
+                        'https://example.org/summary',
+                        new RdfaData([ 'dc:type' => new DcType('Text') ])
+                    )
+                ),
                 self::DC_NS,
                 'dc',
                 'abstract',
-                new Node('https://example.org/summary'),
+                new Node(
+                    'https://example.org/summary',
+                    new RdfaData([ 'dc:type' => new DcType('Text') ])
+                ),
                 'https://example.org/summary'
             ],
             'DcAccessRights-literal' => [
@@ -288,14 +294,6 @@ class AbstractStmtTest extends TestCase
                 new Duration('P40D'),
                 'P40D'
             ],
-            'MetaCharset' => [
-                new MetaCharset('ASCII'),
-                self::META_NS,
-                'meta',
-                'charset',
-                'ASCII',
-                'ASCII'
-            ],
             'OwlVersionInfo' => [
                 new OwlVersionInfo('1.2.3'),
                 self::OWL_NS,
@@ -304,29 +302,21 @@ class AbstractStmtTest extends TestCase
                 '1.2.3',
                 '1.2.3'
             ],
-            'RelContents' => [
-                new RelContents('index.php'),
-                self::REL_NS,
-                'rel',
+            'OwlSameAs' => [
+                new OwlSameAs('https://owl.example.org/42'),
+                self::OWL_NS,
+                'owl',
+                'sameAs',
+                new Node('https://owl.example.org/42'),
+                'https://owl.example.org/42'
+            ],
+            'XhvContents' => [
+                new XhvMetaStmt('contents', 'index.php'),
+                self::XHV_NS,
+                'xhv',
                 'contents',
                 new Node('index.php'),
                 'index.php'
-            ],
-            'RelHome' => [
-                new RelHome('../..'),
-                self::REL_NS,
-                'rel',
-                'home',
-                new Node('../..'),
-                '../..'
-            ],
-            'RelUp' => [
-                new RelUp('..'),
-                self::REL_NS,
-                'rel',
-                'up',
-                new Node('..'),
-                '..'
             ]
         ];
     }

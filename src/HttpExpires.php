@@ -5,16 +5,14 @@ namespace alcamo\rdfa;
 use alcamo\time\Duration;
 
 /**
- * @brief expires RDFa statement
+ * @brief Expires RDFa statement
  *
- * @sa [Expires](http://tools.ietf.org/html/rfc2616#section-14.21)
+ * @sa [Expires](https://datatracker.ietf.org/doc/html/rfc7234#section-5.3)
+ *
+ * @date Last reviewed 2025-10-19
  */
-class HttpExpires extends AbstractStmt
+class HttpExpires extends AbstractHttpStmt
 {
-    public const PROP_NS_NAME = self::HTTP_NS;
-
-    public const PROP_NS_PREFIX = 'http';
-
     public const PROP_LOCAL_NAME = 'expires';
 
     public const PROP_URI = self::PROP_NS_NAME . self::PROP_LOCAL_NAME;
@@ -22,7 +20,7 @@ class HttpExpires extends AbstractStmt
     public const PROP_CURIE =
         self::PROP_NS_PREFIX . ':' . self::PROP_LOCAL_NAME;
 
-    public const UNIQUE = true;
+    public const IS_ONCE_ONLY = true;
 
     public function __construct($duration)
     {

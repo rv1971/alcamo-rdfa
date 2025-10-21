@@ -14,8 +14,6 @@ use alcamo\exception\DataValidationFailed;
  */
 class RdfaData extends ReadonlyCollection
 {
-    public const PROP_CURIE_TO_CLASS = Factory::PROP_CURIE_TO_CLASS;
-
     /**
      * @brief Create from map of property CURIEs to object data
      *
@@ -30,62 +28,30 @@ class RdfaData extends ReadonlyCollection
      */
     public static function newFromIterable(
         iterable $map,
-        ?Factory $factory = null
+        ?FactoryInterface $factory = null
     ) {
-        return new self(($factory ?? new Factory())
-            ->createStmtArrayFromPropCurieMap($map));
+        return new self(
+            ($factory ?? new Factory())->createStmtArrayFromIterable($map)
+        );
     }
 
-    private function __construct(array $map)
-    {
-        parent::__construct($map);
-
-        /** If `meta:charset` is not provided, add it from `dc:format` if
-         *  possible. */
-        if (
-            !isset($this->data_['meta:charset'])
-            && isset($this->data_['dc:format'])
-        ) {
-            $charset =
-                $this->data_['dc:format']->getObject()->getParams()['charset']
-                ?? null;
-
-            if (isset($charset)) {
-                $this->data_['meta:charset'] = new MetaCharset($charset);
-            }
-        }
-    }
-
-    /// Return new object, adding properties without overwriting existing ones
+    /**
+     * @brief Return new object, adding properties without overwriting
+     * existing ones
+     */
     public function add(self $rdfaData): self
     {
         $newData = $this->data_;
 
         foreach ($rdfaData->data_ as $curie => $value) {
             if (isset($newData[$curie])) {
-                /** If a property is already present and is unique, leave it
-                 *  unchanged. */
-
-                $class = static::PROP_CURIE_TO_CLASS[$curie] ?? null;
-
-                if (isset($class) && $class::UNIQUE) {
+                /** If a property is already present and is unique, leave
+                 *  it unchanged. */
+                if ($newData[$curie] instanceof StmtInterface) {
                     continue;
                 }
 
-                /** Otherwise, add new data to its values. The result is an
-                 *  array indexed by the string representations of the
-                 *  values. */
-                $data = $newData[$curie];
-
-                if (!is_array($data)) {
-                    $newData[$curie] = [ (string)$data => $data ];
-                }
-
-                if (is_array($value)) {
-                    $newData[$curie] += $value;
-                } else {
-                    $newData[$curie] += [ (string)$value => $value ];
-                }
+                $newData[$curie] += $value;
             } else {
                 $newData[$curie] = $value;
             }

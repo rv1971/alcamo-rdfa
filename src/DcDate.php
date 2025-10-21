@@ -7,13 +7,11 @@ namespace alcamo\rdfa;
  *
  * @sa [dc:date](http://purl.org/dc/terms/date).
  *
- * @date Last reviewed 2025-10-16
+ * @date Last reviewed 2025-10-19
  */
-class DcDate extends AbstractDateTimeStmt
+class DcDate extends AbstractDcStmt
 {
-    public const PROP_NS_NAME = self::DC_NS;
-
-    public const PROP_NS_PREFIX = 'dc';
+    use DateTimeStmtTrait;
 
     public const PROP_LOCAL_NAME = 'date';
 

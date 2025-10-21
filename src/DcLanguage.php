@@ -7,14 +7,10 @@ namespace alcamo\rdfa;
  *
  * @sa [dc:language](http://purl.org/dc/terms/language).
  *
- * @date Last reviewed 2025-10-16
+ * @date Last reviewed 2025-10-19
  */
-class DcLanguage extends AbstractStmt
+class DcLanguage extends AbstractDcStmt
 {
-    public const PROP_NS_NAME = self::DC_NS;
-
-    public const PROP_NS_PREFIX = 'dc';
-
     public const PROP_LOCAL_NAME = 'language';
 
     public const PROP_URI = self::PROP_NS_NAME . self::PROP_LOCAL_NAME;

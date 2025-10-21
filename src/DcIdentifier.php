@@ -7,14 +7,10 @@ namespace alcamo\rdfa;
  *
  * @sa [dc:identifier](http://purl.org/dc/terms/identifier).
  *
- * @date Last reviewed 2025-10-15
+ * @date Last reviewed 2025-10-19
  */
-class DcIdentifier extends AbstractStmt
+class DcIdentifier extends AbstractDcStmt
 {
-    public const PROP_NS_NAME = self::DC_NS;
-
-    public const PROP_NS_PREFIX = 'dc';
-
     public const PROP_LOCAL_NAME = 'identifier';
 
     public const PROP_URI = self::PROP_NS_NAME . self::PROP_LOCAL_NAME;

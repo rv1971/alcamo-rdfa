@@ -5,14 +5,12 @@ namespace alcamo\rdfa;
 /**
  * @brief cache-control RDFa statement
  *
- * @sa [Caching](https://tools.ietf.org/html/rfc7234)
+ * @sa [Caching](https://datatracker.ietf.org/doc/html/rfc7234#section-5.2)
+ *
+ * @date Last reviewed 2025-10-19
  */
-class HttpCacheControl extends AbstractStmt
+class HttpCacheControl extends AbstractHttpStmt
 {
-    public const PROP_NS_NAME = self::HTTP_NS;
-
-    public const PROP_NS_PREFIX = 'http';
-
     public const PROP_LOCAL_NAME = 'cache-control';
 
     public const PROP_URI = self::PROP_NS_NAME . self::PROP_LOCAL_NAME;
@@ -20,5 +18,5 @@ class HttpCacheControl extends AbstractStmt
     public const PROP_CURIE =
         self::PROP_NS_PREFIX . ':' . self::PROP_LOCAL_NAME;
 
-    public const UNIQUE = true;
+    public const IS_ONCE_ONLY = true;
 }

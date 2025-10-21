@@ -7,16 +7,13 @@ use alcamo\exception\InvalidEnumerator;
 /**
  * @brief RDFa statement whose object is an enumerator
  *
- * @attention Each derived class *must* define a class constant VALUES which
- * must be an array of legal value strings.
+ * @attention Each class using this trait *must* define a class constant
+ * VALUES which must be an array of legal value strings.
  *
- * @date Last reviewed 2025-10-15
+ * @date Last reviewed 2025-10-19
  */
-abstract class AbstractEnumeratorStmt extends AbstractStmt
+trait EnumeratorStmtTrait
 {
-    /// Array of valid values
-    public const VALUES = null;
-
     public function __construct(string $value)
     {
         if (!in_array($value, static::VALUES)) {

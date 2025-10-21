@@ -10,69 +10,68 @@ use alcamo\exception\DataValidationFailed;
  * @attention Each class listed in @ref PROP_CURIE_TO_CLASS must define a
  * boolean class constant `UNIQUE` which tells whether this property can only
  * have a unique value or may have an array of values.
+ *
+ * @date Last reviewed 2025-10-21
  */
-class Factory
+class Factory implements FactoryInterface
 {
-    public const PROP_CURIE_TO_CLASS = [
-        DcAbstract::PROP_CURIE             => DcAbstract::class,
-        DcAccessRights::PROP_CURIE         => DcAccessRights::class,
-        DcAlternative::PROP_CURIE          => DcAlternative::class,
-        DcAudience::PROP_CURIE             => DcAudience::class,
-        DcConformsTo::PROP_CURIE           => DcConformsTo::class,
-        DcCoverage::PROP_CURIE             => DcCoverage::class,
-        DcCreated::PROP_CURIE              => DcCreated::class,
-        DcCreator::PROP_CURIE              => DcCreator::class,
-        DcDate::PROP_CURIE                 => DcDate::class,
-        DcFormat::PROP_CURIE               => DcFormat::class,
-        DcIdentifier::PROP_CURIE           => DcIdentifier::class,
-        DcLanguage::PROP_CURIE             => DcLanguage::class,
-        DcModified::PROP_CURIE             => DcModified::class,
-        DcPublisher::PROP_CURIE            => DcPublisher::class,
-        DcRights::PROP_CURIE               => DcRights::class,
-        DcSource::PROP_CURIE               => DcSource::class,
-        DcTitle::PROP_CURIE                => DcTitle::class,
-        DcType::PROP_CURIE                 => DcType::class,
-
-        HttpCacheControl::PROP_CURIE       => HttpCacheControl::class,
-        HttpContentDisposition::PROP_CURIE => HttpContentDisposition::class,
-        HttpContentLength::PROP_CURIE      => HttpContentLength::class,
-        HttpExpires::PROP_CURIE            => HttpExpires::class,
-
-        MetaCharset::PROP_CURIE            => MetaCharset::class,
-
-        OwlVersionInfo::PROP_CURIE         => OwlVersionInfo::class,
-
-        RelContents::PROP_CURIE            => RelContents::class,
-        RelHome::PROP_CURIE                => RelHome::class,
-        RelUp::PROP_CURIE                  => RelUp::class
+    /**
+     * @brief Map of property namespace prefix to statement class.
+     *
+     * Needed for property namespaces where one class implements all
+     * properties of that namespace. For prefixes not in this map, it is
+     * assumed that there is one class for each supported property.
+     *
+     * Derived classes may add items to support more such classes.
+     */
+    public const PROP_NS_PREFIX_TO_STMT_CLASS = [
+        XhvMetaStmt::PROP_NS_PREFIX => XhvMetaStmt::class
     ];
 
-    public function createStmtFromPropCurie(
-        string $propCurie,
-        $object
+    /**
+     * @brief Construct a statement from a property CURIE and object data
+     *
+     * If $data is an array, construct a Node from it. This allows to
+     * distinguish in $data whether a string represents a string value or a
+     * Node URI, for those statements where both are possible (such as
+     * DcRights). In the latter case, the Node URI must be given as a
+     * one-element array.
+     */
+    public function createStmtFromCurieAndData(
+        string $curie,
+        $data
     ): StmtInterface {
-        return new $class($object);
+        [ $propNsPrefix, $propLocalName ] = explode(':', $curie, 2);
+
+        if (is_array($data)) {
+            $nodeRdfaData = isset($data[1])
+                ? new RdfaData($this->createStmtArrayFromIterable($data[1]))
+                : null;
+        }
+
+        if (isset(static::PROP_NS_PREFIX_TO_STMT_CLASS[$propNsPrefix])) {
+            $class = static::PROP_NS_PREFIX_TO_STMT_CLASS[$propNsPrefix];
+
+        return is_array($data)
+            ? new $class($propLocalName, new Node($data[0], $nodeRdfaData))
+            : new $class($propLocalName, $data);
+        }
+
+        $class = __NAMESPACE__ . '\\'
+            . ucfirst($propNsPrefix) . ucfirst($propLocalName);
+
+        return is_array($data)
+            ? new $class(new Node($data[0], $nodeRdfaData))
+            : new $class($data);
     }
 
-    /**
-     * @param $data Map of property CURIE to one of
-     * - instance of StmtInterface
-     * - statement object
-     * - array of one or the other
-     * - null
-     *
-     * @return Map of property CURIE to either instance of StmtInterface or
-     * array thereof, the latter indexed by string representation of the
-     * object. Ignore entis with value null.
-     *
-     * @throw alcamo::exception::DataValidationFailed if the input contains an
-     * RDFa statement not matching its key CURIE.
-     */
-    public function createStmtArrayFromPropCurieMap(iterable $map): array
+    public function createStmtArrayFromIterable(iterable $map): array
     {
         $rdfaData = [];
 
-        foreach ($map as $curie => $data) {
+        foreach ($map as $pair) {
+            [ $curie, $data ] = $pair;
+
             switch (true) {
                 case !isset($data):
                     continue 2;
@@ -83,65 +82,28 @@ class Factory
                             [
                                 'inData' => (string)$data,
                                 'extraMessage' =>
-                                "object property CURIE \""
-                                . $data->getPropCurie()
-                                . "\" does not match key \"$curie\""
+                                    "object property CURIE \""
+                                    . $data->getPropCurie()
+                                    . "\" does not match key \"$curie\""
                             ]
                         );
                     }
 
-                    $rdfaData[$curie] = $data;
-                    break;
-
-                case is_array($data):
-                    $class = static::PROP_CURIE_TO_CLASS[$curie];
-
-                    if ($class::UNIQUE) {
-                        /** @throw alcamo::exception::DataValidationFailed if
-                         *  an array is given as a value for a unique
-                         *  property. */
-                        throw (new DataValidationFailed())
-                            ->setMessageContext(
-                                [
-                                    'inData' => (string)$curie,
-                                    'extraMessage' =>
-                                    "array given for unique $class"
-                                ]
-                            );
-                    }
-
-                    $objects = [];
-
-                    foreach ($data as $item) {
-                        if ($item instanceof StmtInterface) {
-                            if ($item->getPropCurie() != $curie) {
-                                throw (new DataValidationFailed())
-                                    ->setMessageContext(
-                                        [
-                                            'inData' => (string)$item,
-                                            'extraMessage' =>
-                                            "object item property CURIE \""
-                                            . $item->getPropCurie()
-                                            . "\" does not match key \"$curie\""
-                                        ]
-                                    );
-                            }
-
-                            $objects[(string)$item] = $item;
-                        } else {
-                            $object = new $class($item);
-
-                            $objects[(string)$object] = $object;
-                        }
-                    }
-
-                    $rdfaData[$curie] = $objects;
+                    $stmt = $data;
                     break;
 
                 default:
-                    $class = static::PROP_CURIE_TO_CLASS[$curie];
+                    $stmt = $this->createStmtFromCurieAndData($curie, $data);
+            }
 
-                    $rdfaData[$curie] = new $class($data);
+            if ($stmt->isOnceOnly()) {
+                $rdfaData[$curie] = $stmt;
+            } else {
+                if (!isset($rdfaData[$curie])) {
+                    $rdfaData[$curie] = [];
+                }
+
+                $rdfaData[$curie][(string)$stmt] = $stmt;
             }
         }
 
