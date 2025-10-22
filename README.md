@@ -1,7 +1,7 @@
-# Usage exmaple
+# Usage example
 
 ~~~
-use alcamordfaRdfaData;
+use alcamo\rdfa\RdfaData;
 
 $rdfaData = RdfaData::newFromIterable(
     [
@@ -14,15 +14,16 @@ $rdfaData = RdfaData::newFromIterable(
 
 /* $rdfaData['dc:title'] is an array because a subject may have
  * multiple titles. */
+ 
 $titles = $rdfaData['dc:title'];
 
 echo 'Title: ' . reset($titles) . "\n";
 
+/* $rdfaData['dc:creator'] is an array for the same reason. */
+
 echo 'Creators: ';
 
-/* $rdfaData['dc:creator'] is an array for the same reason. */
 foreach ($rdfaData['dc:creator'] as $creator) {
-    /* Each DcCreator object is implicitly converted to a string. */
     echo "$creator, ";
 }
 
@@ -30,12 +31,23 @@ echo "\n";
 
 /* $rdfaData['dc:created'] is a single DcCreated object because a
  * subject may have only one such property. */
+
 echo "Created at: {$rdfaData['dc:created']}\n";
 
 /* The format() method is applied to the DateTime object contained in
  * the DcCreated object. */
+
 echo "Same in a different format: "
     . $rdfaData['dc:created']->format('r') . "\n";
+~~~
+
+This will output:
+
+~~~
+Title: Example data
+Creators: Alice, Bob, 
+Created at: 2025-10-21T19:09:00+02:00
+Same in a different format: Tue, 21 Oct 2025 19:09:00 +0200
 ~~~
 
 # Overview
@@ -48,9 +60,9 @@ implementation approaches.
 
 The data model assumes that each property has a canonical prefix, such
 as `dc` for http://purl.org/dc/terms/ . Thus, the package can deduce
-that the properties in the abov e example are the Dublic Core
-properties *title*, *creator* and *created* and can create objects of
-class `DcTitle`, `DcCreator` and `DcCreated` for them. The latter
+that the properties in the above example are the Dublic Core
+properties *title*, *creator* and *created*, and it can create objects
+of class `DcTitle`, `DcCreator` and `DcCreated` for them. The latter
 class knows that its object is a timestamp and is able to output it in
 various formats.
 
@@ -66,9 +78,9 @@ as DateTime for `DcCreated`. A number of classes have an object which
 must be or can be an RDFa node, which can itself have RDFa data
 attached. The class `Node` is provided for the latter case.
 
-This package focuses on the data model for RDFa statements themselves,
-in order to have a unique way to manage metadata wherever they come
-from or go to.
+This package focuses on the representation of RDFa statements
+themselves in PHP, in order to have a unique way to manage metadata
+wherever they come from or go to.
 
 Other packages may do something useful with these data,
 for instance [alcamo-http](https://github.com/rv1971/alcamo-http)
