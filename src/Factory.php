@@ -58,7 +58,8 @@ class Factory implements FactoryInterface
         }
 
         $class = __NAMESPACE__ . '\\'
-            . ucfirst($propNsPrefix) . ucfirst($propLocalName);
+            . ucfirst($propNsPrefix)
+            . implode('', array_map('ucfirst', explode('-', $propLocalName)));
 
         return is_array($data)
             ? new $class(new Node($data[0], $nodeRdfaData))

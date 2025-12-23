@@ -61,6 +61,14 @@ class FactoryTest extends TestCase
                         => new DcConformsTo('https://example.org/strict')
                     ],
                     'dc:created' => new DcCreated('2025-10-21T17:17+02:00')
+                ],
+            ],
+            [
+                [
+                    [ 'http:content-length', 4711 ]
+                ],
+                [
+                    'http:content-length' => new HttpContentLength(4711)
                 ]
             ]
         ];
