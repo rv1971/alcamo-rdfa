@@ -2,6 +2,7 @@
 
 namespace alcamo\rdfa;
 
+use alcamo\collection\Collection;
 use alcamo\exception\DataValidationFailed;
 use PHPUnit\Framework\TestCase;
 
@@ -18,7 +19,27 @@ class FactoryTest extends TestCase
 
         $data = $factory->createStmtArrayFromIterable($inputData);
 
-        $this->assertEquals($expectedData, $data);
+        $this->assertSame(count($expectedData), count($data));
+
+        foreach ($expectedData as $prop => $expectedItems) {
+            $this->assertSame(count($expectedItems), count($data[$prop]));
+
+            foreach ($expectedItems as $key => $item) {
+                if ($item instanceof Node) {
+                    $this->assertEquals(
+                        $item->getUri(),
+                        $data[$prop][$key]->getUri()
+                    );
+
+                    $this->assertEquals(
+                        $item->getRdfaData(),
+                        $data[$prop][$key]->getRdfaData()
+                    );
+                } else {
+                    $this->assertEquals($item, $data[$prop][$key]);
+                }
+            }
+        }
     }
 
     public function createStmtArrayFromIterableProvider(): array
@@ -49,10 +70,12 @@ class FactoryTest extends TestCase
                                 'https://semver.org/spec/v2.0.0.html',
                                 new RdfaData(
                                     [
-                                        'dc:title' => [
-                                            'Semantic Versioning'
-                                                => new DcTitle('Semantic Versioning')
-                                        ]
+                                        'dc:title' => new Collection(
+                                            [
+                                                'Semantic Versioning'
+                                                    => new DcTitle('Semantic Versioning')
+                                            ]
+                                        )
                                     ]
                                 )
                             ),

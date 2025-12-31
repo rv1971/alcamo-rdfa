@@ -18,8 +18,12 @@ class RdfaDataTest extends TestCase
 
         $this->assertSame(count($expectedData), count($rdfaData));
 
-        foreach ($expectedData as $key => $stmts) {
-            $this->assertEquals($stmts, $rdfaData[$key]);
+        foreach ($expectedData as $prop => $expectedItems) {
+            $this->assertSame(count($expectedItems), count($rdfaData[$prop]));
+
+            foreach ($expectedItems as $key => $item) {
+                $this->assertEquals($item, $rdfaData[$prop][$key]);
+            }
         }
     }
 

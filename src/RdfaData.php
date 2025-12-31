@@ -8,9 +8,16 @@ use alcamo\exception\DataValidationFailed;
 /**
  * @brief Collection of RDFa statements
  *
- * Readonly map of properties to objects.
+ * Map of properties to alcamo::collection::Collection objects of
+ * statements. Each collection of statements is indexed by the string
+ * representation of the statement value.
  *
- * @invariant Immutable class.
+ * The method alcamo::collection::ArrayIteratorTrait::first() is often useful
+ * to access the first statement, in particular if it is known there is only
+ * one statement because mupltiple statements do not make sense,
+ * e.g. `$rdfaData['dc:created']->first()`.
+ *
+ * @invariant Immutable object.
  */
 class RdfaData extends ReadonlyCollection
 {
@@ -45,7 +52,7 @@ class RdfaData extends ReadonlyCollection
 
         foreach ($rdfaData->data_ as $curie => $stmts) {
             if (isset($newData[$curie])) {
-                $newData[$curie] += $stmts;
+                $newData[$curie]->add($stmts);
             } else {
                 $newData[$curie] = $stmts;
             }
@@ -66,13 +73,8 @@ class RdfaData extends ReadonlyCollection
         $map = [];
 
         foreach ($this as $stmts) {
-            if (is_array($stmts)) {
-                $nsPrefix = current($stmts)->getPropNsPrefix();
-                $nsName = current($stmts)->getPropNsName();
-            } else {
-                $nsPrefix = $stmts->getPropNsPrefix();
-                $nsName = $stmts->getPropNsName();
-            }
+            $nsPrefix = $stmts->first()->getPropNsPrefix();
+            $nsName = $stmts->first()->getPropNsName();
 
             if (isset($map[$nsPrefix])) {
                 if ($map[$nsPrefix] != $nsName) {

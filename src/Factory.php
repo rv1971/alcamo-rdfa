@@ -2,14 +2,11 @@
 
 namespace alcamo\rdfa;
 
+use alcamo\collection\Collection;
 use alcamo\exception\DataValidationFailed;
 
 /**
  * @brief Factory that creates RDFa statements from property CURIEs and values
- *
- * @attention Each class listed in @ref PROP_CURIE_TO_CLASS must define a
- * boolean class constant `UNIQUE` which tells whether this property can only
- * have a unique value or may have an array of values.
  *
  * @date Last reviewed 2025-10-21
  */
@@ -66,6 +63,19 @@ class Factory implements FactoryInterface
             : new $class($data);
     }
 
+    /**
+     * @brief Create an array mapping property CURIEs to Collection objects of
+     * statements
+     *
+     * @param $map ieratable of pairs consisting of a property CURIE and
+     * object data, as in the input for
+     * alcamo::rdfa::Factory::createStmtFromCurieAndData.
+     *
+     * @return array mapping property CURIEs to alcamo::collection::Collection
+     * objects of statements. Each collection of statements is indexed by the
+     * string representation of the statement value. This implies that
+     * duplicates are silently discarded.
+     */
     public function createStmtArrayFromIterable(iterable $map): array
     {
         $rdfaData = [];
@@ -98,7 +108,7 @@ class Factory implements FactoryInterface
             }
 
             if (!isset($rdfaData[$curie])) {
-                $rdfaData[$curie] = [];
+                $rdfaData[$curie] = new Collection();
             }
 
             $rdfaData[$curie][(string)$stmt] = $stmt;
