@@ -52,9 +52,9 @@ class Factory implements FactoryInterface
         if (isset(static::PROP_NS_PREFIX_TO_STMT_CLASS[$propNsPrefix])) {
             $class = static::PROP_NS_PREFIX_TO_STMT_CLASS[$propNsPrefix];
 
-        return is_array($data)
-            ? new $class($propLocalName, new Node($data[0], $nodeRdfaData))
-            : new $class($propLocalName, $data);
+            return is_array($data)
+                ? new $class($propLocalName, new Node($data[0], $nodeRdfaData))
+                : new $class($propLocalName, $data);
         }
 
         $class = __NAMESPACE__ . '\\'
@@ -97,15 +97,11 @@ class Factory implements FactoryInterface
                     $stmt = $this->createStmtFromCurieAndData($curie, $data);
             }
 
-            if ($stmt->isOnceOnly()) {
-                $rdfaData[$curie] = $stmt;
-            } else {
-                if (!isset($rdfaData[$curie])) {
-                    $rdfaData[$curie] = [];
-                }
-
-                $rdfaData[$curie][(string)$stmt] = $stmt;
+            if (!isset($rdfaData[$curie])) {
+                $rdfaData[$curie] = [];
             }
+
+            $rdfaData[$curie][(string)$stmt] = $stmt;
         }
 
         return $rdfaData;

@@ -43,17 +43,11 @@ class RdfaData extends ReadonlyCollection
     {
         $newData = $this->data_;
 
-        foreach ($rdfaData->data_ as $curie => $value) {
+        foreach ($rdfaData->data_ as $curie => $stmts) {
             if (isset($newData[$curie])) {
-                /** If a property is already present and is unique, leave
-                 *  it unchanged. */
-                if ($newData[$curie] instanceof StmtInterface) {
-                    continue;
-                }
-
-                $newData[$curie] += $value;
+                $newData[$curie] += $stmts;
             } else {
-                $newData[$curie] = $value;
+                $newData[$curie] = $stmts;
             }
         }
 

@@ -63,10 +63,4 @@ class XhvMetaStmt implements StmtInterface
     {
         return self::PROP_NS_PREFIX . ":{$this->propLocalName_}";
     }
-
-    /// @copydoc StmtInterface::isOnceOnly()
-    public function isOnceOnly(): bool
-    {
-        return false;
-    }
 }

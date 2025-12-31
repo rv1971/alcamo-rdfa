@@ -23,5 +23,4 @@ abstract class AbstractOwlStmt implements StmtInterface
 
     /// Canonical prefix for the property's namespace
     public const PROP_NS_PREFIX = 'owl';
-
 }

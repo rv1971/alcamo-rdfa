@@ -56,9 +56,4 @@ class SimpleStmt implements StmtInterface
     {
         return "{$this->propNsPrefix_}:{$this->propLocalName_}";
     }
-
-    public function isOnceOnly(): bool
-    {
-        return false;
-    }
 }

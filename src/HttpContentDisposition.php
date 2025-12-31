@@ -20,6 +20,4 @@ class HttpContentDisposition extends AbstractHttpStmt
 
     public const PROP_CURIE =
         self::PROP_NS_PREFIX . ':' . self::PROP_LOCAL_NAME;
-
-    public const IS_ONCE_ONLY = true;
 }

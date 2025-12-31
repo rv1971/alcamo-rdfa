@@ -34,9 +34,6 @@ interface StmtInterface
     /// Property as a CURIE using the canonical prefix
     public function getPropCurie(): string;
 
-    /// Whether this property can appear only once
-    public function isOnceOnly(): bool;
-
     /// Object of the RDFa statement
     public function getObject();
 

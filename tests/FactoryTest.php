@@ -35,7 +35,6 @@ class FactoryTest extends TestCase
                         ]
                     ],
                     [ 'dc:publisher', null ],
-                    [ 'dc:created', '2023-01-18T18:34+03:00' ],
                     [ 'dc:conformsTo', 'https://example.org/strict' ],
                     [ 'dc:created', '2025-10-21T17:17+02:00' ]
                 ],
@@ -60,7 +59,10 @@ class FactoryTest extends TestCase
                         'https://example.org/strict'
                         => new DcConformsTo('https://example.org/strict')
                     ],
-                    'dc:created' => new DcCreated('2025-10-21T17:17+02:00')
+                    'dc:created' => [
+                        '2025-10-21T17:17:00+02:00'
+                            => new DcCreated('2025-10-21T17:17+02:00')
+                    ]
                 ],
             ],
             [
@@ -68,7 +70,9 @@ class FactoryTest extends TestCase
                     [ 'http:content-length', 4711 ]
                 ],
                 [
-                    'http:content-length' => new HttpContentLength(4711)
+                    'http:content-length' => [
+                        '4711' => new HttpContentLength(4711)
+                    ]
                 ]
             ]
         ];

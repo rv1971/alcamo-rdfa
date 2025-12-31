@@ -18,8 +18,8 @@ class RdfaDataTest extends TestCase
 
         $this->assertSame(count($expectedData), count($rdfaData));
 
-        foreach ($expectedData as $key => $value) {
-            $this->assertEquals($expectedData[$key], $rdfaData[$key]);
+        foreach ($expectedData as $key => $stmts) {
+            $this->assertEquals($stmts, $rdfaData[$key]);
         }
     }
 
@@ -31,7 +31,7 @@ class RdfaDataTest extends TestCase
                     [ 'dc:format', 'application/xml' ],
                     [ 'dc:creator', null ]
                 ],
-                [ 'dc:format' => 'application/xml' ]
+                [ 'dc:format' => [ 'application/xml' => 'application/xml' ] ]
             ]
         ];
     }
