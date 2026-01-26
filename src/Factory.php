@@ -67,7 +67,7 @@ class Factory implements FactoryInterface
      * @brief Create an array mapping property CURIEs to Collection objects of
      * statements
      *
-     * @param $map ieratable of pairs consisting of a property CURIE and
+     * @param $map iterable of pairs consisting of a property CURIE and
      * object data, as in the input for
      * alcamo::rdfa::Factory::createStmtFromCurieAndData.
      *

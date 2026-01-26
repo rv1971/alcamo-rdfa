@@ -36,7 +36,7 @@ class RdfaData extends ReadonlyCollection
     public static function newFromIterable(
         iterable $map,
         ?FactoryInterface $factory = null
-    ) {
+    ): self {
         return new self(
             ($factory ?? new Factory())->createStmtArrayFromIterable($map)
         );
