@@ -12,6 +12,8 @@ class StmtTest extends TestCase
 
     public const OWL_NS = 'http://www.w3.org/2002/07/owl#';
 
+    public const RDFS_NS = 'http://www.w3.org/2000/01/rdf-schema#';
+
     public const XHV_NS  = 'https://www.w3.org/1999/xhtml/vocab#';
 
     public const HTTP_NS = 'tag:rv1971@web.de,2021:alcamo-rdfa:ns:http#';
@@ -317,6 +319,30 @@ class StmtTest extends TestCase
                 'sameAs',
                 new Node('https://owl.example.org/42'),
                 'https://owl.example.org/42'
+            ],
+            'RdfsLabel' => [
+                new RdfsLabel(new LangStringLiteral('example', 'en-IE')),
+                self::RDFS_NS,
+                'rdfs',
+                'label',
+                new LangStringLiteral('example', 'en-IE'),
+                'example'
+            ],
+            'RdfsComment' => [
+                new RdfsComment('Lorem ipsum'),
+                self::RDFS_NS,
+                'rdfs',
+                'comment',
+                'Lorem ipsum',
+                'Lorem ipsum'
+            ],
+            'RdfsSeeAlso' => [
+                new RdfsSeeAlso('http://www.example.info'),
+                self::RDFS_NS,
+                'rdfs',
+                'seeAlso',
+                new Node('http://www.example.info'),
+                'http://www.example.info'
             ],
             'XhvContents' => [
                 new XhvMetaStmt('contents', 'index.php'),
