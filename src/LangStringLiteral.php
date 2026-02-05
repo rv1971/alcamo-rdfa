@@ -1,0 +1,38 @@
+<?php
+
+namespace alcamo\rdfa;
+
+/**
+ * @brief RDF language-tagged string
+ *
+ * @date Last reviewed 2026-02-05
+ */
+class LangStringLiteral extends Literal
+{
+    public const DATATYPE_URI = self::RDF_NS_URI . 'langString';
+
+    private $lang_; ///< ?Lang
+
+    /**
+     * @param $value stringable
+     *
+     * @param $lang Lang object or language string.
+     *
+     * @param $datatypeUri Datatype IRI. [Default `xsd:langString`]
+     */
+    public function __construct($value, $lang = null, $datatypeUri = null)
+    {
+        parent::__construct($value, $datatypeUri ?? static::DATATYPE_URI);
+
+        if (isset($lang)) {
+            $this->lang_ =
+                $lang instanceof Lang ? $lang : Lang::newFromString($lang);
+        }
+    }
+
+    /** Currently the only class that may return non-`null`. */
+    public function getLang(): ?Lang
+    {
+        return $this->lang_;
+    }
+}

@@ -125,10 +125,10 @@ class LangTest extends TestCase
     public function newFromCurrentLocaleProvider(): array
     {
         return [
-            [ 'en_US' ],
             [ 'es_ES' ],
             [ 'fr_CA' ],
-            [ 'pt_BR' ]
+            [ 'pt_BR' ],
+            [ 'en_US' ]
         ];
     }
 }

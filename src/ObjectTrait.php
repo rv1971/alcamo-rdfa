@@ -28,7 +28,7 @@ trait ObjectTrait
     /// @copydoc StmtInterface::__toString()
     public function __toString(): string
     {
-        return (string)$this->object_;
+        return $this->object_;
     }
 
     public function __call(string $name, array $params)

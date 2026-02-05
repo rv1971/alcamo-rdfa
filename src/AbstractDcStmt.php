@@ -18,9 +18,7 @@ abstract class AbstractDcStmt implements StmtInterface
 
     public const DC_NS = 'http://purl.org/dc/terms/';
 
-    /// Namespace name of the property
     public const PROP_NS_NAME = self::DC_NS;
 
-    /// Canonical prefix for the property's namespace
     public const PROP_NS_PREFIX = 'dc';
 }

@@ -7,7 +7,7 @@ namespace alcamo\rdfa;
  *
  * @sa [dc:format](http://purl.org/dc/terms/format).
  *
- * @date Last reviewed 2025-10-1´9
+ * @date Last reviewed 2025-10-19
  */
 class DcFormat extends AbstractDcStmt
 {

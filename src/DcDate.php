@@ -11,7 +11,7 @@ namespace alcamo\rdfa;
  */
 class DcDate extends AbstractDcStmt
 {
-    use DateTimeStmtTrait;
+    use FixedLiteralStmtTrait;
 
     public const PROP_LOCAL_NAME = 'date';
 
@@ -19,4 +19,6 @@ class DcDate extends AbstractDcStmt
 
     public const PROP_CURIE =
         self::PROP_NS_PREFIX . ':' . self::PROP_LOCAL_NAME;
+
+    public const LITERAL_CLASS = DateTimeLiteral::class;
 }

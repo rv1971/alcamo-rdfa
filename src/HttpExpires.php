@@ -13,6 +13,8 @@ use alcamo\time\Duration;
  */
 class HttpExpires extends AbstractHttpStmt
 {
+    use FixedLiteralStmtTrait;
+
     public const PROP_LOCAL_NAME = 'expires';
 
     public const PROP_URI = self::PROP_NS_NAME . self::PROP_LOCAL_NAME;
@@ -20,12 +22,5 @@ class HttpExpires extends AbstractHttpStmt
     public const PROP_CURIE =
         self::PROP_NS_PREFIX . ':' . self::PROP_LOCAL_NAME;
 
-    public function __construct($duration)
-    {
-        parent::__construct(
-            $duration instanceof Duration
-            ? $duration
-            : new Duration($duration)
-        );
-    }
+    public const LITERAL_CLASS = DurationLiteral::class;
 }

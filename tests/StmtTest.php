@@ -43,15 +43,23 @@ class StmtTest extends TestCase
             $stmt->getPropCurie()
         );
 
-        if (is_object($expectedObject)) {
-            $this->assertInstanceOf(
-                get_class($expectedObject),
-                $stmt->getObject()
-            );
+        switch (true) {
+            case is_object($expectedObject):
+                $this->assertInstanceOf(
+                    get_class($expectedObject),
+                    $stmt->getObject()
+                );
 
-            $this->assertEquals($expectedObject, $stmt->getObject());
-        } else {
-            $this->assertSame($expectedObject, $stmt->getObject());
+                $this->assertEquals($expectedObject, $stmt->getObject());
+
+                break;
+
+            case is_string($expectedObject):
+                $this->assertSame($expectedObject, (string)$stmt->getObject());
+                break;
+
+            default:
+                $this->assertSame($expectedObject, $stmt->getObject()->getValue());
         }
 
         $this->assertSame($expectedString, (string)$stmt);
@@ -147,7 +155,7 @@ class StmtTest extends TestCase
                 self::DC_NS,
                 'dc',
                 'created',
-                new \DateTime('2023-01-17T15:52:00+01:00'),
+                new DateTimeLiteral('2023-01-17T15:52:00+01:00'),
                 '2023-01-17T15:52:00+01:00'
             ],
             'DcCreator-literal' => [
@@ -171,7 +179,7 @@ class StmtTest extends TestCase
                 self::DC_NS,
                 'dc',
                 'date',
-                new \DateTime('2025-03-16T22:13:16+01:00'),
+                new DateTimeLiteral('2025-03-16T22:13:16+01:00'),
                 '2025-03-16T22:13:16+01:00'
             ],
             'DcFormat' => [
@@ -195,7 +203,7 @@ class StmtTest extends TestCase
                 self::DC_NS,
                 'dc',
                 'language',
-                Lang::newFromPrimaryAndRegion('es', 'MX'),
+                new LanguageLiteral(Lang::newFromPrimaryAndRegion('es', 'MX')),
                 'es-MX'
             ],
             'DcModified' => [
@@ -203,7 +211,7 @@ class StmtTest extends TestCase
                 self::DC_NS,
                 'dc',
                 'modified',
-                new \DateTime('2023-01-18Z'),
+                new DateTimeLiteral('2023-01-18Z'),
                 '2023-01-18T00:00:00+00:00'
             ],
             'DcPublisher-literal' => [
@@ -291,7 +299,7 @@ class StmtTest extends TestCase
                 self::HTTP_NS,
                 'http',
                 'expires',
-                new Duration('P40D'),
+                new DurationLiteral('P40D'),
                 'P40D'
             ],
             'OwlVersionInfo' => [

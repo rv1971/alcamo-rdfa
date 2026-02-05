@@ -11,6 +11,8 @@ namespace alcamo\rdfa;
  */
 class HttpContentLength extends AbstractHttpStmt
 {
+    use FixedLiteralStmtTrait;
+
     public const PROP_LOCAL_NAME = 'content-length';
 
     public const PROP_URI = self::PROP_NS_NAME . self::PROP_LOCAL_NAME;
@@ -18,8 +20,5 @@ class HttpContentLength extends AbstractHttpStmt
     public const PROP_CURIE =
         self::PROP_NS_PREFIX . ':' . self::PROP_LOCAL_NAME;
 
-    public function __construct(int $length)
-    {
-        parent::__construct($length);
-    }
+    public const LITERAL_CLASS = IntegerLiteral::class;
 }

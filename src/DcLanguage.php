@@ -11,6 +11,8 @@ namespace alcamo\rdfa;
  */
 class DcLanguage extends AbstractDcStmt
 {
+    use FixedLiteralStmtTrait;
+
     public const PROP_LOCAL_NAME = 'language';
 
     public const PROP_URI = self::PROP_NS_NAME . self::PROP_LOCAL_NAME;
@@ -18,12 +20,5 @@ class DcLanguage extends AbstractDcStmt
     public const PROP_CURIE =
         self::PROP_NS_PREFIX . ':' . self::PROP_LOCAL_NAME;
 
-    public function __construct($lang)
-    {
-        parent::__construct(
-            $lang instanceof \Lang
-            ? $lang
-            : Lang::newFromString($lang)
-        );
-    }
+    public const LITERAL_CLASS = LanguageLiteral::class;
 }

@@ -6,7 +6,7 @@
     "require": {
         "php": "7.3 - 8.0",
         "alcamo/collection": "^0.2",
-        "alcamo/time": "^0.1"
+        "alcamo/time": "^0.2"
     },
     "autoload": {
 	"psr-4": {
