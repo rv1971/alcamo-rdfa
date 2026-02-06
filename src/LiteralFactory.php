@@ -37,8 +37,22 @@ class LiteralFactory implements LiteralFactoryInterface
         self::XSD_NS_URI . 'float'              => FloatLiteral::class
     ];
 
-    public function create($value, $datatypeUri = null): LiteralInterface
-    {
+    /**
+     * @param $value stringable
+     *
+     * @param $datatypeUri Datatype IRI. [Default `xsd:langString`]
+     *
+     * @param $lang Lang object or language string. Considered only if a
+     * LangStringLiteral is returned, i.e. if either the datatype is that of
+     * language-tagged string or $lang is not `null` and the type to return
+     * could not be deduced neither from the type of $value nor from
+     * $datatypeUri.
+     */
+    public function create(
+        $value,
+        $datatypeUri = null,
+        $lang = null
+    ): LiteralInterface {
         switch (true) {
             case isset($datatypeUri)
                 && isset(static::DATATYPE_URI_TO_CLASS[(string)$datatypeUri]):
@@ -65,9 +79,8 @@ class LiteralFactory implements LiteralFactoryInterface
                 return new LanguageLiteral($value, $datatypeUri);
 
             case $datatypeUri == LangStringLiteral::DATATYPE_URI:
-                /* Here the second argument would be the language, not the
-                 * data type. The third argument is redudant because known. */
-                return new LangStringLiteral($value);
+            case isset($lang):
+                return new LangStringLiteral($value, $lang, $datatypeUri);
 
             default:
                 return new Literal($value, $datatypeUri);
