@@ -107,6 +107,11 @@ class LangTest extends TestCase
         ];
     }
 
+    public function testNewFromEmptyString(): void
+    {
+        $this->assertNull(Lang::newFromString(''));
+    }
+
     /**
      * @dataProvider newFromCurrentLocaleProvider
      */

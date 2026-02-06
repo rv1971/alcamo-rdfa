@@ -33,9 +33,12 @@ class Lang
         );
     }
 
-    public static function newFromString(string $lang): self
+    /**  @return `null` if $lang is the empty string, conforming to
+     * [Language Identification](https://www.w3.org/TR/xml/#sec-lang-tag)
+     * in XML documents. */
+    public static function newFromString(string $lang): ?self
     {
-        return new self(\Locale::parseLocale($lang));
+        return $lang != '' ? new self(\Locale::parseLocale($lang)) : null;
     }
 
     public static function newFromCurrentLocale(): self
