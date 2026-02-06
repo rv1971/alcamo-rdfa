@@ -2,7 +2,6 @@
 
 namespace alcamo\rdfa;
 
-use alcamo\collection\Collection;
 use alcamo\exception\DataValidationFailed;
 use PHPUnit\Framework\TestCase;
 
@@ -70,7 +69,7 @@ class FactoryTest extends TestCase
                                 'https://semver.org/spec/v2.0.0.html',
                                 new RdfaData(
                                     [
-                                        'dc:title' => new Collection(
+                                        'dc:title' => new StmtCollection(
                                             [
                                                 'Semantic Versioning'
                                                     => new DcTitle('Semantic Versioning')

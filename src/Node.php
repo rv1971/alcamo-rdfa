@@ -12,10 +12,20 @@ class Node
     private $uri_;      ///< string or convertible to string
     private $rdfaData_; ///< ?RdfaData
 
-    public function __construct($uri, ?RdfaData $rdfaData = null)
+    /**
+     * @param $uri Resource URI.
+     *
+     * @param RdfaData|array RDFa data about the resource
+     */
+    public function __construct($uri, $rdfaData = null)
     {
         $this->uri_ = $uri;
-        $this->rdfaData_ = $rdfaData;
+
+        if (isset($rdfaData)) {
+            $this->rdfaData_ = $rdfaData instanceof RdfaData
+                ? $rdfaData
+                : RdfaData::newFromIterable($rdfaData);
+        }
     }
 
     public function getUri()

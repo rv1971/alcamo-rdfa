@@ -11,7 +11,12 @@ use alcamo\exception\ProgramFlowException;
  */
 trait NodeStmtTrait
 {
-    public function __construct($nodeOrUri, ?RdfaData $rdfaData = null)
+    /**
+     * @param Node|stringable $nodeOrUri Resource Node object or URI.
+     *
+     * @param RdfaData|array RDFa data about the resource
+     */
+    public function __construct($nodeOrUri, $rdfaData = null)
     {
         if (isset($rdfaData) && $nodeOrUri instanceof Node) {
             throw (new ProgramFlowException())->setMessageContext(

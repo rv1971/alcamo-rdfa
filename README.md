@@ -52,6 +52,17 @@ Same in a different format: Tue, 21 Oct 2025 19:09:00 +0200
 
 # Overview
 
+## Literals
+
+The classes that implement `LiteralInterface` represent the concept of
+[RDF Literals](https://www.w3.org/TR/2014/REC-rdf11-concepts-20140225/#section-Graph-Literal), i.e. data elements that may have a datataype and a
+language tag.
+
+## Nodes
+
+The `Node` class represents the concept of RDF nodes, i.e. URIs which
+may have RDFa data attached.
+
 ## RDFa statements
 
 This package manages [RDFa](https://www.w3.org/TR/rdfa-primer/)

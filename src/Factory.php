@@ -2,7 +2,6 @@
 
 namespace alcamo\rdfa;
 
-use alcamo\collection\Collection;
 use alcamo\exception\DataValidationFailed;
 
 /**
@@ -64,14 +63,14 @@ class Factory implements FactoryInterface
     }
 
     /**
-     * @brief Create an array mapping property CURIEs to Collection objects of
-     * statements
+     * @brief Create an array mapping property CURIEs to StmtCollection
+     * objects of statements
      *
      * @param $map iterable of pairs consisting of a property CURIE and
      * object data, as in the input for
      * alcamo::rdfa::Factory::createStmtFromCurieAndData.
      *
-     * @return array mapping property CURIEs to alcamo::collection::Collection
+     * @return array mapping property CURIEs to StmtCollection
      * objects of statements. Each collection of statements is indexed by the
      * string representation of the statement value. This implies that
      * duplicates are silently discarded.
@@ -108,7 +107,7 @@ class Factory implements FactoryInterface
             }
 
             if (!isset($rdfaData[$curie])) {
-                $rdfaData[$curie] = new Collection();
+                $rdfaData[$curie] = new StmtCollection();
             }
 
             $rdfaData[$curie][(string)$stmt] = $stmt;

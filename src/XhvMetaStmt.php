@@ -25,10 +25,17 @@ class XhvMetaStmt implements StmtInterface
 
     private $propLocalName_; ///< string
 
+    /**
+     * @param $propLocalName Property local name (i.e. without namespace)
+     *
+     * @param Node|stringable $nodeOrUri Resource Node object or URI.
+     *
+     * @param RdfaData|array RDFa data about the resource
+     */
     public function __construct(
         string $propLocalName,
         $nodeOrUri,
-        ?RdfaData $rdfaData = null
+        $rdfaData = null
     ) {
         if (isset($rdfaData) && $nodeOrUri instanceof Node) {
             throw (new ProgramFlowException())->setMessageContext(
