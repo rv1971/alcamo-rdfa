@@ -7,7 +7,7 @@ namespace alcamo\rdfa;
  *
  * @date Last reviewed 2025-10-21
  */
-class Factory implements FactoryInterface
+class RdfaFactory implements RdfaFactoryInterface
 {
     /**
      * @brief Map of property namespace prefix to statement class.

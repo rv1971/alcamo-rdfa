@@ -7,7 +7,7 @@ namespace alcamo\rdfa;
  *
  * @date Last reviewed 2026-02-07
  */
-interface FactoryInterface
+interface RdfaFactoryInterface
 {
     /**
      * @brief Construct a statement from a property CURIE and object data

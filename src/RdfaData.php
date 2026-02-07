@@ -29,16 +29,16 @@ class RdfaData extends ReadonlyCollection
      * - statement object
      * - array of one or the other
      *
-     * @param $factory RDFa factory used to create RDFa data by calling
-     * Factory::createStmtArrayFromPropCurieMap(). Defaults to a new instance
-     * of Factory.
+     * @param $rdfaFactory RDFa factory used to create RDFa data by calling
+     * RdfaFactory::createStmtFromCurieAndData(). Defaults to a new instance
+     * of RdfaFactory.
      */
     public static function newFromIterable(
         iterable $map,
-        ?FactoryInterface $factory = null
+        ?RdfaFactoryInterface $rdfaFactory = null
     ): self {
-        if (!isset($factory)) {
-            $factory = new Factory();
+        if (!isset($rdfaFactory)) {
+            $rdfaFactory = new RdfaFactory();
         }
 
         $rdfaData = [];
@@ -68,7 +68,8 @@ class RdfaData extends ReadonlyCollection
                     break;
 
                 default:
-                    $stmt = $factory->createStmtFromCurieAndData($curie, $data);
+                    $stmt = $rdfaFactory
+                        ->createStmtFromCurieAndData($curie, $data);
             }
 
             $uri = $stmt->getPropUri();

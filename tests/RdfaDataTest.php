@@ -16,8 +16,6 @@ class RdfaDataTest extends TestCase
      */
     public function testNewFromIterable($inputData, $expectedData): void
     {
-        $factory = new Factory();
-
         $rdfaData = RdfaData::newFromIterable($inputData);
 
         $this->assertSame(count($expectedData), count($rdfaData));
@@ -160,8 +158,6 @@ class RdfaDataTest extends TestCase
      */
     public function testAdd($inputData1, $inputData2, $expectedData): void
     {
-        $factory = new Factory();
-
         $rdfaData = RdfaData::newFromIterable($inputData1)
             ->add(RdfaData::newFromIterable($inputData2));
 
