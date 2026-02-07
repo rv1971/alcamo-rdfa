@@ -7,6 +7,10 @@ use PHPUnit\Framework\TestCase;
 
 class FactoryTest extends TestCase
 {
+    public const DC_NS = AbstractDcStmt::DC_NS;
+
+    public const HTTP_NS = AbstractHttpStmt::HTTP_NS;
+
   /**
    * @dataProvider createStmtArrayFromIterableProvider
    */
@@ -63,7 +67,29 @@ class FactoryTest extends TestCase
                         'Lorem ipsum dolor sit amet'
                             => new DcTitle('Lorem ipsum dolor sit amet')
                     ],
+                    self::DC_NS . 'title' => [
+                        'Lorem ipsum dolor sit amet'
+                            => new DcTitle('Lorem ipsum dolor sit amet')
+                    ],
                     'dc:conformsTo' => [
+                        'https://semver.org/spec/v2.0.0.html'
+                            => new DcConformsTo(
+                                'https://semver.org/spec/v2.0.0.html',
+                                RdfaData::newFromIterable(
+                                    [
+                                        [
+                                            'dc:title',
+                                            [
+                                                new DcTitle('Semantic Versioning')
+                                            ]
+                                        ]
+                                    ]
+                                )
+                            ),
+                        'https://example.org/strict'
+                        => new DcConformsTo('https://example.org/strict')
+                    ],
+                    self::DC_NS . 'conformsTo' => [
                         'https://semver.org/spec/v2.0.0.html'
                             => new DcConformsTo(
                                 'https://semver.org/spec/v2.0.0.html',
@@ -84,6 +110,10 @@ class FactoryTest extends TestCase
                     'dc:created' => [
                         '2025-10-21T17:17:00+02:00'
                             => new DcCreated('2025-10-21T17:17+02:00')
+                    ],
+                    self::DC_NS . 'created' => [
+                        '2025-10-21T17:17:00+02:00'
+                            => new DcCreated('2025-10-21T17:17+02:00')
                     ]
                 ],
             ],
@@ -93,6 +123,9 @@ class FactoryTest extends TestCase
                 ],
                 [
                     'http:content-length' => [
+                        '4711' => new HttpContentLength(4711)
+                    ],
+                    self::HTTP_NS . 'content-length' => [
                         '4711' => new HttpContentLength(4711)
                     ]
                 ]

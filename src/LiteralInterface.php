@@ -7,6 +7,8 @@ namespace alcamo\rdfa;
  *
  * @sa [RDF Literals](https://www.w3.org/TR/2014/REC-rdf11-concepts-20140225/#section-Graph-Literal)
  *
+ * @invariant Implementations should be immutable.
+ *
  * @date Last reviewed 2026-02-05
  */
 interface LiteralInterface
@@ -26,7 +28,4 @@ interface LiteralInterface
 
     /// String representation of value
     public function __toString(): string;
-
-    /// Forward calls to value
-    public function __call(string $name, array $params);
 }

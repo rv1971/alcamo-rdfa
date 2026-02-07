@@ -7,6 +7,8 @@ use PHPUnit\Framework\TestCase;
 
 class RdfaDataTest extends TestCase
 {
+    public const DC_NS = AbstractDcStmt::DC_NS;
+
     /**
      * @dataProvider newFromIterableProvider
      */
@@ -35,7 +37,11 @@ class RdfaDataTest extends TestCase
                     [ 'dc:format', 'application/xml' ],
                     [ 'dc:creator', null ]
                 ],
-                [ 'dc:format' => [ 'application/xml' => 'application/xml' ] ]
+                [
+                    'dc:format' => [ 'application/xml' => 'application/xml' ],
+                    self::DC_NS . 'format'
+                        => [ 'application/xml' => 'application/xml' ]
+                ]
             ]
         ];
     }

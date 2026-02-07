@@ -45,9 +45,4 @@ class Literal implements LiteralInterface
     {
         return $this->value_;
     }
-
-    public function __call(string $name, array $params)
-    {
-        return call_user_func_array([ $this->value_, $name ], $params);
-    }
 }

@@ -106,11 +106,15 @@ class Factory implements FactoryInterface
                     $stmt = $this->createStmtFromCurieAndData($curie, $data);
             }
 
-            if (!isset($rdfaData[$curie])) {
-                $rdfaData[$curie] = new StmtCollection();
+            $uri = $stmt->getPropUri();
+
+            if (!isset($rdfaData[$uri])) {
+                $stmtCollection = new StmtCollection();
+                $rdfaData[$uri] = $stmtCollection;
+                $rdfaData[$curie] = $stmtCollection;
             }
 
-            $rdfaData[$curie][(string)$stmt] = $stmt;
+            $rdfaData[$uri][(string)$stmt] = $stmt;
         }
 
         return $rdfaData;

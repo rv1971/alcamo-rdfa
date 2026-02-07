@@ -55,11 +55,11 @@ class RdfaData extends ReadonlyCollection
     {
         $newData = $this->data_;
 
-        foreach ($rdfaData->data_ as $curie => $stmts) {
-            if (isset($newData[$curie])) {
-                $newData[$curie]->add($stmts);
+        foreach ($rdfaData->data_ as $key => $stmts) {
+            if (isset($newData[$key])) {
+                $newData[$key]->add($stmts);
             } else {
-                $newData[$curie] = $stmts;
+                $newData[$key] = clone $stmts;
             }
         }
 
@@ -69,7 +69,7 @@ class RdfaData extends ReadonlyCollection
     /// Return a new object with added properties, overwriting existing ones
     public function replace(self $rdfaData): self
     {
-        return new self($rdfaData->data_ + $this->data_);
+        return new self((clone $rdfaData)->data_ + (clone $this)->data_);
     }
 
     /// Return map of namespaces prefixes to namespaces

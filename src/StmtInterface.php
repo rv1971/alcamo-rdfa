@@ -15,6 +15,8 @@ namespace alcamo\rdfa;
  *
  * @sa [CURIE Syntax](https://www.w3.org/TR/curie/)
  *
+ * @invariant Implementations should be immutable.
+ *
  * @date Last reviewed 2025-10-15
  */
 interface StmtInterface
