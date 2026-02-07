@@ -2,6 +2,8 @@
 
 namespace alcamo\rdfa;
 
+use alcamo\xml\NamespaceConstantsInterface;
+
 /**
  * @namespace alcamo::rdfa
  *

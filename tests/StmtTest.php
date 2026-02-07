@@ -4,20 +4,11 @@ namespace alcamo\rdfa;
 
 use alcamo\exception\InvalidEnumerator;
 use alcamo\time\Duration;
+use alcamo\xml\NamespaceConstantsInterface;
 use PHPUnit\Framework\TestCase;
 
-class StmtTest extends TestCase
+class StmtTest extends TestCase implements NamespaceConstantsInterface
 {
-    public const DC_NS = 'http://purl.org/dc/terms/';
-
-    public const OWL_NS = 'http://www.w3.org/2002/07/owl#';
-
-    public const RDFS_NS = 'http://www.w3.org/2000/01/rdf-schema#';
-
-    public const XHV_NS  = 'https://www.w3.org/1999/xhtml/vocab#';
-
-    public const HTTP_NS = 'tag:rv1971@web.de,2021:alcamo-rdfa:ns:http#';
-
     /**
      * @dataProvider basicsProvider
      */
