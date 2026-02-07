@@ -16,9 +16,7 @@ abstract class AbstractDcStmt implements StmtInterface
 {
     use FixedPropertyTrait;
 
-    public const DC_NS = 'http://purl.org/dc/terms/';
-
     public const PROP_NS_NAME = self::DC_NS;
 
-    public const PROP_NS_PREFIX = 'dc';
+    public const PROP_NS_PREFIX = self::NS_URI_TO_NS_PREFIX[self::PROP_NS_NAME];
 }

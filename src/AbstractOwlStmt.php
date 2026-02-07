@@ -16,11 +16,7 @@ abstract class AbstractOwlStmt implements StmtInterface
 {
     use FixedPropertyTrait;
 
-    public const OWL_NS = 'http://www.w3.org/2002/07/owl#';
-
-    /// Namespace name of the property
     public const PROP_NS_NAME = self::OWL_NS;
 
-    /// Canonical prefix for the property's namespace
-    public const PROP_NS_PREFIX = 'owl';
+    public const PROP_NS_PREFIX = self::NS_URI_TO_NS_PREFIX[self::PROP_NS_NAME];
 }

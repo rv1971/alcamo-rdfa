@@ -19,7 +19,7 @@ namespace alcamo\rdfa;
  *
  * @date Last reviewed 2025-10-15
  */
-interface StmtInterface
+interface StmtInterface extends NamespaceConstantsInterface
 {
     /// Namespace name of the property
     public function getPropNsName(): string;

@@ -15,13 +15,9 @@ class XhvMetaStmt implements StmtInterface
 {
     use FixedNsTrait;
 
-    public const XHV_NS  = 'https://www.w3.org/1999/xhtml/vocab#';
-
-    /// Namespace name of the property
     public const PROP_NS_NAME = self::XHV_NS;
 
-    /// Canonical prefix for the property's namespace
-    public const PROP_NS_PREFIX = 'xhv';
+    public const PROP_NS_PREFIX = self::NS_URI_TO_NS_PREFIX[self::PROP_NS_NAME];
 
     private $propLocalName_; ///< string
 

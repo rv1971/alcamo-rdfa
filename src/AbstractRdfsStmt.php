@@ -16,9 +16,7 @@ abstract class AbstractRdfsStmt implements StmtInterface
 {
     use FixedPropertyTrait;
 
-    public const RDFS_NS = 'http://www.w3.org/2000/01/rdf-schema#';
-
     public const PROP_NS_NAME = self::RDFS_NS;
 
-    public const PROP_NS_PREFIX = 'rdfs';
+    public const PROP_NS_PREFIX = self::NS_URI_TO_NS_PREFIX[self::PROP_NS_NAME];
 }

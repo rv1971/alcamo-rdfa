@@ -16,11 +16,7 @@ abstract class AbstractHttpStmt implements StmtInterface
 {
     use FixedPropertyTrait;
 
-    public const HTTP_NS = 'tag:rv1971@web.de,2021:alcamo-rdfa:ns:http#';
-
-    /// Namespace name of the property
     public const PROP_NS_NAME = self::HTTP_NS;
 
-    /// Canonical prefix for the property's namespace
-    public const PROP_NS_PREFIX = 'http';
+    public const PROP_NS_PREFIX = self::NS_URI_TO_NS_PREFIX[self::PROP_NS_NAME];
 }
