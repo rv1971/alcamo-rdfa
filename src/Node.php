@@ -21,7 +21,9 @@ class Node
     {
         $this->uri_ = $uri;
 
-        if (isset($rdfaData)) {
+        /* This sets $rdfaData_ if $rdfaData is an object or a *nonemtpy*
+         * array. */
+        if ($rdfaData) {
             $this->rdfaData_ = $rdfaData instanceof RdfaData
                 ? $rdfaData
                 : RdfaData::newFromIterable($rdfaData);

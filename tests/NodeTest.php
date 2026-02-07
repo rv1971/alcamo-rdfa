@@ -15,7 +15,7 @@ class NodeTest extends TestCase
 
         $this->assertSame($uri, $node->getUri());
 
-        $this->assertSame($rdfaData, $node->getRdfaData());
+        $this->assertSame($rdfaData ?: null, $node->getRdfaData());
 
         $this->assertSame($uri, (string)$node);
     }
@@ -29,7 +29,8 @@ class NodeTest extends TestCase
                 RdfaData::newFromIterable(
                     [ [ 'dc:title', new DcTitle('About me') ] ]
                 )
-            ]
+            ],
+            [ 'https://www.example.org/Alice', [] ],
         ];
     }
 }
