@@ -2,27 +2,24 @@
 
 namespace alcamo\rdfa;
 
-/// Interface for RDFa data factories
+/**
+ * @brief Interface for RDFa data factories
+ *
+ * @date Last reviewed 2026-02-07
+ */
 interface FactoryInterface
 {
     /**
-     * @brief Create an array of statment objects from an array of data pairs
+     * @brief Construct a statement from a property CURIE and object data
      *
-     * Entries with value `nll` in the input are silently discarded.
-     *
-     * @param $data pairs consisting of a property CURIE and one of
-     * - instance of StmtInterface
-     * - primitive object
-     * - `array`
-     * - `null`
-     *
-     * @return Map of property CURIE to array of instances of StmtInterface,
-     *   indexed by string representation of the statement object,
-     *   otherwise. The indexing implies that double occurrences of the same
-     *   statement are silently discarded.
-     *
-     * @throw alcamo::exception::DataValidationFailed if the input contains an
-     * RDFa statement not matching its key CURIE.
+     * If $data is an array, construct a Node from it. This allows to
+     * distinguish in $data whether a string represents a string value or a
+     * Node URI, for those statements where both are possible (such as
+     * DcRights). In the latter case, the Node URI must be given as a
+     * one-element array.
      */
-    public function createStmtArrayFromIterable(iterable $map): array;
+    public function createStmtFromCurieAndData(
+        string $curie,
+        $data
+    ): StmtInterface;
 }

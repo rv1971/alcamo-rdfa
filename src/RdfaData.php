@@ -37,14 +37,57 @@ class RdfaData extends ReadonlyCollection
         iterable $map,
         ?FactoryInterface $factory = null
     ): self {
-        return new self(
-            ($factory ?? new Factory())->createStmtArrayFromIterable($map)
-        );
+        if (!isset($factory)) {
+            $factory = new Factory();
+        }
+
+        $rdfaData = [];
+
+        foreach ($map as $pair) {
+            [ $curie, $data ] = $pair;
+
+            switch (true) {
+                /* Skip unset data asd well as empty array data. */
+                case !$data:
+                    continue 2;
+
+                case $data instanceof StmtInterface:
+                    if ($data->getPropCurie() != $curie) {
+                        throw (new DataValidationFailed())->setMessageContext(
+                            [
+                                'inData' => (string)$data,
+                                'extraMessage' =>
+                                    "object property CURIE \""
+                                    . $data->getPropCurie()
+                                    . "\" does not match key \"$curie\""
+                            ]
+                        );
+                    }
+
+                    $stmt = $data;
+                    break;
+
+                default:
+                    $stmt = $factory->createStmtFromCurieAndData($curie, $data);
+            }
+
+            $uri = $stmt->getPropUri();
+
+            if (!isset($rdfaData[$uri])) {
+                $stmtCollection = new StmtCollection();
+                $rdfaData[$uri] = $stmtCollection;
+                $rdfaData[$curie] = $stmtCollection;
+            }
+
+            $rdfaData[$uri][(string)$stmt] = $stmt;
+        }
+
+        return new self($rdfaData);
     }
 
-    private function __construct(?array $data = null)
+    private function __construct(?array $rdfaData = null)
     {
-        parent::__construct($data);
+        parent::__construct($rdfaData);
     }
 
     /**

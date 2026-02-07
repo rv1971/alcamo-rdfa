@@ -2,8 +2,6 @@
 
 namespace alcamo\rdfa;
 
-use alcamo\exception\DataValidationFailed;
-
 /**
  * @brief Factory that creates RDFa statements from property CURIEs and values
  *
@@ -24,15 +22,6 @@ class Factory implements FactoryInterface
         XhvMetaStmt::PROP_NS_PREFIX => XhvMetaStmt::class
     ];
 
-    /**
-     * @brief Construct a statement from a property CURIE and object data
-     *
-     * If $data is an array, construct a Node from it. This allows to
-     * distinguish in $data whether a string represents a string value or a
-     * Node URI, for those statements where both are possible (such as
-     * DcRights). In the latter case, the Node URI must be given as a
-     * one-element array.
-     */
     public function createStmtFromCurieAndData(
         string $curie,
         $data
@@ -60,63 +49,5 @@ class Factory implements FactoryInterface
         return is_array($data)
             ? new $class(new Node($data[0], $nodeRdfaData))
             : new $class($data);
-    }
-
-    /**
-     * @brief Create an array mapping property CURIEs to StmtCollection
-     * objects of statements
-     *
-     * @param $map iterable of pairs consisting of a property CURIE and
-     * object data, as in the input for
-     * alcamo::rdfa::Factory::createStmtFromCurieAndData.
-     *
-     * @return array mapping property CURIEs to StmtCollection
-     * objects of statements. Each collection of statements is indexed by the
-     * string representation of the statement value. This implies that
-     * duplicates are silently discarded.
-     */
-    public function createStmtArrayFromIterable(iterable $map): array
-    {
-        $rdfaData = [];
-
-        foreach ($map as $pair) {
-            [ $curie, $data ] = $pair;
-
-            switch (true) {
-                case !isset($data):
-                    continue 2;
-
-                case $data instanceof StmtInterface:
-                    if ($data->getPropCurie() != $curie) {
-                        throw (new DataValidationFailed())->setMessageContext(
-                            [
-                                'inData' => (string)$data,
-                                'extraMessage' =>
-                                    "object property CURIE \""
-                                    . $data->getPropCurie()
-                                    . "\" does not match key \"$curie\""
-                            ]
-                        );
-                    }
-
-                    $stmt = $data;
-                    break;
-
-                default:
-                    $stmt = $this->createStmtFromCurieAndData($curie, $data);
-            }
-
-            $uri = $stmt->getPropUri();
-
-            if (!isset($rdfaData[$uri])) {
-                $stmtCollection = new StmtCollection();
-                $rdfaData[$uri] = $stmtCollection;
-                $rdfaData[$curie] = $stmtCollection;
-            }
-
-            $rdfaData[$uri][(string)$stmt] = $stmt;
-        }
-
-        return $rdfaData;
     }
 }

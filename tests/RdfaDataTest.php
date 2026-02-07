@@ -9,6 +9,8 @@ class RdfaDataTest extends TestCase
 {
     public const DC_NS = AbstractDcStmt::DC_NS;
 
+    public const HTTP_NS = AbstractHttpStmt::HTTP_NS;
+
     /**
      * @dataProvider newFromIterableProvider
      */
@@ -34,6 +36,88 @@ class RdfaDataTest extends TestCase
         return [
             [
                 [
+                    [ 'dc:title', new DcTitle('Lorem ipsum dolor sit amet') ],
+                    [
+                        'dc:conformsTo',
+                        [
+                            'https://semver.org/spec/v2.0.0.html',
+                            [ [ 'dc:title', 'Semantic Versioning' ] ]
+                        ]
+                    ],
+                    [ 'dc:publisher', null ],
+                    [ 'dc:conformsTo', 'https://example.org/strict' ],
+                    [ 'dc:created', '2025-10-21T17:17+02:00' ]
+                ],
+                [
+                    'dc:title' => [
+                        'Lorem ipsum dolor sit amet'
+                            => new DcTitle('Lorem ipsum dolor sit amet')
+                    ],
+                    self::DC_NS . 'title' => [
+                        'Lorem ipsum dolor sit amet'
+                            => new DcTitle('Lorem ipsum dolor sit amet')
+                    ],
+                    'dc:conformsTo' => [
+                        'https://semver.org/spec/v2.0.0.html'
+                            => new DcConformsTo(
+                                'https://semver.org/spec/v2.0.0.html',
+                                RdfaData::newFromIterable(
+                                    [
+                                        [
+                                            'dc:title',
+                                            [
+                                                new DcTitle('Semantic Versioning')
+                                            ]
+                                        ]
+                                    ]
+                                )
+                            ),
+                        'https://example.org/strict'
+                        => new DcConformsTo('https://example.org/strict')
+                    ],
+                    self::DC_NS . 'conformsTo' => [
+                        'https://semver.org/spec/v2.0.0.html'
+                            => new DcConformsTo(
+                                'https://semver.org/spec/v2.0.0.html',
+                                RdfaData::newFromIterable(
+                                    [
+                                        [
+                                            'dc:title',
+                                            [
+                                                new DcTitle('Semantic Versioning')
+                                            ]
+                                        ]
+                                    ]
+                                )
+                            ),
+                        'https://example.org/strict'
+                        => new DcConformsTo('https://example.org/strict')
+                    ],
+                    'dc:created' => [
+                        '2025-10-21T17:17:00+02:00'
+                            => new DcCreated('2025-10-21T17:17+02:00')
+                    ],
+                    self::DC_NS . 'created' => [
+                        '2025-10-21T17:17:00+02:00'
+                            => new DcCreated('2025-10-21T17:17+02:00')
+                    ]
+                ],
+            ],
+            [
+                [
+                    [ 'http:content-length', 4711 ]
+                ],
+                [
+                    'http:content-length' => [
+                        '4711' => new HttpContentLength(4711)
+                    ],
+                    self::HTTP_NS . 'content-length' => [
+                        '4711' => new HttpContentLength(4711)
+                    ]
+                ]
+            ],
+            [
+                [
                     [ 'dc:format', 'application/xml' ],
                     [ 'dc:creator', null ]
                 ],
@@ -46,6 +130,31 @@ class RdfaDataTest extends TestCase
         ];
     }
 
+
+    public function testNewFromIterableException1(): void
+    {
+        $this->expectException(DataValidationFailed::class);
+        $this->expectExceptionMessage(
+            'object property CURIE "dc:title" does not match key "dc:tittle"'
+        );
+
+        RdfaData::newFromIterable(
+            [ [ 'dc:tittle', new DcTitle('Lorem') ] ]
+        );
+    }
+
+    public function testNewFromIterableException2(): void
+    {
+        $this->expectException(DataValidationFailed::class);
+        $this->expectExceptionMessage(
+            'object property CURIE "dc:title" does not match key "dc:alternative"'
+        );
+
+        RdfaData::newFromIterable(
+            [ [ 'dc:alternative', new DcTitle('Ipsum') ] ]
+        );
+    }
+
     /**
      * @dataProvider addProvider
      */
@@ -56,8 +165,7 @@ class RdfaDataTest extends TestCase
         $rdfaData = RdfaData::newFromIterable($inputData1)
             ->add(RdfaData::newFromIterable($inputData2));
 
-        $expectedArray =
-            $factory->createStmtArrayFromIterable($expectedData);
+        $expectedArray = RdfaData::newFromIterable($expectedData);
 
         $this->assertSame(count($expectedArray), count($rdfaData));
 
@@ -116,13 +224,10 @@ class RdfaDataTest extends TestCase
      */
     public function testReplace($inputData1, $inputData2, $expectedData): void
     {
-        $factory = new Factory();
-
         $rdfaData = RdfaData::newFromIterable($inputData1)
             ->replace(RdfaData::newFromIterable($inputData2));
 
-        $expectedArray =
-            $factory->createStmtArrayFromIterable($expectedData);
+        $expectedArray = RdfaData::newFromIterable($expectedData);
 
         $this->assertSame(count($expectedArray), count($rdfaData));
 
