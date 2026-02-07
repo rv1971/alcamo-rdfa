@@ -41,7 +41,7 @@ class Factory implements FactoryInterface
 
         if (is_array($data)) {
             $nodeRdfaData = isset($data[1])
-                ? new RdfaData($this->createStmtArrayFromIterable($data[1]))
+                ? RdfaData::newFromIterable($data[1])
                 : null;
         }
 

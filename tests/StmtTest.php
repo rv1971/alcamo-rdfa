@@ -82,7 +82,9 @@ class StmtTest extends TestCase
                 new DcAbstract(
                     new Node(
                         'https://example.org/summary',
-                        new RdfaData([ 'dc:type' => new DcType('Text') ])
+                        RdfaData::newFromIterable(
+                            [ [ 'dc:type', new DcType('Text') ] ]
+                        )
                     )
                 ),
                 self::DC_NS,
@@ -90,7 +92,9 @@ class StmtTest extends TestCase
                 'abstract',
                 new Node(
                     'https://example.org/summary',
-                    new RdfaData([ 'dc:type' => new DcType('Text') ])
+                    RdfaData::newFromIterable(
+                        [ [ 'dc:type', new DcType('Text') ] ]
+                    )
                 ),
                 'https://example.org/summary'
             ],

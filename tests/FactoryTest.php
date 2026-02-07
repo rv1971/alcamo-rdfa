@@ -67,14 +67,14 @@ class FactoryTest extends TestCase
                         'https://semver.org/spec/v2.0.0.html'
                             => new DcConformsTo(
                                 'https://semver.org/spec/v2.0.0.html',
-                                new RdfaData(
+                                RdfaData::newFromIterable(
                                     [
-                                        'dc:title' => new StmtCollection(
+                                        [
+                                            'dc:title',
                                             [
-                                                'Semantic Versioning'
-                                                    => new DcTitle('Semantic Versioning')
+                                                new DcTitle('Semantic Versioning')
                                             ]
-                                        )
+                                        ]
                                     ]
                                 )
                             ),

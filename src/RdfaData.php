@@ -42,6 +42,11 @@ class RdfaData extends ReadonlyCollection
         );
     }
 
+    private function __construct(?array $data = null)
+    {
+        parent::__construct($data);
+    }
+
     /**
      * @brief Return new object, adding properties without overwriting
      * existing ones

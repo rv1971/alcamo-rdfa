@@ -26,7 +26,9 @@ class NodeTest extends TestCase
             [ 'https://www.example.org', null ],
             [
                 'https://www.example.org/bob',
-                new RdfaData([ 'dc:title' => new DcTitle('About me') ])
+                RdfaData::newFromIterable(
+                    [ [ 'dc:title', new DcTitle('About me') ] ]
+                )
             ]
         ];
     }
