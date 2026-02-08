@@ -57,11 +57,11 @@ class RdfaDataTest extends TestCase implements NamespaceConstantsInterface
                 null,
                 [
                     'dc:title' => [
-                        'Lorem ipsum dolor sit amet'
+                        '"Lorem ipsum dolor sit amet"'
                             => new DcTitle('Lorem ipsum dolor sit amet')
                     ],
                     self::DC_NS . 'title' => [
-                        'Lorem ipsum dolor sit amet'
+                        '"Lorem ipsum dolor sit amet"'
                             => new DcTitle('Lorem ipsum dolor sit amet')
                     ],
                     'dc:conformsTo' => [
@@ -154,6 +154,41 @@ class RdfaDataTest extends TestCase implements NamespaceConstantsInterface
                         '2026' => new DcCoverage(2026)
                     ],
                     'http://www.example.com/foo' => [ 'bar' => 'bar' ]
+                ]
+            ],
+            [
+                [
+                    [
+                        'dc:title',
+                        new DcTitle(new LangStringLiteral('Traces', 'en'))
+                    ],
+                    [
+                        'dc:title',
+                        new DcTitle(new LangStringLiteral('Traces', 'fr'))
+                    ]
+                ],
+                null,
+                [
+                    'dc:title' => [
+                        '"Traces"@en'
+                            => new DcTitle(
+                                new LangStringLiteral('Traces', 'en')
+                            ),
+                        '"Traces"@fr'
+                            => new DcTitle(
+                                new LangStringLiteral('Traces', 'fr')
+                            )
+                    ],
+                    self::DC_NS . 'title' => [
+                        '"Traces"@en'
+                            => new DcTitle(
+                                new LangStringLiteral('Traces', 'en')
+                            ),
+                        '"Traces"@fr'
+                            => new DcTitle(
+                                new LangStringLiteral('Traces', 'fr')
+                            )
+                    ]
                 ]
             ]
         ];

@@ -58,6 +58,8 @@ class RdfaData extends ReadonlyCollection
                     continue 2;
 
                 case $data instanceof StmtInterface:
+                    /** @throw alcamo::exception::DataValidationFailed if a
+                     *  key dos not match a statement CURIE/URI. */
                     if ($flags & self::URI_AS_KEY) {
                         if ($data->getPropUri() != $key) {
                             throw (new DataValidationFailed())->setMessageContext(
@@ -108,7 +110,7 @@ class RdfaData extends ReadonlyCollection
                 }
             }
 
-            $rdfaData[$uri][(string)$stmt] = $stmt;
+            $rdfaData[$uri]->addStmt($stmt);
         }
 
         return new self($rdfaData);
@@ -129,7 +131,7 @@ class RdfaData extends ReadonlyCollection
 
         foreach ($rdfaData->data_ as $key => $stmts) {
             if (isset($newData[$key])) {
-                $newData[$key]->add($stmts);
+                $newData[$key]->addStmtCollection($stmts);
             } else {
                 $newData[$key] = clone $stmts;
             }
@@ -155,6 +157,8 @@ class RdfaData extends ReadonlyCollection
 
             if (isset($map[$nsPrefix])) {
                 if ($map[$nsPrefix] != $nsName) {
+                    /** @throw alcamo::exception::DataValidationFailed if the
+                     *  same prefix is used for multiple namespaces. */
                     throw (new DataValidationFailed())->setMessageContext(
                         [
                             'extraMessage' =>
