@@ -11,7 +11,7 @@ namespace alcamo\rdfa;
  *
  * @date Last reviewed 2026-02-05
  */
-interface LiteralInterface
+interface LiteralInterface extends HavingDigestInterface
 {
     public const RDF_NS_NAME = 'http://www.w3.org/1999/02/22-rdf-syntax-ns#';
 

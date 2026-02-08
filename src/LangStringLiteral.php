@@ -35,4 +35,10 @@ class LangStringLiteral extends Literal
     {
         return $this->lang_;
     }
+
+    public function getDigest(): string
+    {
+        return "\"$this->value_\"" .
+            (isset($this->lang_) ? "@$this->lang_" : '');
+    }
 }

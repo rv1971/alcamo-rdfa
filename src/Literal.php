@@ -45,4 +45,9 @@ class Literal implements LiteralInterface
     {
         return $this->value_;
     }
+
+    public function getDigest(): string
+    {
+        return $this->value_;
+    }
 }

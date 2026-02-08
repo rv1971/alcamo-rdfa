@@ -5,7 +5,7 @@ namespace alcamo\rdfa;
 use alcamo\xml\NamespaceConstantsInterface;
 
 /**
- * @brief Interface for RDFa data factories
+ * @brief RDFa data factory
  *
  * @date Last reviewed 2026-02-07
  */
