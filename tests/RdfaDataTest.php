@@ -11,11 +11,11 @@ class RdfaDataTest extends TestCase implements NamespaceConstantsInterface
     /**
      * @dataProvider newFromIterableProvider
      */
-    public function testNewFromIterable($inputData, $expectedData): void
+    public function testNewFromIterable($inputData, $flags, $expectedData): void
     {
         $rdfaFactory = new RdfaFactory();
 
-        $rdfaData = RdfaData::newFromIterable($inputData);
+        $rdfaData = RdfaData::newFromIterable($inputData, null, $flags);
 
         $this->assertSame(count($expectedData), count($rdfaData));
 
@@ -54,6 +54,7 @@ class RdfaDataTest extends TestCase implements NamespaceConstantsInterface
                     [ 'dc:created', '2025-10-21T17:17+02:00' ],
                     [ 'dc:foo', 'bar' ]
                 ],
+                null,
                 [
                     'dc:title' => [
                         'Lorem ipsum dolor sit amet'
@@ -119,6 +120,7 @@ class RdfaDataTest extends TestCase implements NamespaceConstantsInterface
                 [
                     [ 'http:content-length', 4711 ]
                 ],
+                null,
                 [
                     'http:content-length' => [
                         '4711' => new HttpContentLength(4711)
@@ -133,15 +135,29 @@ class RdfaDataTest extends TestCase implements NamespaceConstantsInterface
                     [ 'dc:format', 'application/xml' ],
                     [ 'dc:creator', null ]
                 ],
+                null,
                 [
                     'dc:format' => [ 'application/xml' => 'application/xml' ],
                     self::DC_NS . 'format'
                         => [ 'application/xml' => 'application/xml' ]
                 ]
+            ],
+            [
+                [
+                    [ self::DC_NS . 'coverage', 2026 ],
+                    [ 'http://www.example.com/foo', 'bar' ]
+                ],
+                RdfaData::URI_AS_KEY,
+                [
+                    'dc:coverage' => [ '2026' => new DcCoverage(2026) ],
+                    self::DC_NS . 'coverage' => [
+                        '2026' => new DcCoverage(2026)
+                    ],
+                    'http://www.example.com/foo' => [ 'bar' => 'bar' ]
+                ]
             ]
         ];
     }
-
 
     public function testNewFromIterableException1(): void
     {
@@ -164,6 +180,21 @@ class RdfaDataTest extends TestCase implements NamespaceConstantsInterface
 
         RdfaData::newFromIterable(
             [ [ 'dc:alternative', new DcTitle('Ipsum') ] ]
+        );
+    }
+
+    public function testNewFromIterableException3(): void
+    {
+        $this->expectException(DataValidationFailed::class);
+        $this->expectExceptionMessage(
+            'object property URI "' . self::DC_NS . 'title" '
+                . 'does not match key "' . self::DC_NS . 'tittle"'
+        );
+
+        RdfaData::newFromIterable(
+            [ [ self::DC_NS . 'tittle', new DcTitle('Lorem') ] ],
+            null,
+            RdfaData::URI_AS_KEY
         );
     }
 

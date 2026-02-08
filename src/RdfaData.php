@@ -21,6 +21,8 @@ use alcamo\exception\DataValidationFailed;
  */
 class RdfaData extends ReadonlyCollection
 {
+    public const URI_AS_KEY = 1;
+
     /**
      * @brief Create from map of property CURIEs to object data
      *
@@ -32,10 +34,14 @@ class RdfaData extends ReadonlyCollection
      * @param $rdfaFactory RDFa factory used to create RDFa data by calling
      * RdfaFactory::createStmtFromCurieAndData(). Defaults to a new instance
      * of RdfaFactory.
+     *
+     * @param $flags
+     * - If $flags contain alcamo::rdfa::RdfaData::URI_AS_KEY
      */
     public static function newFromIterable(
         iterable $map,
-        ?RdfaFactoryInterface $rdfaFactory = null
+        ?RdfaFactoryInterface $rdfaFactory = null,
+        ?int $flags = null
     ): self {
         if (!isset($rdfaFactory)) {
             $rdfaFactory = new RdfaFactory();
@@ -44,7 +50,7 @@ class RdfaData extends ReadonlyCollection
         $rdfaData = [];
 
         foreach ($map as $pair) {
-            [ $curie, $data ] = $pair;
+            [ $key, $data ] = $pair;
 
             switch (true) {
                 /* Skip unset data asd well as empty array data. */
@@ -52,32 +58,54 @@ class RdfaData extends ReadonlyCollection
                     continue 2;
 
                 case $data instanceof StmtInterface:
-                    if ($data->getPropCurie() != $curie) {
-                        throw (new DataValidationFailed())->setMessageContext(
-                            [
-                                'inData' => (string)$data,
-                                'extraMessage' =>
-                                    "object property CURIE \""
-                                    . $data->getPropCurie()
-                                    . "\" does not match key \"$curie\""
-                            ]
-                        );
+                    if ($flags & self::URI_AS_KEY) {
+                        if ($data->getPropUri() != $key) {
+                            throw (new DataValidationFailed())->setMessageContext(
+                                [
+                                    'inData' => (string)$data,
+                                    'extraMessage' =>
+                                        "object property URI \""
+                                        . $data->getPropUri()
+                                        . "\" does not match key \"$key\""
+                                ]
+                            );
+                        }
+                    } else {
+                        if ($data->getPropCurie() != $key) {
+                            throw (new DataValidationFailed())->setMessageContext(
+                                [
+                                    'inData' => (string)$data,
+                                    'extraMessage' =>
+                                        "object property CURIE \""
+                                        . $data->getPropCurie()
+                                        . "\" does not match key \"$key\""
+                                ]
+                            );
+                        }
                     }
 
                     $stmt = $data;
                     break;
 
                 default:
-                    $stmt = $rdfaFactory
-                        ->createStmtFromCurieAndData($curie, $data);
+                    $stmt = $flags & self::URI_AS_KEY
+                        ? ($rdfaFactory
+                           ->createStmtFromUriAndData($key, $data))
+                        : ($rdfaFactory
+                           ->createStmtFromCurieAndData($key, $data));
             }
 
-            $uri = $stmt->getPropUri();
+            $uri = $flags & self::URI_AS_KEY ? $key : $stmt->getPropUri();
+
+            $curie = $flags & self::URI_AS_KEY ? $stmt->getPropCurie() : $key;
 
             if (!isset($rdfaData[$uri])) {
                 $stmtCollection = new StmtCollection();
                 $rdfaData[$uri] = $stmtCollection;
-                $rdfaData[$curie] = $stmtCollection;
+
+                if (isset($curie)) {
+                    $rdfaData[$curie] = $stmtCollection;
+                }
             }
 
             $rdfaData[$uri][(string)$stmt] = $stmt;

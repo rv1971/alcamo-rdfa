@@ -64,7 +64,9 @@ class RdfaFactory implements RdfaFactoryInterface
         if (is_array($data)) {
             $data = new Node(
                 $data[0],
-                isset($data[1]) ? RdfaData::newFromIterable($data[1]) : null
+                isset($data[1])
+                    ? RdfaData::newFromIterable($data[1], $this)
+                    : null
             );
         }
 
@@ -98,7 +100,9 @@ class RdfaFactory implements RdfaFactoryInterface
         if (is_array($data)) {
             $data = new Node(
                 $data[0],
-                isset($data[1]) ? RdfaData::newFromIterable($data[1]) : null
+                isset($data[1])
+                    ? RdfaData::newFromIterable($data[1], $this)
+                    : null
             );
         }
 
