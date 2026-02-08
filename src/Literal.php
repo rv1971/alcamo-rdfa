@@ -48,6 +48,6 @@ class Literal implements LiteralInterface
 
     public function getDigest(): string
     {
-        return $this->value_;
+        return $this;
     }
 }

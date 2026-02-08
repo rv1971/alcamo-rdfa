@@ -31,6 +31,13 @@ trait ObjectTrait
         return $this->object_;
     }
 
+    public function getDigest(): string
+    {
+        return $this->object_ instanceof HavingDigestInterface
+            ? $this->object_->getDigest()
+            : $this;
+    }
+
     public function __call(string $name, array $params)
     {
         return call_user_func_array([ $this->object_, $name ], $params);

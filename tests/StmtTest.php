@@ -18,7 +18,8 @@ class StmtTest extends TestCase implements NamespaceConstantsInterface
         $expectedPropNsPrefix,
         $expectedPropLocalName,
         $expectedObject,
-        $expectedString
+        $expectedString,
+        $expectedDigest
     ): void {
         $this->assertSame($expectedPropNsName, $stmt->getPropNsName());
 
@@ -56,6 +57,8 @@ class StmtTest extends TestCase implements NamespaceConstantsInterface
         }
 
         $this->assertSame($expectedString, (string)$stmt);
+
+        $this->assertSame($expectedDigest, $stmt->getDigest());
     }
 
     public function basicsProvider(): array
@@ -66,6 +69,7 @@ class StmtTest extends TestCase implements NamespaceConstantsInterface
                 self::DC_NS,
                 'dc',
                 'abstract',
+                'Lorem ipsum.',
                 'Lorem ipsum.',
                 'Lorem ipsum.'
             ],
@@ -87,6 +91,7 @@ class StmtTest extends TestCase implements NamespaceConstantsInterface
                         [ [ 'dc:type', new DcType('Text') ] ]
                     )
                 ),
+                'https://example.org/summary',
                 'https://example.org/summary'
             ],
             'DcAccessRights-literal' => [
@@ -94,6 +99,7 @@ class StmtTest extends TestCase implements NamespaceConstantsInterface
                 self::DC_NS,
                 'dc',
                 'accessRights',
+                'confidential',
                 'confidential',
                 'confidential'
             ],
@@ -105,6 +111,7 @@ class StmtTest extends TestCase implements NamespaceConstantsInterface
                 'dc',
                 'accessRights',
                 new Node('https://example.org/access-rights'),
+                'https://example.org/access-rights',
                 'https://example.org/access-rights'
             ],
             'DcAlternative' => [
@@ -113,13 +120,15 @@ class StmtTest extends TestCase implements NamespaceConstantsInterface
                 'dc',
                 'alternative',
                 'At vero eos',
-                'At vero eos'
+                'At vero eos',
+                '"At vero eos"'
             ],
             'DcAudience-literal' => [
                 new DcAudience('customers'),
                 self::DC_NS,
                 'dc',
                 'audience',
+                'customers',
                 'customers',
                 'customers'
             ],
@@ -129,6 +138,7 @@ class StmtTest extends TestCase implements NamespaceConstantsInterface
                 'dc',
                 'audience',
                 new Node('https://example.info/public'),
+                'https://example.info/public',
                 'https://example.info/public'
             ],
             'DcConformsTo' => [
@@ -137,6 +147,7 @@ class StmtTest extends TestCase implements NamespaceConstantsInterface
                 'dc',
                 'conformsTo',
                 new Node('https://example.com/standards'),
+                'https://example.com/standards',
                 'https://example.com/standards'
             ],
             'DcCoverage' => [
@@ -144,6 +155,7 @@ class StmtTest extends TestCase implements NamespaceConstantsInterface
                 self::DC_NS,
                 'dc',
                 'coverage',
+                'Akureyri',
                 'Akureyri',
                 'Akureyri'
             ],
@@ -153,6 +165,7 @@ class StmtTest extends TestCase implements NamespaceConstantsInterface
                 'dc',
                 'created',
                 new DateTimeLiteral('2023-01-17T15:52:00+01:00'),
+                '2023-01-17T15:52:00+01:00',
                 '2023-01-17T15:52:00+01:00'
             ],
             'DcCreator-literal' => [
@@ -160,6 +173,7 @@ class StmtTest extends TestCase implements NamespaceConstantsInterface
                 self::DC_NS,
                 'dc',
                 'creator',
+                'Alice',
                 'Alice',
                 'Alice'
             ],
@@ -169,6 +183,7 @@ class StmtTest extends TestCase implements NamespaceConstantsInterface
                 'dc',
                 'creator',
                 new Node('https://alice.example.org'),
+                'https://alice.example.org',
                 'https://alice.example.org'
             ],
             'DcDate' => [
@@ -177,6 +192,7 @@ class StmtTest extends TestCase implements NamespaceConstantsInterface
                 'dc',
                 'date',
                 new DateTimeLiteral('2025-03-16T22:13:16+01:00'),
+                '2025-03-16T22:13:16+01:00',
                 '2025-03-16T22:13:16+01:00'
             ],
             'DcFormat' => [
@@ -185,6 +201,7 @@ class StmtTest extends TestCase implements NamespaceConstantsInterface
                 'dc',
                 'format',
                 new MediaType('application', 'xml'),
+                'application/xml',
                 'application/xml'
             ],
             'DcIdentifier' => [
@@ -192,6 +209,7 @@ class StmtTest extends TestCase implements NamespaceConstantsInterface
                 self::DC_NS,
                 'dc',
                 'identifier',
+                'foo-bar',
                 'foo-bar',
                 'foo-bar'
             ],
@@ -201,6 +219,7 @@ class StmtTest extends TestCase implements NamespaceConstantsInterface
                 'dc',
                 'language',
                 new LanguageLiteral(Lang::newFromPrimaryAndRegion('es', 'MX')),
+                'es-MX',
                 'es-MX'
             ],
             'DcModified' => [
@@ -209,6 +228,7 @@ class StmtTest extends TestCase implements NamespaceConstantsInterface
                 'dc',
                 'modified',
                 new DateTimeLiteral('2023-01-18Z'),
+                '2023-01-18T00:00:00+00:00',
                 '2023-01-18T00:00:00+00:00'
             ],
             'DcPublisher-literal' => [
@@ -216,6 +236,7 @@ class StmtTest extends TestCase implements NamespaceConstantsInterface
                 self::DC_NS,
                 'dc',
                 'publisher',
+                'Bob',
                 'Bob',
                 'Bob'
             ],
@@ -225,6 +246,7 @@ class StmtTest extends TestCase implements NamespaceConstantsInterface
                 'dc',
                 'publisher',
                 new Node('https://bob.example.org'),
+                'https://bob.example.org',
                 'https://bob.example.org'
             ],
             'DcRights-literal' => [
@@ -232,6 +254,7 @@ class StmtTest extends TestCase implements NamespaceConstantsInterface
                 self::DC_NS,
                 'dc',
                 'rights',
+                '(C) Example ltd. 2023',
                 '(C) Example ltd. 2023',
                 '(C) Example ltd. 2023'
             ],
@@ -241,6 +264,7 @@ class StmtTest extends TestCase implements NamespaceConstantsInterface
                 'dc',
                 'rights',
                 new Node('https://example.org/rights'),
+                'https://example.org/rights',
                 'https://example.org/rights'
             ],
             'DcSource' => [
@@ -249,6 +273,7 @@ class StmtTest extends TestCase implements NamespaceConstantsInterface
                 'dc',
                 'source',
                 new Node('https://example.com/42'),
+                'https://example.com/42',
                 'https://example.com/42'
             ],
             'DcTitle' => [
@@ -257,13 +282,15 @@ class StmtTest extends TestCase implements NamespaceConstantsInterface
                 'dc',
                 'title',
                 'Lorem ipsum',
-                'Lorem ipsum'
+                'Lorem ipsum',
+                '"Lorem ipsum"'
             ],
             'DcType' => [
                 new DcType('Sound'),
                 self::DC_NS,
                 'dc',
                 'type',
+                'Sound',
                 'Sound',
                 'Sound'
             ],
@@ -273,6 +300,7 @@ class StmtTest extends TestCase implements NamespaceConstantsInterface
                 'http',
                 'cache-control',
                 'public',
+                'public',
                 'public'
             ],
             'HttpContentDisposition' => [
@@ -280,6 +308,7 @@ class StmtTest extends TestCase implements NamespaceConstantsInterface
                 self::HTTP_NS,
                 'http',
                 'content-disposition',
+                'qux.json',
                 'qux.json',
                 'qux.json'
             ],
@@ -289,6 +318,7 @@ class StmtTest extends TestCase implements NamespaceConstantsInterface
                 'http',
                 'content-length',
                 1024,
+                '1024',
                 '1024'
             ],
             'HttpExpires' => [
@@ -297,6 +327,7 @@ class StmtTest extends TestCase implements NamespaceConstantsInterface
                 'http',
                 'expires',
                 new DurationLiteral('P40D'),
+                'P40D',
                 'P40D'
             ],
             'OwlVersionInfo' => [
@@ -304,6 +335,7 @@ class StmtTest extends TestCase implements NamespaceConstantsInterface
                 self::OWL_NS,
                 'owl',
                 'versionInfo',
+                '1.2.3',
                 '1.2.3',
                 '1.2.3'
             ],
@@ -313,6 +345,7 @@ class StmtTest extends TestCase implements NamespaceConstantsInterface
                 'owl',
                 'sameAs',
                 new Node('https://owl.example.org/42'),
+                'https://owl.example.org/42',
                 'https://owl.example.org/42'
             ],
             'RdfsLabel' => [
@@ -321,7 +354,8 @@ class StmtTest extends TestCase implements NamespaceConstantsInterface
                 'rdfs',
                 'label',
                 new LangStringLiteral('example', 'en-IE'),
-                'example'
+                'example',
+                '"example"@en-IE'
             ],
             'RdfsComment' => [
                 new RdfsComment('Lorem ipsum'),
@@ -329,7 +363,8 @@ class StmtTest extends TestCase implements NamespaceConstantsInterface
                 'rdfs',
                 'comment',
                 'Lorem ipsum',
-                'Lorem ipsum'
+                'Lorem ipsum',
+                '"Lorem ipsum"'
             ],
             'RdfsSeeAlso' => [
                 new RdfsSeeAlso('http://www.example.info'),
@@ -337,6 +372,7 @@ class StmtTest extends TestCase implements NamespaceConstantsInterface
                 'rdfs',
                 'seeAlso',
                 new Node('http://www.example.info'),
+                'http://www.example.info',
                 'http://www.example.info'
             ],
             'XhvContents' => [
@@ -345,6 +381,7 @@ class StmtTest extends TestCase implements NamespaceConstantsInterface
                 'xhv',
                 'contents',
                 new Node('index.php'),
+                'index.php',
                 'index.php'
             ]
         ];

@@ -42,6 +42,8 @@ class SimpleStmtTest extends TestCase
         $this->assertSame($object, $stmt->getObject());
 
         $this->assertSame((string)$object, (string)$stmt);
+
+        $this->assertSame((string)$object, $stmt->getDigest());
     }
 
     public function basicsProvider(): array

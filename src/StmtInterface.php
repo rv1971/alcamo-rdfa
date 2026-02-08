@@ -21,7 +21,7 @@ use alcamo\xml\NamespaceConstantsInterface;
  *
  * @date Last reviewed 2025-10-15
  */
-interface StmtInterface extends NamespaceConstantsInterface
+interface StmtInterface extends HavingDigestInterface, NamespaceConstantsInterface
 {
     /// Namespace name of the property
     public function getPropNsName(): string;
