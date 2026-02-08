@@ -30,10 +30,14 @@ class SimpleStmtTest extends TestCase
 
         $this->assertSame($propNsName . $propLocalName, $stmt->getPropUri());
 
-        $this->assertSame(
-            $propNsPrefix . ':' . $propLocalName,
-            $stmt->getPropCurie()
-        );
+        if (isset($propNsPrefix)) {
+            $this->assertSame(
+                $propNsPrefix . ':' . $propLocalName,
+                $stmt->getPropCurie()
+            );
+        } else {
+            $this->assertNull($stmt->getPropCurie());
+        }
 
         $this->assertSame($object, $stmt->getObject());
 
@@ -43,7 +47,8 @@ class SimpleStmtTest extends TestCase
     public function basicsProvider(): array
     {
         return [
-            [ 'https://foo.example.com', 'foo', 'bar', 42 ]
+            [ 'https://foo.example.com', 'foo', 'bar', 42 ],
+            [ 'https://foo.example.com', null, 'baz', 43 ]
         ];
     }
 }

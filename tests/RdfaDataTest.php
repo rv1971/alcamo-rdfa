@@ -3,28 +3,35 @@
 namespace alcamo\rdfa;
 
 use alcamo\exception\DataValidationFailed;
+use alcamo\xml\NamespaceConstantsInterface;
 use PHPUnit\Framework\TestCase;
 
-class RdfaDataTest extends TestCase
+class RdfaDataTest extends TestCase implements NamespaceConstantsInterface
 {
-    public const DC_NS = AbstractDcStmt::DC_NS;
-
-    public const HTTP_NS = AbstractHttpStmt::HTTP_NS;
-
     /**
      * @dataProvider newFromIterableProvider
      */
     public function testNewFromIterable($inputData, $expectedData): void
     {
+        $rdfaFactory = new RdfaFactory();
+
         $rdfaData = RdfaData::newFromIterable($inputData);
 
         $this->assertSame(count($expectedData), count($rdfaData));
 
-        foreach ($expectedData as $prop => $expectedItems) {
-            $this->assertSame(count($expectedItems), count($rdfaData[$prop]));
+        foreach ($expectedData as $prop => $expectedStmts) {
+            $this->assertSame(count($expectedStmts), count($rdfaData[$prop]));
 
-            foreach ($expectedItems as $key => $item) {
-                $this->assertEquals($item, $rdfaData[$prop][$key]);
+            foreach ($expectedStmts as $key => $stmt) {
+                $this->assertEquals($stmt, $rdfaData[$prop][$key]);
+
+                $this->assertEquals(
+                    $stmt,
+                    $rdfaFactory->createStmtFromUriAndData(
+                        $rdfaData[$prop][$key]->getPropUri(),
+                        $rdfaData[$prop][$key]->getObject()
+                    )
+                );
             }
         }
     }
@@ -44,7 +51,8 @@ class RdfaDataTest extends TestCase
                     ],
                     [ 'dc:publisher', null ],
                     [ 'dc:conformsTo', 'https://example.org/strict' ],
-                    [ 'dc:created', '2025-10-21T17:17+02:00' ]
+                    [ 'dc:created', '2025-10-21T17:17+02:00' ],
+                    [ 'dc:foo', 'bar' ]
                 ],
                 [
                     'dc:title' => [
@@ -98,6 +106,12 @@ class RdfaDataTest extends TestCase
                     self::DC_NS . 'created' => [
                         '2025-10-21T17:17:00+02:00'
                             => new DcCreated('2025-10-21T17:17+02:00')
+                    ],
+                    'dc:foo' => [
+                        'bar' => new SimpleStmt(self::DC_NS, 'dc', 'foo', 'bar')
+                    ],
+                    self::DC_NS . 'foo' => [
+                        'bar' => new SimpleStmt(self::DC_NS, 'dc', 'foo', 'bar')
                     ]
                 ],
             ],

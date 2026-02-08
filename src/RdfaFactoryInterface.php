@@ -33,9 +33,12 @@ interface RdfaFactoryInterface extends NamespaceConstantsInterface
      * Node URI, for those statements where both are possible (such as
      * DcRights). In the latter case, the Node URI must be given as a
      * one-element array.
+     *
+     * @return StmtInterface if the namespace rpefix is known, otherwise
+     * `null`.
      */
     public function createStmtFromCurieAndData(
         string $propCurie,
         $data
-    ): StmtInterface;
+    ): ?StmtInterface;
 }

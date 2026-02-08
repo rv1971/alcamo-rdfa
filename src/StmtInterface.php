@@ -26,8 +26,8 @@ interface StmtInterface extends NamespaceConstantsInterface
     /// Namespace name of the property
     public function getPropNsName(): string;
 
-    /// Canonical prefix for the property's namespace
-    public function getPropNsPrefix(): string;
+    /// Canonical prefix for the property's namespace, if any
+    public function getPropNsPrefix(): ?string;
 
     /// Local name of the property
     public function getPropLocalName(): string;
@@ -35,8 +35,8 @@ interface StmtInterface extends NamespaceConstantsInterface
     /// Property as a URI
     public function getPropUri(): string;
 
-    /// Property as a CURIE using the canonical prefix
-    public function getPropCurie(): string;
+    /// Property as a CURIE using the canonical prefix, if any
+    public function getPropCurie(): ?string;
 
     /// Object of the RDFa statement
     public function getObject();

@@ -7,6 +7,15 @@ use alcamo\xml\XName;
 /**
  * @brief Factory that creates RDFa statements from property CURIEs and values
  *
+ * Both factory methods for statements first try to find a statment class in
+ * alcamo::rdfa::RdfaFactory::PROP_URI_TO_STMT_CLASS. If that fails, they try
+ * alcamo::rdfa::RdfaFactory::PROP_NS_NAME_TO_STMT_CLASS. If that fails as
+ * well:
+ * - createStmtFromUriAndData() creates an alcamo::rdfa::SimpleStmt object,
+ * setting the namespace prefix to the canonical prefix, if known.
+ * - createStmtFromCurieAndData() creates an alcamo::rdfa::SimpleStmt object,
+ * if the namespace prefix  is a known canonical prefix.
+ *
  * @date Last reviewed 2025-10-21
  */
 class RdfaFactory implements RdfaFactoryInterface
@@ -74,13 +83,18 @@ class RdfaFactory implements RdfaFactoryInterface
             return new $class($propLocalName, $data);
         }
 
-        return new SimpleStmt($propNsName, null, $propLocalName);
+        return new SimpleStmt(
+            $propNsName,
+            static::NS_NAME_TO_NS_PREFIX[$propNsName] ?? null,
+            $propLocalName,
+            $data
+        );
     }
 
     public function createStmtFromCurieAndData(
         string $propCurie,
         $data
-    ): StmtInterface {
+    ): ?StmtInterface {
         if (is_array($data)) {
             $data = new Node(
                 $data[0],
@@ -90,7 +104,11 @@ class RdfaFactory implements RdfaFactoryInterface
 
         [ $propNsPrefix, $propLocalName ] = explode(':', $propCurie, 2);
 
-        $propNsName = static::NS_PRFIX_TO_NS_NAME[$propNsPrefix];
+        $propNsName = static::NS_PRFIX_TO_NS_NAME[$propNsPrefix] ?? null;
+
+        if (!isset($propNsName)) {
+            return null;
+        }
 
         $propUri = "$propNsName$propLocalName";
 
@@ -106,6 +124,6 @@ class RdfaFactory implements RdfaFactoryInterface
             return new $class($propLocalName, $data);
         }
 
-        return new SimpleStmt($propNsName, $propNsPrefix, $propLocalName);
+        return new SimpleStmt($propNsName, $propNsPrefix, $propLocalName, $data);
     }
 }
