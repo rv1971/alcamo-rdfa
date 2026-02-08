@@ -13,9 +13,9 @@ namespace alcamo\rdfa;
  */
 interface LiteralInterface
 {
-    public const RDF_NS_URI = 'http://www.w3.org/1999/02/22-rdf-syntax-ns#';
+    public const RDF_NS_NAME = 'http://www.w3.org/1999/02/22-rdf-syntax-ns#';
 
-    public const XSD_NS_URI = 'http://www.w3.org/2001/XMLSchema#';
+    public const XSD_NS_NAME = 'http://www.w3.org/2001/XMLSchema#';
 
     /// Value as an appropriate PHP type, not necessarily stringable
     public function getValue();

@@ -9,7 +9,7 @@ namespace alcamo\rdfa;
  */
 class FloatLiteral extends Literal
 {
-    public const DATATYPE_URI = self::XSD_NS_URI . 'double';
+    public const DATATYPE_URI = self::XSD_NS_NAME . 'double';
 
     /**
      * @param $value double|float|string Floating point number or string.

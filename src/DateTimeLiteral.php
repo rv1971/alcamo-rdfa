@@ -9,7 +9,7 @@ namespace alcamo\rdfa;
  */
 class DateTimeLiteral extends Literal
 {
-    public const DATATYPE_URI = self::XSD_NS_URI . 'dateTime';
+    public const DATATYPE_URI = self::XSD_NS_NAME . 'dateTime';
 
     /**
      * @param $value DateTime|string DateTime or datetime string.

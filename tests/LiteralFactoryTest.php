@@ -7,9 +7,9 @@ use PHPUnit\Framework\TestCase;
 
 class LiteralFactoryTest extends TestCase
 {
-    public const RDF_NS_URI = 'http://www.w3.org/1999/02/22-rdf-syntax-ns#';
+    public const RDF_NS_NAME = 'http://www.w3.org/1999/02/22-rdf-syntax-ns#';
 
-    public const XSD_NS_URI = 'http://www.w3.org/2001/XMLSchema#';
+    public const XSD_NS_NAME = 'http://www.w3.org/2001/XMLSchema#';
 
   /**
    * @dataProvider basicsProvider
@@ -69,25 +69,25 @@ class LiteralFactoryTest extends TestCase
                 null,
                 BooleanLiteral::class,
                 true,
-                self::XSD_NS_URI . 'boolean',
+                self::XSD_NS_NAME . 'boolean',
                 'true'
             ],
             [
                 0,
-                self::XSD_NS_URI . 'boolean',
+                self::XSD_NS_NAME . 'boolean',
                 null,
                 BooleanLiteral::class,
                 false,
-                self::XSD_NS_URI . 'boolean',
+                self::XSD_NS_NAME . 'boolean',
                 'false'
             ],
             [
                 1,
-                self::XSD_NS_URI . 'boolean',
+                self::XSD_NS_NAME . 'boolean',
                 null,
                 BooleanLiteral::class,
                 true,
-                self::XSD_NS_URI . 'boolean',
+                self::XSD_NS_NAME . 'boolean',
                 'true'
             ],
             [
@@ -96,34 +96,34 @@ class LiteralFactoryTest extends TestCase
                 null,
                 DateTimeLiteral::class,
                 new \DateTime('2026-02-03T11:04:42+01:00'),
-                self::XSD_NS_URI . 'dateTime',
+                self::XSD_NS_NAME . 'dateTime',
                 '2026-02-03T11:04:42+01:00'
             ],
             [
                 '2026-02-04T16:05:12Z',
-                self::XSD_NS_URI . 'dateTime',
+                self::XSD_NS_NAME . 'dateTime',
                 null,
                 DateTimeLiteral::class,
                 new \DateTime('2026-02-04T16:05:12Z'),
-                self::XSD_NS_URI . 'dateTime',
+                self::XSD_NS_NAME . 'dateTime',
                 '2026-02-04T16:05:12+00:00'
             ],
             [
                 '2026-02-05',
-                self::XSD_NS_URI . 'date',
+                self::XSD_NS_NAME . 'date',
                 null,
                 DateLiteral::class,
                 new \DateTime('2026-02-05'),
-                self::XSD_NS_URI . 'date',
+                self::XSD_NS_NAME . 'date',
                 '2026-02-05'
             ],
             [
                 '15:01:02',
-                self::XSD_NS_URI . 'time',
+                self::XSD_NS_NAME . 'time',
                 null,
                 TimeLiteral::class,
                 new \DateTime('15:01:02'),
-                self::XSD_NS_URI . 'time',
+                self::XSD_NS_NAME . 'time',
                 '15:01:02'
             ],
             [
@@ -132,16 +132,16 @@ class LiteralFactoryTest extends TestCase
                 null,
                 DurationLiteral::class,
                 new Duration('P40D'),
-                self::XSD_NS_URI . 'duration',
+                self::XSD_NS_NAME . 'duration',
                 'P40D'
             ],
             [
                 'PT42.123S',
-                self::XSD_NS_URI . 'duration',
+                self::XSD_NS_NAME . 'duration',
                 null,
                 DurationLiteral::class,
                 new Duration('PT42.123S'),
-                self::XSD_NS_URI . 'duration',
+                self::XSD_NS_NAME . 'duration',
                 'PT42.123S'
             ],
             [
@@ -150,16 +150,16 @@ class LiteralFactoryTest extends TestCase
                 null,
                 FloatLiteral::class,
                 3.14,
-                self::XSD_NS_URI . 'double',
+                self::XSD_NS_NAME . 'double',
                 '3.14'
             ],
             [
                 '2.73',
-                self::XSD_NS_URI . 'float',
+                self::XSD_NS_NAME . 'float',
                 null,
                 FloatLiteral::class,
                 2.73,
-                self::XSD_NS_URI . 'float',
+                self::XSD_NS_NAME . 'float',
                 '2.73'
             ],
             [
@@ -168,25 +168,25 @@ class LiteralFactoryTest extends TestCase
                 null,
                 IntegerLiteral::class,
                 0,
-                self::XSD_NS_URI . 'integer',
+                self::XSD_NS_NAME . 'integer',
                 '0'
             ],
             [
                 8.1,
-                self::XSD_NS_URI . 'byte',
+                self::XSD_NS_NAME . 'byte',
                 null,
                 IntegerLiteral::class,
                 8,
-                self::XSD_NS_URI . 'byte',
+                self::XSD_NS_NAME . 'byte',
                 '8'
             ],
             [
                 "Don't panic",
-                self::RDF_NS_URI . 'langString',
+                self::RDF_NS_NAME . 'langString',
                 null,
                 LangStringLiteral::class,
                 "Don't panic",
-                self::RDF_NS_URI . 'langString',
+                self::RDF_NS_NAME . 'langString',
                 "Don't panic"
             ],
             [
@@ -195,16 +195,16 @@ class LiteralFactoryTest extends TestCase
                 null,
                 LanguageLiteral::class,
                 Lang::newFromPrimary('is'),
-                self::XSD_NS_URI . 'language',
+                self::XSD_NS_NAME . 'language',
                 'is'
             ],
             [
                 'et-EE',
-                self::XSD_NS_URI . 'language',
+                self::XSD_NS_NAME . 'language',
                 null,
                 LanguageLiteral::class,
                 Lang::newFromPrimaryAndRegion('et', 'EE'),
-                self::XSD_NS_URI . 'language',
+                self::XSD_NS_NAME . 'language',
                 'et-EE'
             ],
             [
@@ -213,7 +213,7 @@ class LiteralFactoryTest extends TestCase
                 null,
                 Literal::class,
                 'Foo',
-                self::XSD_NS_URI . 'string',
+                self::XSD_NS_NAME . 'string',
                 'Foo'
             ],
             [
@@ -231,7 +231,7 @@ class LiteralFactoryTest extends TestCase
                 'pt-BR',
                 LangStringLiteral::class,
                 'Foo',
-                self::RDF_NS_URI . 'langString',
+                self::RDF_NS_NAME . 'langString',
                 'Foo'
             ],
             [

@@ -9,7 +9,7 @@ namespace alcamo\rdfa;
  */
 class Literal implements LiteralInterface
 {
-    public const DATATYPE_URI = self::XSD_NS_URI . 'string';
+    public const DATATYPE_URI = self::XSD_NS_NAME . 'string';
 
     protected $value_;
     protected $datatypeUri_; ///< string or stringable URI

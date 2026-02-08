@@ -9,7 +9,7 @@ namespace alcamo\rdfa;
  */
 class TimeLiteral extends DateTimeLiteral
 {
-    public const DATATYPE_URI = self::XSD_NS_URI . 'time';
+    public const DATATYPE_URI = self::XSD_NS_NAME . 'time';
 
     /// Return content using as ISO 8601 string without timezone
     public function __toString(): string

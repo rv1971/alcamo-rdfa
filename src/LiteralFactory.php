@@ -20,21 +20,21 @@ class LiteralFactory implements LiteralFactoryInterface
         LanguageLiteral::DATATYPE_URI   => LanguageLiteral::class,
         TimeLiteral::DATATYPE_URI       => TimeLiteral::class,
 
-        self::XSD_NS_URI . 'byte'               => IntegerLiteral::class,
-        self::XSD_NS_URI . 'int'                => IntegerLiteral::class,
-        self::XSD_NS_URI . 'long'               => IntegerLiteral::class,
-        self::XSD_NS_URI . 'negativeInteger'    => IntegerLiteral::class,
-        self::XSD_NS_URI . 'nonNegativeInteger' => IntegerLiteral::class,
-        self::XSD_NS_URI . 'nonPositiveInteger' => IntegerLiteral::class,
-        self::XSD_NS_URI . 'positiveInteger'    => IntegerLiteral::class,
-        self::XSD_NS_URI . 'short'              => IntegerLiteral::class,
-        self::XSD_NS_URI . 'unsignedByte'       => IntegerLiteral::class,
-        self::XSD_NS_URI . 'unsignedInt'        => IntegerLiteral::class,
-        self::XSD_NS_URI . 'unsignedLong'       => IntegerLiteral::class,
-        self::XSD_NS_URI . 'unsignedShort'      => IntegerLiteral::class,
+        self::XSD_NS_NAME . 'byte'               => IntegerLiteral::class,
+        self::XSD_NS_NAME . 'int'                => IntegerLiteral::class,
+        self::XSD_NS_NAME . 'long'               => IntegerLiteral::class,
+        self::XSD_NS_NAME . 'negativeInteger'    => IntegerLiteral::class,
+        self::XSD_NS_NAME . 'nonNegativeInteger' => IntegerLiteral::class,
+        self::XSD_NS_NAME . 'nonPositiveInteger' => IntegerLiteral::class,
+        self::XSD_NS_NAME . 'positiveInteger'    => IntegerLiteral::class,
+        self::XSD_NS_NAME . 'short'              => IntegerLiteral::class,
+        self::XSD_NS_NAME . 'unsignedByte'       => IntegerLiteral::class,
+        self::XSD_NS_NAME . 'unsignedInt'        => IntegerLiteral::class,
+        self::XSD_NS_NAME . 'unsignedLong'       => IntegerLiteral::class,
+        self::XSD_NS_NAME . 'unsignedShort'      => IntegerLiteral::class,
 
-        self::XSD_NS_URI . 'decimal'            => FloatLiteral::class,
-        self::XSD_NS_URI . 'float'              => FloatLiteral::class
+        self::XSD_NS_NAME . 'decimal'            => FloatLiteral::class,
+        self::XSD_NS_NAME . 'float'              => FloatLiteral::class
     ];
 
     /**

@@ -12,6 +12,20 @@ use alcamo\xml\NamespaceConstantsInterface;
 interface RdfaFactoryInterface extends NamespaceConstantsInterface
 {
     /**
+     * @brief Construct a statement from a property URI and object data
+     *
+     * If $data is an array, construct a Node from it. This allows to
+     * distinguish in $data whether a string represents a string value or a
+     * Node URI, for those statements where both are possible (such as
+     * DcRights). In the latter case, the Node URI must be given as a
+     * one-element array.
+     */
+    public function createStmtFromUriAndData(
+        string $propUri,
+        $data
+    ): StmtInterface;
+
+    /**
      * @brief Construct a statement from a property CURIE and object data
      *
      * If $data is an array, construct a Node from it. This allows to
@@ -21,7 +35,7 @@ interface RdfaFactoryInterface extends NamespaceConstantsInterface
      * one-element array.
      */
     public function createStmtFromCurieAndData(
-        string $curie,
+        string $propCurie,
         $data
     ): StmtInterface;
 }

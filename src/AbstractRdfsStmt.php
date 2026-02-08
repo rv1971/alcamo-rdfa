@@ -18,5 +18,5 @@ abstract class AbstractRdfsStmt implements StmtInterface
 
     public const PROP_NS_NAME = self::RDFS_NS;
 
-    public const PROP_NS_PREFIX = self::NS_URI_TO_NS_PREFIX[self::PROP_NS_NAME];
+    public const PROP_NS_PREFIX = self::NS_NAME_TO_NS_PREFIX[self::PROP_NS_NAME];
 }
