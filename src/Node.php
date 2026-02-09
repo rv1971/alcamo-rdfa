@@ -7,7 +7,7 @@ namespace alcamo\rdfa;
  *
  * @date Last reviewed 2025-10-18
  */
-class Node
+class Node implements HavingRdfaDataInterface
 {
     private $uri_;      ///< string or convertible to string
     private $rdfaData_; ///< ?RdfaData

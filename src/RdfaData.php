@@ -18,6 +18,8 @@ use alcamo\exception\DataValidationFailed;
  * e.g. `$rdfaData['dc:created']->first()`.
  *
  * @invariant Immutable object.
+ *
+ * @date Last reviewed 2026-2-09
  */
 class RdfaData extends ReadonlyCollection
 {
