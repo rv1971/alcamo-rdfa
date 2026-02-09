@@ -25,9 +25,14 @@ class Node
          * array. */
         if ($rdfaData) {
             $this->rdfaData_ = $rdfaData instanceof RdfaData
-                ? $rdfaData
+                ? clone $rdfaData
                 : RdfaData::newFromIterable($rdfaData);
         }
+    }
+
+    public function __clone()
+    {
+        $this->rdfaData_ = clone $this->rdfaData_;
     }
 
     public function getUri()

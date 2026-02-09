@@ -5,6 +5,11 @@ namespace alcamo\rdfa;
 /**
  * @brief Object of an RDFa statement and methods to access it
  *
+ * @attention Cloning is shallow, hence $object_ (if it is a PHP object) is
+ * cloned by reference. Applications should not modify the result of
+ * getObject() or modify it via _call(), unless it is desired that the
+ * modification applies to all statements that reference it.
+ *
  * @date Last reviewed 2025-10-19
  */
 trait ObjectTrait

@@ -5,6 +5,11 @@ namespace alcamo\rdfa;
 /**
  * @brief RDF literal
  *
+ * @attention Cloning is shallow, hence $value_ (if it is an object) is cloned
+ * by reference. Applications should not modify the result of getValue(),
+ * unless it is desired that the modification applies to all literals that
+ * reference it.
+ *
  * @date Last reviewed 2026-02-05
  */
 class Literal implements LiteralInterface

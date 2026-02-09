@@ -15,7 +15,12 @@ class NodeTest extends TestCase
 
         $this->assertSame($uri, $node->getUri());
 
-        $this->assertSame($rdfaData ?: null, $node->getRdfaData());
+        $this->assertEquals($rdfaData ?: null, $node->getRdfaData());
+
+        if (isset($rdfaData)) {
+            /* Test __clone(). */
+            $this->assertNotSame($rdfaData, $node->getRdfaData());
+        }
 
         $this->assertSame($uri, (string)$node);
     }
