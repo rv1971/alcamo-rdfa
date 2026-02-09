@@ -2,7 +2,7 @@
 
 namespace alcamo\rdfa;
 
-use alcamo\exception\ProgramFlowException;
+use alcamo\exception\DataValidationFailed;
 use alcamo\xml\NamespaceMapsInterface;
 
 /**
@@ -36,7 +36,7 @@ class XhvMetaStmt implements StmtInterface
         $rdfaData = null
     ) {
         if (isset($rdfaData) && $nodeOrUri instanceof Node) {
-            throw (new ProgramFlowException())->setMessageContext(
+            throw (new DataValidationFailed())->setMessageContext(
                 [
                     'inMethod' => __METHOD__,
                     'extraMessage' => '$rdfaData must not be given when $nodeOrUri is already a node'

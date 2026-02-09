@@ -2,7 +2,7 @@
 
 namespace alcamo\rdfa;
 
-use alcamo\exception\ProgramFlowException;
+use alcamo\exception\DataValidationFailed;
 
 /**
  * @brief RDFa statement whose object is a node
@@ -19,7 +19,7 @@ trait NodeStmtTrait
     public function __construct($nodeOrUri, $rdfaData = null)
     {
         if (isset($rdfaData) && $nodeOrUri instanceof Node) {
-            throw (new ProgramFlowException())->setMessageContext(
+            throw (new DataValidationFailed())->setMessageContext(
                 [
                     'inMethod' => __METHOD__,
                     'extraMessage' => '$rdfaData must not be given when $nodeOrUri is already a node'

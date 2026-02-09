@@ -2,6 +2,8 @@
 
 namespace alcamo\rdfa;
 
+use alcamo\exception\InvalidType;
+
 /**
  * @brief RDFa statement whose object is a literal of fixed type
  *
@@ -15,6 +17,15 @@ trait FixedLiteralTypeStmtTrait
 {
     public function __construct($object)
     {
+        if ($object instanceof Node) {
+            throw (new InvalidType())->setMessageContext(
+                [
+                    'inMethod' => __METHOD__,
+                    'type' => Node::class
+                ]
+            );
+        }
+
         $class = static::LITERAL_CLASS;
 
         parent::__construct(

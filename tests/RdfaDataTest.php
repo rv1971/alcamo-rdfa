@@ -77,14 +77,7 @@ class RdfaDataTest extends TestCase implements NamespaceConstantsInterface
                             => new DcConformsTo(
                                 'https://semver.org/spec/v2.0.0.html',
                                 RdfaData::newFromIterable(
-                                    [
-                                        [
-                                            'dc:title',
-                                            [
-                                                new DcTitle('Semantic Versioning')
-                                            ]
-                                        ]
-                                    ]
+                                    [ [ 'dc:title', 'Semantic Versioning' ] ]
                                 )
                             ),
                         'https://example.org/strict'

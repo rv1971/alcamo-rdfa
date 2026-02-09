@@ -2,7 +2,7 @@
 
 namespace alcamo\rdfa;
 
-use alcamo\exception\InvalidEnumerator;
+use alcamo\exception\{DataValidationFailed, InvalidEnumerator, InvalidType};
 use alcamo\time\Duration;
 use alcamo\xml\NamespaceConstantsInterface;
 use PHPUnit\Framework\TestCase;
@@ -64,35 +64,14 @@ class StmtTest extends TestCase implements NamespaceConstantsInterface
     public function basicsProvider(): array
     {
         return [
-            'DcAbstract-literal' => [
+            'DcAbstract' => [
                 new DcAbstract('Lorem ipsum.'),
                 self::DC_NS,
                 'dc',
                 'abstract',
                 'Lorem ipsum.',
                 'Lorem ipsum.',
-                'Lorem ipsum.'
-            ],
-            'DcAbstract-node' => [
-                new DcAbstract(
-                    new Node(
-                        'https://example.org/summary',
-                        RdfaData::newFromIterable(
-                            [ [ 'dc:type', new DcType('Text') ] ]
-                        )
-                    )
-                ),
-                self::DC_NS,
-                'dc',
-                'abstract',
-                new Node(
-                    'https://example.org/summary',
-                    RdfaData::newFromIterable(
-                        [ [ 'dc:type', new DcType('Text') ] ]
-                    )
-                ),
-                'https://example.org/summary',
-                'https://example.org/summary'
+                '"Lorem ipsum."'
             ],
             'DcAccessRights-literal' => [
                 new DcAccessRights('confidential'),
@@ -385,6 +364,50 @@ class StmtTest extends TestCase implements NamespaceConstantsInterface
                 'index.php'
             ]
         ];
+    }
+
+    public function testNodeStmtConstructException(): void
+    {
+        $this->expectException(DataValidationFailed::class);
+        $this->expectExceptionMessage(
+            'Validation failed in method '
+                . 'alcamo\rdfa\NodeStmtTrait::__construct(); '
+                . '$rdfaData must not be given when $nodeOrUri '
+                . 'is already a node'
+        );
+
+        new DcConformsTo(
+            new Node('http://www.example.org'),
+            []
+        );
+    }
+
+    public function testFixedLiteralTypeStmtConstructException(): void
+    {
+        $this->expectException(InvalidType::class);
+        $this->expectExceptionMessage(
+            'Invalid type "alcamo\rdfa\Node" in method '
+                . 'alcamo\rdfa\FixedLiteralTypeStmtTrait'
+        );
+
+        new DcTitle(new Node('http://www.example.org'));
+    }
+
+    public function testXhvMetaStmtConstructException(): void
+    {
+        $this->expectException(DataValidationFailed::class);
+        $this->expectExceptionMessage(
+            'Validation failed in method '
+                . 'alcamo\rdfa\XhvMetaStmt::__construct(); '
+                . '$rdfaData must not be given when $nodeOrUri '
+                . 'is already a node'
+        );
+
+        new XhvMetaStmt(
+            'home',
+            new Node('http://www.example.org'),
+            []
+        );
     }
 
     public function testDcTypeException(): void
