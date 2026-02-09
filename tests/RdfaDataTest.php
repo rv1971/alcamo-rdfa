@@ -8,6 +8,14 @@ use PHPUnit\Framework\TestCase;
 
 class RdfaDataTest extends TestCase implements NamespaceConstantsInterface
 {
+    public function newEmpty(): void
+    {
+        $rdfaData = RdfaData::newEmpty();
+
+        $this->assertSame(0, count($rdfaData));
+        $this->assertSame([], $rdfaData->getCurieToUri());
+    }
+
     /**
      * @dataProvider newFromIterableProvider
      */

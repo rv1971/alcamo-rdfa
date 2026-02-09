@@ -23,6 +23,12 @@ class RdfaData extends ReadonlyCollection
 {
     public const URI_AS_KEY = 1;
 
+    /// Create RdfaData with no statements
+    public static function newEmpty(): self
+    {
+        return new self();
+    }
+
     /**
      * @brief Create from map of property CURIEs to object data
      *
