@@ -11,8 +11,12 @@ class RdfaDataTest extends TestCase implements NamespaceConstantsInterface
     /**
      * @dataProvider newFromIterableProvider
      */
-    public function testNewFromIterable($inputData, $flags, $expectedData): void
-    {
+    public function testNewFromIterable(
+        $inputData,
+        $flags,
+        $expectedData,
+        $expecetedCurieToUri
+    ): void {
         $rdfaFactory = new RdfaFactory();
 
         $rdfaData = RdfaData::newFromIterable($inputData, null, $flags);
@@ -56,31 +60,9 @@ class RdfaDataTest extends TestCase implements NamespaceConstantsInterface
                 ],
                 null,
                 [
-                    'dc:title' => [
-                        '"Lorem ipsum dolor sit amet"'
-                            => new DcTitle('Lorem ipsum dolor sit amet')
-                    ],
                     self::DC_NS . 'title' => [
                         '"Lorem ipsum dolor sit amet"'
                             => new DcTitle('Lorem ipsum dolor sit amet')
-                    ],
-                    'dc:conformsTo' => [
-                        'https://semver.org/spec/v2.0.0.html'
-                            => new DcConformsTo(
-                                'https://semver.org/spec/v2.0.0.html',
-                                RdfaData::newFromIterable(
-                                    [
-                                        [
-                                            'dc:title',
-                                            [
-                                                new DcTitle('Semantic Versioning')
-                                            ]
-                                        ]
-                                    ]
-                                )
-                            ),
-                        'https://example.org/strict'
-                        => new DcConformsTo('https://example.org/strict')
                     ],
                     self::DC_NS . 'conformsTo' => [
                         'https://semver.org/spec/v2.0.0.html'
@@ -100,21 +82,20 @@ class RdfaDataTest extends TestCase implements NamespaceConstantsInterface
                         'https://example.org/strict'
                         => new DcConformsTo('https://example.org/strict')
                     ],
-                    'dc:created' => [
-                        '2025-10-21T17:17:00+02:00'
-                            => new DcCreated('2025-10-21T17:17+02:00')
-                    ],
                     self::DC_NS . 'created' => [
                         '2025-10-21T17:17:00+02:00'
                             => new DcCreated('2025-10-21T17:17+02:00')
-                    ],
-                    'dc:foo' => [
-                        'bar' => new SimpleStmt(self::DC_NS, 'dc', 'foo', 'bar')
                     ],
                     self::DC_NS . 'foo' => [
                         'bar' => new SimpleStmt(self::DC_NS, 'dc', 'foo', 'bar')
                     ]
                 ],
+                [
+                    'dc:title' => self::DC_NS . 'title',
+                    'dc:conformsTo' => self::DC_NS . 'conformsTo',
+                    'dc:created' => self::DC_NS . 'created',
+                    'dc:foo' => self::DC_NS . 'foo'
+                ]
             ],
             [
                 [
@@ -122,12 +103,12 @@ class RdfaDataTest extends TestCase implements NamespaceConstantsInterface
                 ],
                 null,
                 [
-                    'http:content-length' => [
-                        '4711' => new HttpContentLength(4711)
-                    ],
                     self::HTTP_NS . 'content-length' => [
                         '4711' => new HttpContentLength(4711)
                     ]
+                ],
+                [
+                    'http:content-length' => self::HTTP_NS . 'content-length'
                 ]
             ],
             [
@@ -137,9 +118,11 @@ class RdfaDataTest extends TestCase implements NamespaceConstantsInterface
                 ],
                 null,
                 [
-                    'dc:format' => [ 'application/xml' => 'application/xml' ],
                     self::DC_NS . 'format'
                         => [ 'application/xml' => 'application/xml' ]
+                ],
+                [
+                    'dc:format' => self::DC_NS . 'format'
                 ]
             ],
             [
@@ -149,11 +132,13 @@ class RdfaDataTest extends TestCase implements NamespaceConstantsInterface
                 ],
                 RdfaData::URI_AS_KEY,
                 [
-                    'dc:coverage' => [ '2026' => new DcCoverage(2026) ],
                     self::DC_NS . 'coverage' => [
                         '2026' => new DcCoverage(2026)
                     ],
                     'http://www.example.com/foo' => [ 'bar' => 'bar' ]
+                ],
+                [
+                    'dc:coverage' => self::DC_NS . 'coverage'
                 ]
             ],
             [
@@ -169,16 +154,6 @@ class RdfaDataTest extends TestCase implements NamespaceConstantsInterface
                 ],
                 null,
                 [
-                    'dc:title' => [
-                        '"Traces"@en'
-                            => new DcTitle(
-                                new LangStringLiteral('Traces', 'en')
-                            ),
-                        '"Traces"@fr'
-                            => new DcTitle(
-                                new LangStringLiteral('Traces', 'fr')
-                            )
-                    ],
                     self::DC_NS . 'title' => [
                         '"Traces"@en'
                             => new DcTitle(
@@ -189,6 +164,9 @@ class RdfaDataTest extends TestCase implements NamespaceConstantsInterface
                                 new LangStringLiteral('Traces', 'fr')
                             )
                     ]
+                ],
+                [
+                    'dc:title' => self::DC_NS . 'title'
                 ]
             ]
         ];

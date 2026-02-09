@@ -49,6 +49,8 @@ class RdfaData extends ReadonlyCollection
 
         $rdfaData = [];
 
+        $curieToUri = [];
+
         foreach ($map as $pair) {
             [ $key, $data ] = $pair;
 
@@ -106,19 +108,47 @@ class RdfaData extends ReadonlyCollection
                 $rdfaData[$uri] = $stmtCollection;
 
                 if (isset($curie)) {
-                    $rdfaData[$curie] = $stmtCollection;
+                    $curieToUri[$curie] = $uri;
                 }
             }
 
             $rdfaData[$uri]->addStmt($stmt);
         }
 
-        return new self($rdfaData);
+        return new self($rdfaData, $curieToUri);
     }
 
-    private function __construct(?array $rdfaData = null)
-    {
+    private $curieToUri_; ///< array
+
+    private function __construct(
+        ?array $rdfaData = null,
+        ?array $curieToUri = null
+    ) {
         parent::__construct($rdfaData);
+
+        $this->curieToUri_ = (array)$curieToUri;
+    }
+
+    /// Check presence of a property URI or CURIE
+    public function offsetExists($offset): bool
+    {
+        return isset($this->data_[$offset])
+            || isset($this->curieToUri_[$offset]);
+    }
+
+    /// Get a statement collection by property URI or CURIE
+    public function offsetGet($offset)
+    {
+        return $this->data_[$offset]
+        ?? (isset($this->curieToUri_[$offset])
+            ? $this->data_[$this->curieToUri_[$offset]]
+            : null);
+    }
+
+    /// Mapping of property CURIEs to URIs
+    public function getCurieToUri(): array
+    {
+        return $this->curieToUri_;
     }
 
     /**
@@ -137,13 +167,16 @@ class RdfaData extends ReadonlyCollection
             }
         }
 
-        return new self($newData);
+        return new self($newData, $this->curieToUri_ + $rdfaData->curieToUri_);
     }
 
     /// Return a new object with added properties, overwriting existing ones
     public function replace(self $rdfaData): self
     {
-        return new self((clone $rdfaData)->data_ + (clone $this)->data_);
+        return new self(
+            (clone $rdfaData)->data_ + (clone $this)->data_,
+            $rdfaData->curieToUri_ + $this->curieToUri_
+        );
     }
 
     /// Return map of namespaces prefixes to namespaces
