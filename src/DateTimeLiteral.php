@@ -7,7 +7,7 @@ namespace alcamo\rdfa;
  *
  * @date Last reviewed 2026-02-05
  */
-class DateTimeLiteral extends Literal
+class DateTimeLiteral extends AbstractLiteral
 {
     public const DATATYPE_URI = self::XSD_NS_NAME . 'dateTime';
 

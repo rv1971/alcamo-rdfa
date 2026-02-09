@@ -11,7 +11,7 @@ namespace alcamo\rdfa;
  */
 class DcModified extends AbstractDcStmt
 {
-    use FixedLiteralStmtTrait;
+    use FixedLiteralTypeStmtTrait;
 
     public const PROP_LOCAL_NAME = 'modified';
 

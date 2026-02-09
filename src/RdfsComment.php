@@ -11,7 +11,7 @@ namespace alcamo\rdfa;
  */
 class RdfsComment extends AbstractRdfsStmt
 {
-    use FixedLiteralStmtTrait;
+    use FixedLiteralTypeStmtTrait;
 
     public const PROP_LOCAL_NAME = 'comment';
 

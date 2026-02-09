@@ -14,19 +14,23 @@ use alcamo\exception\InvalidEnumerator;
  */
 trait EnumeratorStmtTrait
 {
-    public function __construct(string $value)
+    public function __construct(string $object)
     {
-        if (!in_array($value, static::VALUES)) {
-            /** @throw alcamo::exception::InvalidEnumerator if $value is not a
+        if (!in_array($object, static::VALUES)) {
+            /** @throw alcamo::exception::InvalidEnumerator if $object is not a
              *  valid enumerator. */
             throw (new InvalidEnumerator())->setMessageContext(
                 [
-                    'value' => $value,
+                    'value' => $object,
                     'expectedOneOf' => static::VALUES
                 ]
             );
         }
 
-        parent::__construct($value);
+        $class = static::LITERAL_CLASS;
+
+        parent::__construct(
+            $object instanceof $class ? $object : new $class($object)
+        );
     }
 }

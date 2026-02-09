@@ -11,7 +11,7 @@ namespace alcamo\rdfa;
  * @date Last reviewed 2026-02-05
  */
 
-trait FixedLiteralStmtTrait
+trait FixedLiteralTypeStmtTrait
 {
     public function __construct($object)
     {

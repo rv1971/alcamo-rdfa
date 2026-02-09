@@ -13,7 +13,7 @@ use alcamo\time\Duration;
  */
 class HttpExpires extends AbstractHttpStmt
 {
-    use FixedLiteralStmtTrait;
+    use FixedLiteralTypeStmtTrait;
 
     public const PROP_LOCAL_NAME = 'expires';
 

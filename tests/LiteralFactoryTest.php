@@ -228,7 +228,7 @@ class LiteralFactoryTest extends TestCase
                 'Foo',
                 null,
                 null,
-                Literal::class,
+                StringLiteral::class,
                 'Foo',
                 self::XSD_NS_NAME . 'string',
                 'Foo',
@@ -238,7 +238,7 @@ class LiteralFactoryTest extends TestCase
                 'bar',
                 'http://schema.example.org#Bar',
                 null,
-                Literal::class,
+                StringLiteral::class,
                 'bar',
                 'http://schema.example.org#Bar',
                 'bar',
@@ -263,7 +263,18 @@ class LiteralFactoryTest extends TestCase
                 'http://schema.example.org#Bar',
                 'bar',
                 '"bar"@uk-CA'
-            ]
+            ],
+            [
+                new LangStringLiteral("FOO-BAR", 'jp'),
+                self::XSD_NS_NAME . 'string',
+                null,
+                StringLiteral::class,
+                "FOO-BAR",
+                self::XSD_NS_NAME . 'string',
+                "FOO-BAR",
+                "FOO-BAR"
+            ],
+
         ];
     }
 

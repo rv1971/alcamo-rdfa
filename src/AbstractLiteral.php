@@ -12,9 +12,10 @@ namespace alcamo\rdfa;
  *
  * @date Last reviewed 2026-02-05
  */
-class Literal implements LiteralInterface
+abstract class AbstractLiteral implements LiteralInterface
 {
-    public const DATATYPE_URI = self::XSD_NS_NAME . 'string';
+    /// Must be defined in derived classes
+    public const DATATYPE_URI = null;
 
     protected $value_;
     protected $datatypeUri_; ///< string or stringable URI
@@ -26,7 +27,12 @@ class Literal implements LiteralInterface
      */
     public function __construct($value, $datatypeUri = null)
     {
-        $this->value_ = $value;
+        /* Unwrap values wrapped into another literal class. This happens, for
+         * instance, when OwlVersionInfo gets a LangStringLiteral (from an XML
+         * attribute in a place where a language is defined). */
+        $this->value_ =
+            $value instanceof LiteralInterface ? $value->getValue() : $value;
+
         $this->datatypeUri_ = $datatypeUri ?? static::DATATYPE_URI;
     }
 

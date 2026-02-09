@@ -7,7 +7,7 @@ namespace alcamo\rdfa;
  *
  * @date Last reviewed 2026-02-05
  */
-class FloatLiteral extends Literal
+class FloatLiteral extends AbstractLiteral
 {
     public const DATATYPE_URI = self::XSD_NS_NAME . 'double';
 

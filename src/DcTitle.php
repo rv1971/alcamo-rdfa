@@ -11,7 +11,7 @@ namespace alcamo\rdfa;
  */
 class DcTitle extends AbstractDcStmt
 {
-    use FixedLiteralStmtTrait;
+    use FixedLiteralTypeStmtTrait;
 
     public const PROP_LOCAL_NAME = 'title';
 

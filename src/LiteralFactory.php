@@ -83,12 +83,16 @@ class LiteralFactory implements LiteralFactoryInterface
                 return new LangStringLiteral($value, $lang, $datatypeUri);
 
             default:
-                return new Literal($value, $datatypeUri);
+                return new StringLiteral($value, $datatypeUri);
         }
     }
 
     public function convertValue($value, $datatypeUri)
     {
+        if ($value instanceof LiteralInterface) {
+            $value = $value->getValue();
+        }
+
         if (isset(static::DATATYPE_URI_TO_CLASS[(string)$datatypeUri])) {
             $class = static::DATATYPE_URI_TO_CLASS[(string)$datatypeUri];
 

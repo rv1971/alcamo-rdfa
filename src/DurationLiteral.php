@@ -9,7 +9,7 @@ use alcamo\time\Duration;
  *
  * @date Last reviewed 2026-02-05
  */
-class DurationLiteral extends Literal
+class DurationLiteral extends AbstractLiteral
 {
     public const DATATYPE_URI = self::XSD_NS_NAME . 'duration';
 

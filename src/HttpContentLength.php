@@ -11,7 +11,7 @@ namespace alcamo\rdfa;
  */
 class HttpContentLength extends AbstractHttpStmt
 {
-    use FixedLiteralStmtTrait;
+    use FixedLiteralTypeStmtTrait;
 
     public const PROP_LOCAL_NAME = 'content-length';
 

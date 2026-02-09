@@ -7,7 +7,7 @@ namespace alcamo\rdfa;
  *
  * @date Last reviewed 2026-02-05
  */
-class LangStringLiteral extends Literal
+class LangStringLiteral extends AbstractLiteral
 {
     public const DATATYPE_URI = self::RDF_NS_NAME . 'langString';
 

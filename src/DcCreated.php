@@ -11,7 +11,7 @@ namespace alcamo\rdfa;
  */
 class DcCreated extends AbstractDcStmt
 {
-    use FixedLiteralStmtTrait;
+    use FixedLiteralTypeStmtTrait;
 
     public const PROP_LOCAL_NAME = 'created';
 

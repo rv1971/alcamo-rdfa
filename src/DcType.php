@@ -21,6 +21,9 @@ class DcType extends AbstractDcStmt
     public const PROP_CURIE =
         self::PROP_NS_PREFIX . ':' . self::PROP_LOCAL_NAME;
 
+    /// Objects are language-agnostic
+    public const LITERAL_CLASS = StringLiteral::class;
+
     public const VALUES = [
         'Collection',
         'Dataset',
