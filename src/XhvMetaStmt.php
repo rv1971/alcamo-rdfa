@@ -3,6 +3,7 @@
 namespace alcamo\rdfa;
 
 use alcamo\exception\ProgramFlowException;
+use alcamo\xml\NamespaceMapsInterface;
 
 /**
  * @brief XHML metainformation RDFa statement class
@@ -17,7 +18,8 @@ class XhvMetaStmt implements StmtInterface
 
     public const PROP_NS_NAME = self::XHV_NS;
 
-    public const PROP_NS_PREFIX = self::NS_NAME_TO_NS_PREFIX[self::PROP_NS_NAME];
+    public const PROP_NS_PREFIX =
+        NamespaceMapsInterface::NS_NAME_TO_NS_PREFIX[self::PROP_NS_NAME];
 
     private $propLocalName_; ///< string
 

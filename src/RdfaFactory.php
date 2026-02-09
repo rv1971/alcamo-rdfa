@@ -2,7 +2,7 @@
 
 namespace alcamo\rdfa;
 
-use alcamo\xml\XName;
+use alcamo\xml\{NamespaceMapsInterface, XName};
 
 /**
  * @brief Factory that creates RDFa statements from property CURIEs and values
@@ -20,6 +20,14 @@ use alcamo\xml\XName;
  */
 class RdfaFactory implements RdfaFactoryInterface
 {
+    /// Map of canonical namespace prefixes
+    public const NS_PRFIX_TO_NS_NAME =
+        NamespaceMapsInterface::NS_PRFIX_TO_NS_NAME;
+
+    /// Map of namespace names to canonical namespace prefixes
+    public const NS_NAME_TO_NS_PREFIX =
+        NamespaceMapsInterface::NS_NAME_TO_NS_PREFIX;
+
     /// Map of property URI to statement class.
     public const PROP_URI_TO_STMT_CLASS = [
         DcAbstract::PROP_URI              => DcAbstract::class,

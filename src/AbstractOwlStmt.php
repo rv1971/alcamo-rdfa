@@ -2,6 +2,8 @@
 
 namespace alcamo\rdfa;
 
+use alcamo\xml\NamespaceMapsInterface;
+
 /**
  * @brief Base class of OWL RDFa statement classes
  *
@@ -18,5 +20,6 @@ abstract class AbstractOwlStmt implements StmtInterface
 
     public const PROP_NS_NAME = self::OWL_NS;
 
-    public const PROP_NS_PREFIX = self::NS_NAME_TO_NS_PREFIX[self::PROP_NS_NAME];
+    public const PROP_NS_PREFIX =
+        NamespaceMapsInterface::NS_NAME_TO_NS_PREFIX[self::PROP_NS_NAME];
 }
