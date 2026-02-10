@@ -136,4 +136,39 @@ class LangTest extends TestCase
             [ 'en_US' ]
         ];
     }
+
+    /**
+     * @dataProvider countCommonTagsProvider
+     */
+    public function testCountCommonTags($lang1, $lang2, $expectedCount): void
+    {
+        $this->assertSame(
+            $expectedCount,
+            Lang::newFromString($lang1)->countCommonTags($lang2)
+        );
+    }
+
+    public function countCommonTagsProvider(): array
+    {
+        return [
+            [ 'en', 'fr', -1 ],
+            [ 'en-US', null, 0 ],
+            [ 'en-CA', '', 0 ],
+            [ 'en-IE', 'en', 1 ],
+            [ 'en-IE', 'en-CA', 1 ],
+            [ 'en-IE', 'en-Latn', 1 ],
+            [ 'en-IE', 'en-IE', 2 ],
+            [ 'en-IE', 'en-ie', 2 ],
+            [ 'en-IE', 'en-Latn-IE', 2 ],
+            [ 'en-Latn-IE', 'en-Latn-IE', 3 ],
+            [ 'kk-Cyrl', 'KK', 1 ],
+            [ 'kk-Cyrl', 'kk-Arab', 1 ],
+            [ 'kk-Cyrl-CN', 'kk-Arab-CN', 1 ],
+            [ 'kk-Cyrl-CN-x-foo', 'kk-KZ-x-foo', 1 ],
+            [ 'kk-Cyrl', 'kk-Cyrl', 2 ],
+            [ 'kk-Cyrl-CN', 'kk-CN', 2 ],
+            [ 'kk-Cyrl-CN-x-foo', 'kk-x-foo', 2 ],
+            [ 'kk-Cyrl-CN-x-foo', 'kk-CN-x-foo', 3 ]
+        ];
+    }
 }
