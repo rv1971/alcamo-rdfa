@@ -2,7 +2,7 @@
 
 namespace alcamo\rdfa;
 
-use alcamo\collection\ReadonlyCollection;
+use alcamo\collection\{ReadonlyCollection, StringIndexedReadArrayAccessTrait};
 use alcamo\exception\DataValidationFailed;
 
 /**
@@ -23,6 +23,8 @@ use alcamo\exception\DataValidationFailed;
  */
 class RdfaData extends ReadonlyCollection
 {
+    use StringIndexedReadArrayAccessTrait;
+
     public const URI_AS_KEY = 1;
 
     /// Create RdfaData with no statements
@@ -107,7 +109,9 @@ class RdfaData extends ReadonlyCollection
                            ->createStmtFromCurieAndData($key, $data));
             }
 
-            $uri = $flags & self::URI_AS_KEY ? $key : $stmt->getPropUri();
+            $uri = (string)(
+                $flags & self::URI_AS_KEY ? $key : $stmt->getPropUri()
+            );
 
             $curie = $flags & self::URI_AS_KEY ? $stmt->getPropCurie() : $key;
 
@@ -116,7 +120,7 @@ class RdfaData extends ReadonlyCollection
                 $rdfaData[$uri] = $stmtCollection;
 
                 if (isset($curie)) {
-                    $curieToUri[$curie] = $uri;
+                    $curieToUri[(string)$curie] = $uri;
                 }
             }
 
