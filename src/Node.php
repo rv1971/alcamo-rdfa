@@ -5,6 +5,8 @@ namespace alcamo\rdfa;
 /**
  * @brief RDFa node
  *
+ * @invariant Immutable object.
+ *
  * @date Last reviewed 2025-10-18
  */
 class Node implements HavingRdfaDataInterface
