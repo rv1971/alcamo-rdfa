@@ -2,6 +2,9 @@
 
 namespace alcamo\rdfa;
 
+use alcamo\uri\Uri;
+use Psr\Http\Message\UriInterface;
+
 /**
  * @brief RDFa node
  *
@@ -11,7 +14,7 @@ namespace alcamo\rdfa;
  */
 class Node implements HavingRdfaDataInterface, HavingLangInterface
 {
-    private $uri_;      ///< string or convertible to string
+    private $uri_;      ///< UriInterface
     private $rdfaData_; ///< ?RdfaData
 
     /**
@@ -21,7 +24,7 @@ class Node implements HavingRdfaDataInterface, HavingLangInterface
      */
     public function __construct($uri, $rdfaData = null)
     {
-        $this->uri_ = $uri;
+        $this->uri_ = $uri instanceof UriInterface ? $uri : new Uri($uri);
 
         /* This sets $rdfaData_ if $rdfaData is an object or a *nonemtpy*
          * array. */
@@ -37,7 +40,7 @@ class Node implements HavingRdfaDataInterface, HavingLangInterface
         $this->rdfaData_ = clone $this->rdfaData_;
     }
 
-    public function getUri()
+    public function getUri(): Uri
     {
         return $this->uri_;
     }

@@ -13,7 +13,7 @@ class NodeTest extends TestCase
     {
         $node = new Node($uri, $rdfaData);
 
-        $this->assertSame($uri, $node->getUri());
+        $this->assertSame($uri, (string)$node->getUri());
 
         $this->assertEquals($rdfaData ?: null, $node->getRdfaData());
 

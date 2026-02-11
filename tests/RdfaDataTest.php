@@ -35,7 +35,7 @@ class RdfaDataTest extends TestCase implements NamespaceConstantsInterface
             $this->assertSame(count($expectedStmts), count($rdfaData[$prop]));
 
             foreach ($expectedStmts as $key => $stmt) {
-                $this->assertEquals($stmt, $rdfaData[$prop][$key]);
+                $this->assertSame((string)$stmt, (string)$rdfaData[$prop][$key]);
 
                 $this->assertEquals(
                     $stmt,
