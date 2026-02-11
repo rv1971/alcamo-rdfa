@@ -9,7 +9,7 @@ namespace alcamo\rdfa;
  *
  * @date Last reviewed 2025-10-18
  */
-class Node implements HavingRdfaDataInterface
+class Node implements HavingRdfaDataInterface, HavingLangInterface
 {
     private $uri_;      ///< string or convertible to string
     private $rdfaData_; ///< ?RdfaData
@@ -50,5 +50,15 @@ class Node implements HavingRdfaDataInterface
     public function __toString(): string
     {
         return $this->uri_;
+    }
+
+    /// Content of first dc:language in RdfaData, if any
+    public function getLang(): ?Lang
+    {
+        $dcLanguage = $this->getRdfaData()['dc:language'] ?? null;
+
+        return isset($dcLanguage)
+            ? $dcLanguage->first()->getObject()->getValue()
+            : null;
     }
 }

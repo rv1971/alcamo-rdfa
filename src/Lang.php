@@ -93,7 +93,7 @@ class Lang
      * and comparison continues. If both are specified and different,
      * comparison stops.
      */
-    public function countCommonTags($lang = null): int
+    public function countCommonSubtags($lang = null): int
     {
         if (!isset($lang) || $lang == '') {
             return 0;

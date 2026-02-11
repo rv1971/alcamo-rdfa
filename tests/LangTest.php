@@ -138,17 +138,17 @@ class LangTest extends TestCase
     }
 
     /**
-     * @dataProvider countCommonTagsProvider
+     * @dataProvider countCommonSubtagsProvider
      */
-    public function testCountCommonTags($lang1, $lang2, $expectedCount): void
+    public function testCountCommonSubtags($lang1, $lang2, $expectedCount): void
     {
         $this->assertSame(
             $expectedCount,
-            Lang::newFromString($lang1)->countCommonTags($lang2)
+            Lang::newFromString($lang1)->countCommonSubtags($lang2)
         );
     }
 
-    public function countCommonTagsProvider(): array
+    public function countCommonSubtagsProvider(): array
     {
         return [
             [ 'en', 'fr', -1 ],

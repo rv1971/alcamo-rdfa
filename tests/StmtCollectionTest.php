@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 class StmtCollectionTest extends TestCase
 {
-    public function testAddExcpetion(): void
+    public function testAddException(): void
     {
         $collection = new StmtCollection([ new DcTitle('Hello') ]);
 
@@ -25,12 +25,28 @@ class StmtCollectionTest extends TestCase
     /**
      * @dataProvider findLangProvider
      */
-    public function testFindLang($lang, $expectedValue): void
+    public function testFindLang(
+        $collection,
+        $lang,
+        $disableFallback,
+        $expectedValue
+    ): void {
+        if (isset($expectedValue)) {
+            $this->assertSame(
+                $expectedValue,
+                (string)$collection->findLang($lang, $disableFallback)
+            );
+        } else {
+            $this->assertNull($collection->findLang($lang, $disableFallback));
+        }
+    }
+
+    public function findLangProvider(): array
     {
-        $collection = new StmtCollection(
+        $collection0 = new StmtCollection();
+
+        $collection1 = new StmtCollection(
             [
-                new DcCreator('no-LangStringLiteral'),
-                new DcCreator(new LangStringLiteral('no-lang')),
                 new DcCreator(new LangStringLiteral('en', 'en')),
                 new DcCreator(
                     new Node(
@@ -39,25 +55,36 @@ class StmtCollectionTest extends TestCase
                     )
                 ),
                 new DcCreator(new LangStringLiteral('kk-Cyrl', 'kk-Cyrl')),
-                new DcCreator(new Node('http://www.example.org/other')),
-                new DcCreator(new LangStringLiteral('kk-Latn-cn', 'kk-Latn-cn'))
+                new DcCreator(new LangStringLiteral('kk-Latn-CN', 'kk-Latn-CN'))
             ]
         );
 
-        $this->assertSame($expectedValue, (string)$collection->findLang($lang));
-    }
+        $collection2 = (clone $collection1)
+            ->addStmt(new DcCreator('no-LangStringLiteral'))
+            ->addStmt(new DcCreator(new Node('http://www.example.org/other')))
+            ->addStmt(new DcCreator(new LangStringLiteral('no-lang')));
 
-    public function findLangProvider(): array
-    {
         return [
-            [ 'fr', 'no-LangStringLiteral' ],
-            [ 'en-US', 'en' ],
-            [ 'en-IE', 'http://www.example.org/en-IE' ],
-            [ 'kk', 'kk-Cyrl' ],
-            [ 'kk-Arab', 'kk-Cyrl' ],
-            [ 'kk-Curl-ru', 'kk-Cyrl' ],
-            [ 'kk-Latn', 'kk-Latn-cn' ],
-            [ 'kk-Latn-kz', 'kk-Latn-cn' ]
+            [ $collection0, 'la', null, null ],
+            [ $collection1, null, null, 'en' ],
+            [ $collection1, '', null, 'en' ],
+            [ $collection1, 'fr', null, 'en' ],
+            [ $collection1, 'fr', true, null ],
+            [ $collection1, 'en-US', false, 'en' ],
+            [ $collection1, 'en-US', true, 'en' ],
+            [ $collection1, 'en-IE', null, 'http://www.example.org/en-IE' ],
+            [ $collection1, 'et', null, 'en' ],
+            [ $collection1, 'et', true, null ],
+            [ $collection1, 'kk', null, 'kk-Cyrl' ],
+            [ $collection1, 'kk', true, 'kk-Cyrl' ],
+            [ $collection1, 'kk-Arab', null, 'kk-Cyrl' ],
+            [ $collection1, 'kk-Arab', true, 'kk-Cyrl' ],
+            [ $collection1, 'kk-Curl-ru', null, 'kk-Cyrl' ],
+            [ $collection1, 'kk-Latn', true, 'kk-Latn-CN' ],
+            [ $collection1, 'kk-Latn-KZ', true, 'kk-Latn-CN' ],
+            [ $collection1, 'fr', null, 'en' ],
+            [ $collection2, 'fr', true, 'no-LangStringLiteral' ],
+            [ $collection2, 'et', true, 'no-LangStringLiteral' ]
         ];
     }
 }

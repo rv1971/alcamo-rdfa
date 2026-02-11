@@ -11,8 +11,8 @@ use alcamo\exception\DataValidationFailed;
  * @invariant If the collection is nonempty, all statements are about the
  * property returned by getPropUri().
  *
- * @invariant Add statements are indexed by their digest. Duplicates are
- * silently discarded.
+ * @invariant Statements are indexed by their digest. Duplicates are silently
+ * discarded.
  *
  * @date Last reviewed 2026-02-05
  */
@@ -79,74 +79,72 @@ class StmtCollection extends ReadonlyCollection
 
     /**
      * @brief Find the first statement that is a best match for the desired
-     * language
+     * language, if any
      *
      * @param Lang|string $lang desired language
+     *
+     * @param $disableFallback Do not return a statement with a different
+     * primary language subtag as a fallback. Language-agnostic statements or
+     * statements with the same primary language subtag can always be returned
+     * as fallbacks.
      */
-    public function findLang($lang): ?StmtInterface
-    {
-        if ($lang instanceof Lang) {
+    public function findLang(
+        $lang = null,
+        ?bool $disableFallback = null
+    ): ?StmtInterface {
+        /** Return `null` if the collection is empty. */
+        if (!$this->data_) {
+            return null;
+        }
+
+        /** Return the first statement if $lang is `null` or the empty
+         *  string. */
+        if (!isset($lang) || $lang == '') {
+            return $this->first();
+        }
+
+        if (!($lang instanceof Lang)) {
             $lang = Lang::newFromString($lang);
         }
 
-        $langString = (string)$lang;
-        $bestMatch = $this->first();
-        $bestMatchLen = 0;
+        $bestMatch = null;
+        $bestMatchLevel = -1;
 
         foreach ($this as $stmt) {
             $object = $stmt->getObject();
 
-            /** This works for LangStringLiteral objects as well as for Node
-             *  objects, taking a `dc:language` statement from the latter, if
-             *  present. */
-            switch (true) {
-                case $object instanceof LangStringLiteral:
-                    $objectLang = $object->getLang();
-                    break;
-
-                case $object instanceof Node:
-                    if (isset($object->getRdfaData()['dc:language'])) {
-                        $objectLang =
-                            $object->getRdfaData()['dc:language']->first();
-                    }
-
-                    break;
-            }
+            $objectLang = $object instanceof HavingLangInterface
+                ? $object->getLang()
+                : null;
 
             if (!isset($objectLang)) {
+                /* Language-agnostic statement. */
+
+                if ($bestMatchLevel < 0) {
+                    $bestMatch = $stmt;
+                    $bestMatchLevel = 0;
+                }
+
                 continue;
             }
 
-            $objectLangString = (string)$objectLang;
-
             /* If a perfect match is found, return it immediately. */
-            if ($objectLangString == $langString) {
+            if ($objectLang == $lang) {
                 return $stmt;
             }
 
-            /* Otherwise check the length of the common prefix. Save the
-             * current statement if is better than the best match found so
-             * far. */
-            $maxLen = min(strlen($langString), strlen($objectLangString));
+            /* Otherwise, save the current statement if is better than the
+             * best match found so far. */
+            $matchLevel = $objectLang->countCommonSubtags($lang);
 
-            for (
-                $matchLen = 0;
-                $matchLen < $maxLen
-                    && $langString[$matchLen] == $objectLangString[$matchLen];
-                $matchLen++
-            );
-
-            /* Ignore the last common character if it is a dash. */
-            if ($langString[$matchLen - 1] == '-') {
-                $matchLen--;
-            }
-
-            if ($matchLen > $bestMatchLen) {
+            if ($matchLevel > $bestMatchLevel) {
                 $bestMatch = $stmt;
-                $bestMatchLen = $matchLen;
+                $bestMatchLevel = $matchLevel;
             }
         }
 
-        return $bestMatch;
+        return $bestMatchLevel >= 0
+            ? $bestMatch
+            : ($disableFallback ? null : $this->first());
     }
 }
