@@ -213,6 +213,40 @@ class RdfaDataTest extends TestCase implements NamespaceConstantsInterface
     }
 
     /**
+     * @dataProvider findStmtWithLangProvider
+     */
+    public function testFindStmtWithLang(
+        $prop,
+        $lang,
+        $disableFallback,
+        $expectedData
+    ): void {
+        $rdfaData = RdfaData::newFromIterable(
+            [
+                [ 'dc:title', new LangStringLiteral('Titolo', 'it') ],
+                [ 'dc:title', new LangStringLiteral('Titre', 'fr') ]
+            ]
+        );
+
+        $this->assertSame(
+            $expectedData,
+            (string)$rdfaData->findStmtWithLang($prop, $lang, $disableFallback)
+        );
+    }
+
+    public function findStmtWithLangProvider(): array
+    {
+        return [
+            [ 'dc:title', null, null, 'Titolo' ],
+            [ 'dc:title', 'en', null, 'Titolo' ],
+            [ 'dc:title', 'en', true, '' ],
+            [ 'dc:title', 'it', null, 'Titolo' ],
+            [ 'dc:title', 'fr', null, 'Titre' ],
+            [ 'dc:creator', null, null, '' ]
+        ];
+    }
+
+    /**
      * @dataProvider addProvider
      */
     public function testAdd($inputData1, $inputData2, $expectedData): void

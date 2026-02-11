@@ -164,6 +164,26 @@ class RdfaData extends ReadonlyCollection
     }
 
     /**
+     * @brief Find the first statement that is a best match for the desired
+     * language, if any
+     *
+     * @param $prop Property URI or CURIE
+     *
+     * @param Lang|string|null $lang desired language
+     *
+     * @param $disableFallback See alcamo::rdfa::StmtCollection::findLang
+     */
+    public function findStmtWithLang(
+        string $prop,
+        $lang = null,
+        ?bool $disableFallback = null
+    ): ?StmtInterface {
+        $stmts = $this[$prop];
+
+        return isset($stmts) ? $stmts->findLang($lang, $disableFallback) : null;
+    }
+
+    /**
      * @brief Return new object, adding properties without overwriting
      * existing ones
      */

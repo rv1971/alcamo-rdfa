@@ -81,7 +81,7 @@ class StmtCollection extends ReadonlyCollection
      * @brief Find the first statement that is a best match for the desired
      * language, if any
      *
-     * @param Lang|string $lang desired language
+     * @param Lang|string|null $lang desired language
      *
      * @param $disableFallback Do not return a statement with a different
      * primary language subtag as a fallback. Language-agnostic statements or
