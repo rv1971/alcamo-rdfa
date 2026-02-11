@@ -2,6 +2,9 @@
 
 namespace alcamo\rdfa;
 
+use alcamo\uri\Uri;
+use Psr\Http\Message\UriInterface;
+
 /**
  * @brief RDF literal
  *
@@ -17,8 +20,17 @@ abstract class AbstractLiteral implements LiteralInterface
     /// Must be defined in derived classes
     public const DATATYPE_URI = null;
 
+    /// Return static::DATATYPE_URI as an Uri object
+    public static function getClassDatatypeUri(): UriInterface
+    {
+        static $uris = [];
+
+        return $uris[static::class]
+        ?? ($uris[static::class] = new Uri(static::DATATYPE_URI));
+    }
+
     protected $value_;
-    protected $datatypeUri_; ///< string or stringable URI
+    protected $datatypeUri_; ///< UriInterface
 
     /**
      * @param $value in any appropriate PHP type.
@@ -33,7 +45,11 @@ abstract class AbstractLiteral implements LiteralInterface
         $this->value_ =
             $value instanceof LiteralInterface ? $value->getValue() : $value;
 
-        $this->datatypeUri_ = $datatypeUri ?? static::DATATYPE_URI;
+        $this->datatypeUri_ = isset($datatypeUri)
+            ? ($datatypeUri instanceof UriInterface
+               ? $datatypeUri
+               : new Uri($datatypeUri))
+            : static::getClassDatatypeUri();
     }
 
     public function getValue()
@@ -41,7 +57,7 @@ abstract class AbstractLiteral implements LiteralInterface
         return $this->value_;
     }
 
-    public function getDatatypeUri()
+    public function getDatatypeUri(): UriInterface
     {
         return $this->datatypeUri_;
     }

@@ -40,7 +40,7 @@ class Node implements HavingRdfaDataInterface, HavingLangInterface
         $this->rdfaData_ = clone $this->rdfaData_;
     }
 
-    public function getUri(): Uri
+    public function getUri(): UriInterface
     {
         return $this->uri_;
     }

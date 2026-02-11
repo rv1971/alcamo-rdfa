@@ -36,7 +36,10 @@ class LiteralFactoryTest extends TestCase
             $this->assertSame($expectedValue, $literal->getValue());
         }
 
-        $this->assertSame($expectedDatatypeUri, $literal->getDatatypeUri());
+        $this->assertSame(
+            $expectedDatatypeUri,
+            (string)$literal->getDatatypeUri()
+        );
 
         $this->assertSame($expectedString, (string)$literal);
 

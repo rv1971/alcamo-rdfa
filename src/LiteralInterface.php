@@ -2,6 +2,8 @@
 
 namespace alcamo\rdfa;
 
+use Psr\Http\Message\UriInterface;
+
 /**
  * @brief RDF literal
  *
@@ -20,8 +22,7 @@ interface LiteralInterface extends HavingDigestInterface, HavingLangInterface
     /// Value as an appropriate PHP type, not necessarily stringable
     public function getValue();
 
-    /// string or stringable URI
-    public function getDatatypeUri();
+    public function getDatatypeUri(): UriInterface;
 
     /// Language, if available
     public function getLang(): ?Lang;
