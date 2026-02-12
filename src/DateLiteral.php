@@ -9,11 +9,8 @@ namespace alcamo\rdfa;
  */
 class DateLiteral extends DateTimeLiteral
 {
-    public const DATATYPE_URI = self::XSD_NS_NAME . 'date';
+    public const DATATYPE_URI = self::XSD_NS . 'date';
 
-    /// Return content using as ISO 8601 string without timezone
-    public function __toString(): string
-    {
-        return $this->value_->format('Y-m-d');
-    }
+    /// Format content as ISO 8601 string without timezone
+    public const FORMAT = 'Y-m-d';
 }

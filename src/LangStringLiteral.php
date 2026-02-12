@@ -9,7 +9,7 @@ namespace alcamo\rdfa;
  */
 class LangStringLiteral extends AbstractLiteral
 {
-    public const DATATYPE_URI = self::RDF_NS_NAME . 'langString';
+    public const DATATYPE_URI = self::RDF_NS . 'langString';
 
     private $lang_; ///< ?Lang
 

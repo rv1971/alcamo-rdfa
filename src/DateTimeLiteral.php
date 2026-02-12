@@ -9,7 +9,10 @@ namespace alcamo\rdfa;
  */
 class DateTimeLiteral extends AbstractLiteral
 {
-    public const DATATYPE_URI = self::XSD_NS_NAME . 'dateTime';
+    public const DATATYPE_URI = self::XSD_NS . 'dateTime';
+
+    /// Format used in __toString()
+    public const FORMAT = 'c';
 
     /**
      * @param $value DateTime|string DateTime or datetime string.
@@ -27,6 +30,6 @@ class DateTimeLiteral extends AbstractLiteral
     /// Return content using as ISO 8601 string with timezone
     public function __toString(): string
     {
-        return $this->value_->format('c');
+        return $this->value_->format(static::FORMAT);
     }
 }

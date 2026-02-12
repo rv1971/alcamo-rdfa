@@ -9,7 +9,7 @@ namespace alcamo\rdfa;
  */
 class BooleanLiteral extends AbstractLiteral
 {
-    public const DATATYPE_URI = self::XSD_NS_NAME . 'boolean';
+    public const DATATYPE_URI = self::XSD_NS . 'boolean';
 
     /**
      * @param @param $value bool|string Boolean or boolean string.

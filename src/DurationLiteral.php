@@ -11,7 +11,7 @@ use alcamo\time\Duration;
  */
 class DurationLiteral extends AbstractLiteral
 {
-    public const DATATYPE_URI = self::XSD_NS_NAME . 'duration';
+    public const DATATYPE_URI = self::XSD_NS . 'duration';
 
     /**
      * @param $value Duration|string Duration or duration string.

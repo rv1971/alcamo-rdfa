@@ -18,23 +18,24 @@ class LiteralFactory implements LiteralFactoryInterface
         FloatLiteral::DATATYPE_URI      => FloatLiteral::class,
         IntegerLiteral::DATATYPE_URI    => IntegerLiteral::class,
         LanguageLiteral::DATATYPE_URI   => LanguageLiteral::class,
+        MediaTypeLiteral::DATATYPE_URI  => MediaTypeLiteral::class,
         TimeLiteral::DATATYPE_URI       => TimeLiteral::class,
 
-        self::XSD_NS_NAME . 'byte'               => IntegerLiteral::class,
-        self::XSD_NS_NAME . 'int'                => IntegerLiteral::class,
-        self::XSD_NS_NAME . 'long'               => IntegerLiteral::class,
-        self::XSD_NS_NAME . 'negativeInteger'    => IntegerLiteral::class,
-        self::XSD_NS_NAME . 'nonNegativeInteger' => IntegerLiteral::class,
-        self::XSD_NS_NAME . 'nonPositiveInteger' => IntegerLiteral::class,
-        self::XSD_NS_NAME . 'positiveInteger'    => IntegerLiteral::class,
-        self::XSD_NS_NAME . 'short'              => IntegerLiteral::class,
-        self::XSD_NS_NAME . 'unsignedByte'       => IntegerLiteral::class,
-        self::XSD_NS_NAME . 'unsignedInt'        => IntegerLiteral::class,
-        self::XSD_NS_NAME . 'unsignedLong'       => IntegerLiteral::class,
-        self::XSD_NS_NAME . 'unsignedShort'      => IntegerLiteral::class,
+        self::XSD_NS . 'byte'               => IntegerLiteral::class,
+        self::XSD_NS . 'int'                => IntegerLiteral::class,
+        self::XSD_NS . 'long'               => IntegerLiteral::class,
+        self::XSD_NS . 'negativeInteger'    => IntegerLiteral::class,
+        self::XSD_NS . 'nonNegativeInteger' => IntegerLiteral::class,
+        self::XSD_NS . 'nonPositiveInteger' => IntegerLiteral::class,
+        self::XSD_NS . 'positiveInteger'    => IntegerLiteral::class,
+        self::XSD_NS . 'short'              => IntegerLiteral::class,
+        self::XSD_NS . 'unsignedByte'       => IntegerLiteral::class,
+        self::XSD_NS . 'unsignedInt'        => IntegerLiteral::class,
+        self::XSD_NS . 'unsignedLong'       => IntegerLiteral::class,
+        self::XSD_NS . 'unsignedShort'      => IntegerLiteral::class,
 
-        self::XSD_NS_NAME . 'decimal'            => FloatLiteral::class,
-        self::XSD_NS_NAME . 'float'              => FloatLiteral::class
+        self::XSD_NS . 'decimal'            => FloatLiteral::class,
+        self::XSD_NS . 'float'              => FloatLiteral::class
     ];
 
     /**

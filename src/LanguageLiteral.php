@@ -9,7 +9,7 @@ namespace alcamo\rdfa;
  */
 class LanguageLiteral extends AbstractLiteral
 {
-    public const DATATYPE_URI = self::XSD_NS_NAME . 'language';
+    public const DATATYPE_URI = self::XSD_NS . 'language';
 
     /*
      * @param $value Lang|string Lang or language string.

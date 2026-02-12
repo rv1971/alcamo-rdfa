@@ -9,7 +9,7 @@ namespace alcamo\rdfa;
  */
 class IntegerLiteral extends AbstractLiteral
 {
-    public const DATATYPE_URI = self::XSD_NS_NAME . 'integer';
+    public const DATATYPE_URI = self::XSD_NS . 'integer';
 
     /**
      * @param $value int|string Integer or integer string.

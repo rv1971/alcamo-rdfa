@@ -9,9 +9,9 @@ namespace alcamo\rdfa;
  */
 interface LiteralFactoryInterface
 {
-    public const RDF_NS_NAME = LiteralInterface::RDF_NS_NAME;
+    public const RDF_NS = LiteralInterface::RDF_NS;
 
-    public const XSD_NS_NAME = LiteralInterface::XSD_NS_NAME;
+    public const XSD_NS = LiteralInterface::XSD_NS;
 
     /**
      * @param $value in any appropriate PHP type.

@@ -9,5 +9,5 @@ namespace alcamo\rdfa;
  */
 class StringLiteral extends AbstractLiteral
 {
-    public const DATATYPE_URI = self::XSD_NS_NAME . 'string';
+    public const DATATYPE_URI = self::XSD_NS . 'string';
 }
