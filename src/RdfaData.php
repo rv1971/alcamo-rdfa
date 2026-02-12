@@ -152,6 +152,8 @@ class RdfaData extends ReadonlyCollection
     /// Check presence of a property URI or CURIE
     public function offsetExists($offset): bool
     {
+        $offset = (string)$offset;
+
         return isset($this->data_[$offset])
             || isset($this->curieToUri_[$offset]);
     }
@@ -159,10 +161,34 @@ class RdfaData extends ReadonlyCollection
     /// Get a statement collection by property URI or CURIE
     public function offsetGet($offset)
     {
+        $offset = (string)$offset;
+
         return $this->data_[$offset]
         ?? (isset($this->curieToUri_[$offset])
             ? $this->data_[$this->curieToUri_[$offset]]
             : null);
+    }
+
+    /// Unset all data for a property URI or CURIE
+    public function offsetUnset($offset): void
+    {
+        $offset = (string)$offset;
+
+        $uri = isset($this->data_[$offset])
+            ? $offset
+            : ($this->curieToUri_[$offset] ?? null);
+
+        if (isset($uri) && isset($this->data_[$uri])) {
+            unset($this->data_[$uri]);
+
+            foreach ($this->curieToUri_ as $curie => $uri2) {
+                if ($uri2 == $uri) {
+                    unset($this->curieToUri_[$curie]);
+
+                    break;
+                }
+            }
+        }
     }
 
     /// Mapping of property CURIEs to URIs
@@ -233,19 +259,7 @@ class RdfaData extends ReadonlyCollection
         $this->curieToUri_ = $rdfaData->curieToUri_ + $this->curieToUri_;
 
         foreach ($rdfaData->propUrisToDelete_ as $uri) {
-            $uri = (string)$uri;
-
-            if (isset($this->data_[$uri])) {
-                unset($this->data_[$uri]);
-
-                foreach ($this->curieToUri_ as $curie => $uri2) {
-                    if ($uri2 == $uri) {
-                        unset($this->curieToUri_[$curie]);
-
-                        break;
-                    }
-                }
-            }
+            $this->offsetUnset($uri);
         }
 
         foreach ($rdfaData->data_ as $uri => $stmts) {

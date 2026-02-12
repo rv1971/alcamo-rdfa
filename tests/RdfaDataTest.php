@@ -213,6 +213,26 @@ class RdfaDataTest extends TestCase implements NamespaceConstantsInterface
         );
     }
 
+    public function testOffsetUnset(): void
+    {
+        $rdfaData = RdfaData::newFromIterable(
+            [
+                [ 'dc:title', 'Foo' ],
+                [ 'dc:alternative', 'Bar' ],
+                [ 'dc:creator', 'Alice' ],
+            ]
+        );
+
+        unset($rdfaData['dc:title']);
+        unset($rdfaData[self::DC_NS . 'alternative']);
+        unset($rdfaData['no-such-index']);
+
+        $this->assertEquals(
+            RdfaData::newFromIterable([ [ 'dc:creator', 'Alice' ] ]),
+            $rdfaData
+        );
+    }
+
     /**
      * @dataProvider findStmtWithLangProvider
      */
