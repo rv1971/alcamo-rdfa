@@ -24,7 +24,10 @@ class SimpleStmt implements StmtInterface
         $this->propNsName_ = $propNsName;
         $this->propNsPrefix_ = $propNsPrefix;
         $this->propLocalName_ = $propLocalName;
-        $this->object_ = $object;
+
+        $this->object_ = $object instanceof LiteralOrNodeInterface
+            ? $object
+            : (new LiteralFactory())->create($object);
     }
 
     public function getPropNsName(): string

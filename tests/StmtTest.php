@@ -179,7 +179,7 @@ class StmtTest extends TestCase implements NamespaceConstantsInterface
                 self::DC_NS,
                 'dc',
                 'format',
-                new MediaType('application', 'xml'),
+                new MediaTypeLiteral(new MediaType('application', 'xml')),
                 'application/xml',
                 'application/xml'
             ],

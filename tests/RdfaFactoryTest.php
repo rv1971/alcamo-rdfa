@@ -29,7 +29,7 @@ class RdfaFactoryTest extends TestCase implements NamespaceConstantsInterface
 
         $this->assertNull($stmt->getPropCurie());
 
-        $this->assertSame('baz', $stmt->getObject());
+        $this->assertEquals(new StringLiteral('baz'), $stmt->getObject());
 
         $this->assertSame('baz', (string)$stmt);
     }

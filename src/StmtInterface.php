@@ -39,7 +39,7 @@ interface StmtInterface extends HavingDigestInterface, NamespaceConstantsInterfa
     public function getPropCurie(): ?string;
 
     /// Object of the RDFa statement
-    public function getObject();
+    public function getObject(): LiteralOrNodeInterface;
 
     /// String representation of the object
     public function __toString(): string;

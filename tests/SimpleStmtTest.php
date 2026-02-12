@@ -49,8 +49,8 @@ class SimpleStmtTest extends TestCase
     public function basicsProvider(): array
     {
         return [
-            [ 'https://foo.example.com', 'foo', 'bar', 42 ],
-            [ 'https://foo.example.com', null, 'baz', 43 ]
+            [ 'https://foo.example.com', 'foo', 'bar', new IntegerLiteral(42) ],
+            [ 'https://foo.example.com', null, 'baz', new IntegerLiteral(43) ]
         ];
     }
 }

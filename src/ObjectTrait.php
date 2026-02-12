@@ -21,11 +21,13 @@ trait ObjectTrait
      */
     public function __construct($object)
     {
-        $this->object_ = $object;
+        $this->object_ = $object instanceof LiteralOrNodeInterface
+            ? $object
+            : (new LiteralFactory())->create($object);
     }
 
     /// @copydoc StmtInterface::getObject()
-    public function getObject()
+    public function getObject(): LiteralOrNodeInterface
     {
         return $this->object_;
     }

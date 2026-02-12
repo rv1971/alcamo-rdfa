@@ -12,7 +12,7 @@ use Psr\Http\Message\UriInterface;
  *
  * @date Last reviewed 2025-10-18
  */
-class Node implements HavingRdfaDataInterface, HavingLangInterface
+class Node implements HavingRdfaDataInterface, LiteralOrNodeInterface
 {
     private $uri_;      ///< UriInterface
     private $rdfaData_; ///< ?RdfaData
