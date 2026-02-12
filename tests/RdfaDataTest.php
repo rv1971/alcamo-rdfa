@@ -4,6 +4,7 @@ namespace alcamo\rdfa;
 
 use alcamo\exception\DataValidationFailed;
 use alcamo\xml\NamespaceConstantsInterface;
+use Ds\Set;
 use PHPUnit\Framework\TestCase;
 
 class RdfaDataTest extends TestCase implements NamespaceConstantsInterface
@@ -359,6 +360,93 @@ class RdfaDataTest extends TestCase implements NamespaceConstantsInterface
                 ]
             ]
         ];
+    }
+
+    public function testPropUrisToDelete(): void
+    {
+        $rdfaData1 = RdfaData::newFromIterable(
+            [
+                [ 'dc:title', 'Foo' ],
+                [ 'dc:abstract', 'Lorem ipsum.' ],
+                [ 'rdfs:comment', 'At vero eos et accusam et justo duo.' ],
+                [ 'owl:sameAs', 'http://www.example.com/foo' ],
+                [ 'dc:coverage', '2000' ]
+            ]
+        );
+
+        $this->assertSame(
+            [
+                'dc:title' => self::DC_NS . 'title',
+                'dc:abstract' => self::DC_NS . 'abstract',
+                'rdfs:comment' => self::RDFS_NS . 'comment',
+                'owl:sameAs' => self::OWL_NS . 'sameAs',
+                'dc:coverage' => self::DC_NS . 'coverage'
+            ],
+            $rdfaData1->getCurieToUri()
+        );
+
+        $rdfaData2 = RdfaData::newFromIterable(
+            [
+                [ 'dc:creator', 'Bob' ]
+            ]
+        );
+
+        $rdfaData2->getPropUrisToDelete()->add(
+            self::DC_NS . 'title',
+            self::RDFS_NS . 'comment',
+            self::DC_NS . 'coverage'
+        );
+
+        $this->assertEquals(
+            new Set(
+                [
+                    self::DC_NS . 'title',
+                    self::RDFS_NS . 'comment',
+                    self::DC_NS . 'coverage'
+                ]
+            ),
+            $rdfaData2->getPropUrisToDelete()
+        );
+
+        $rdfaData3 = RdfaData::newFromIterable(
+            [
+                [ 'dc:coverage', '2026' ],
+                [ 'dc:abstract', 'Stet clita kasd gubergren.' ],
+            ]
+        );
+
+        $rdfaData2->add($rdfaData3);
+
+        $this->assertEquals(
+            new Set(
+                [ self::DC_NS . 'title', self::RDFS_NS . 'comment' ]
+            ),
+            $rdfaData2->getPropUrisToDelete()
+        );
+
+        $rdfaData1->replace($rdfaData2);
+
+        $this->assertEquals(
+            RdfaData::newFromIterable(
+                [
+                    [ 'dc:abstract', 'Stet clita kasd gubergren.' ],
+                    [ 'owl:sameAs', 'http://www.example.com/foo' ],
+                    [ 'dc:coverage', '2026' ],
+                    [ 'dc:creator', 'Bob' ]
+                ]
+            ),
+            $rdfaData1
+        );
+
+        $this->assertSame(
+            [
+                'dc:creator' => self::DC_NS . 'creator',
+                'dc:coverage' => self::DC_NS . 'coverage',
+                'dc:abstract' => self::DC_NS . 'abstract',
+                'owl:sameAs' => self::OWL_NS . 'sameAs'
+            ],
+            $rdfaData1->getCurieToUri()
+        );
     }
 
     /**

@@ -4,6 +4,7 @@ namespace alcamo\rdfa;
 
 use alcamo\collection\{ReadonlyCollection, StringIndexedReadArrayAccessTrait};
 use alcamo\exception\DataValidationFailed;
+use Ds\Set;
 
 /**
  * @brief Collection of RDFa statements
@@ -130,6 +131,8 @@ class RdfaData extends ReadonlyCollection
 
     private $curieToUri_; ///< array
 
+    private $propUrisToDelete_; ///< Set
+
     private function __construct(
         ?array $rdfaData = null,
         ?array $curieToUri = null
@@ -137,6 +140,13 @@ class RdfaData extends ReadonlyCollection
         parent::__construct($rdfaData);
 
         $this->curieToUri_ = (array)$curieToUri;
+
+        $this->propUrisToDelete_ = new Set();
+    }
+
+    public function __clone()
+    {
+        $this->propUrisToDelete_ = clone $this->propUrisToDelete_;
     }
 
     /// Check presence of a property URI or CURIE
@@ -159,6 +169,15 @@ class RdfaData extends ReadonlyCollection
     public function getCurieToUri(): array
     {
         return $this->curieToUri_;
+    }
+
+    /**
+     * The properties with URIs in this set are deleted from an RdfData object
+     * when the present object is used as an argument for replace().
+     */
+    public function getPropUrisToDelete(): Set
+    {
+        return $this->propUrisToDelete_;
     }
 
     /**
@@ -188,12 +207,14 @@ class RdfaData extends ReadonlyCollection
      */
     public function add(self $rdfaData): self
     {
-        foreach ($rdfaData->data_ as $key => $stmts) {
-            if (isset($this->data_[$key])) {
-                $this->data_[$key]->addStmtCollection($stmts);
+        foreach ($rdfaData->data_ as $uri => $stmts) {
+            if (isset($this->data_[$uri])) {
+                $this->data_[$uri]->addStmtCollection($stmts);
             } else {
-                $this->data_[$key] = clone $stmts;
+                $this->data_[$uri] = clone $stmts;
             }
+
+            $this->propUrisToDelete_->remove($uri);
         }
 
         $this->curieToUri_ += $rdfaData->curieToUri_;
@@ -207,6 +228,22 @@ class RdfaData extends ReadonlyCollection
         $this->data_ = $rdfaData->data_ + $this->data_;
 
         $this->curieToUri_ = $rdfaData->curieToUri_ + $this->curieToUri_;
+
+        foreach ($rdfaData->propUrisToDelete_ as $uri) {
+            $uri = (string)$uri;
+
+            if (isset($this->data_[$uri])) {
+                unset($this->data_[$uri]);
+
+                foreach ($this->curieToUri_ as $curie => $uri2) {
+                    if ($uri2 == $uri) {
+                        unset($this->curieToUri_[$curie]);
+
+                        break;
+                    }
+                }
+            }
+        }
 
         return $this;
     }
