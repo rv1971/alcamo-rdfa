@@ -385,6 +385,16 @@ class RdfaDataTest extends TestCase implements NamespaceConstantsInterface
             $rdfaData1->getCurieToUri()
         );
 
+        $rdfaData1->getPropUrisToDelete()->add(
+            self::DC_NS . 'creator',
+            self::DC_NS . 'publisher',
+        );
+
+        $this->assertEquals(
+            new Set([ self::DC_NS . 'creator', self::DC_NS . 'publisher' ]),
+            $rdfaData1->getPropUrisToDelete()
+        );
+
         $rdfaData2 = RdfaData::newFromIterable(
             [
                 [ 'dc:creator', 'Bob' ]
@@ -415,16 +425,31 @@ class RdfaDataTest extends TestCase implements NamespaceConstantsInterface
             ]
         );
 
+        $rdfaData3->getPropUrisToDelete()->add(
+            self::DC_NS . 'modified'
+        );
+
         $rdfaData2->add($rdfaData3);
 
         $this->assertEquals(
             new Set(
-                [ self::DC_NS . 'title', self::RDFS_NS . 'comment' ]
+                [
+                    self::DC_NS . 'title',
+                    self::RDFS_NS . 'comment',
+                    self::DC_NS . 'modified'
+                ]
             ),
             $rdfaData2->getPropUrisToDelete()
         );
 
         $rdfaData1->replace($rdfaData2);
+
+        $this->assertEquals(
+            new Set([ self::DC_NS . 'publisher' ]),
+            $rdfaData1->getPropUrisToDelete()
+        );
+
+        $rdfaData1->getPropUrisToDelete()->clear();
 
         $this->assertEquals(
             RdfaData::newFromIterable(

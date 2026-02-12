@@ -219,6 +219,9 @@ class RdfaData extends ReadonlyCollection
 
         $this->curieToUri_ += $rdfaData->curieToUri_;
 
+        $this->propUrisToDelete_ =
+            $this->propUrisToDelete_->union($rdfaData->propUrisToDelete_);
+
         return $this;
     }
 
@@ -243,6 +246,10 @@ class RdfaData extends ReadonlyCollection
                     }
                 }
             }
+        }
+
+        foreach ($rdfaData->data_ as $uri => $stmts) {
+            $this->propUrisToDelete_->remove($uri);
         }
 
         return $this;
