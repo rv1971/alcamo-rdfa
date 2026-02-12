@@ -17,9 +17,7 @@ use alcamo\exception\DataValidationFailed;
  * one statement because mupltiple statements do not make sense,
  * e.g. `$rdfaData['dc:created']->first()`.
  *
- * @invariant Immutable object.
- *
- * @date Last reviewed 2026-2-09
+ * @date Last reviewed 2026-02-12
  */
 class RdfaData extends ReadonlyCollection
 {
@@ -184,31 +182,33 @@ class RdfaData extends ReadonlyCollection
     }
 
     /**
-     * @brief Return new object, adding properties without overwriting
-     * existing ones
+     * @brief Add properties without overwriting existing ones
+     *
+     * @return $this
      */
     public function add(self $rdfaData): self
     {
-        $newData = $this->data_;
-
         foreach ($rdfaData->data_ as $key => $stmts) {
-            if (isset($newData[$key])) {
-                $newData[$key]->addStmtCollection($stmts);
+            if (isset($this->data_[$key])) {
+                $this->data_[$key]->addStmtCollection($stmts);
             } else {
-                $newData[$key] = clone $stmts;
+                $this->data_[$key] = clone $stmts;
             }
         }
 
-        return new self($newData, $this->curieToUri_ + $rdfaData->curieToUri_);
+        $this->curieToUri_ += $rdfaData->curieToUri_;
+
+        return $this;
     }
 
     /// Return a new object with added properties, overwriting existing ones
     public function replace(self $rdfaData): self
     {
-        return new self(
-            (clone $rdfaData)->data_ + (clone $this)->data_,
-            $rdfaData->curieToUri_ + $this->curieToUri_
-        );
+        $this->data_ = $rdfaData->data_ + $this->data_;
+
+        $this->curieToUri_ = $rdfaData->curieToUri_ + $this->curieToUri_;
+
+        return $this;
     }
 
     /// Return map of namespaces prefixes to namespaces
