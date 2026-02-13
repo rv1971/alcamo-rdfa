@@ -267,6 +267,24 @@ class RdfaDataTest extends TestCase implements NamespaceConstantsInterface
         ];
     }
 
+    public function testAddStmt(): void
+    {
+        $rdfaData = RdfaData::newEmpty();
+
+        $rdfaData->addStmt(new DcTitle('foo'))
+            ->addStmt(new OwlVersionInfo('1.2.3'));
+
+        $this->assertEquals(
+            RdfaData::newFromIterable(
+                [
+                    [ 'dc:title', 'foo' ],
+                    [ 'owl:versionInfo', '1.2.3' ]
+                ]
+            ),
+            $rdfaData
+        );
+    }
+
     /**
      * @dataProvider addProvider
      */

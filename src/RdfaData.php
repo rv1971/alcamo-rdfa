@@ -115,11 +115,10 @@ class RdfaData extends ReadonlyCollection
             $curie = $flags & self::URI_AS_KEY ? $stmt->getPropCurie() : $key;
 
             if (!isset($rdfaData[$uri])) {
-                $stmtCollection = new StmtCollection();
-                $rdfaData[$uri] = $stmtCollection;
+                $rdfaData[$uri] = new StmtCollection();
 
                 if (isset($curie)) {
-                    $curieToUri[(string)$curie] = $uri;
+                    $curieToUri[$curie] = $uri;
                 }
             }
 
@@ -224,6 +223,30 @@ class RdfaData extends ReadonlyCollection
         $stmts = $this[$prop];
 
         return isset($stmts) ? $stmts->findLang($lang, $disableFallback) : null;
+    }
+
+    /**
+     * @brief Add a statement
+     *
+     * @return $this
+     */
+    public function addStmt(StmtInterface $stmt): self
+    {
+        $uri = $stmt->getPropUri();
+
+        if (!isset($this->data_[$uri])) {
+            $this->data_[$uri] = new StmtCollection();
+
+            $curie = $stmt->getPropCurie();
+
+            if (isset($curie)) {
+                $this->curieToUri_[$curie] = $uri;
+            }
+        }
+
+        $this->data_[$uri]->addStmt($stmt);
+
+        return $this;
     }
 
     /**
