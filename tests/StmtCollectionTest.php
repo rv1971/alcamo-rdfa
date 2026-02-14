@@ -84,7 +84,9 @@ class StmtCollectionTest extends TestCase
             [ $collection1, 'kk-Latn-KZ', true, 'kk-Latn-CN' ],
             [ $collection1, 'fr', null, 'en' ],
             [ $collection2, 'fr', true, 'no-LangStringLiteral' ],
-            [ $collection2, 'et', true, 'no-LangStringLiteral' ]
+            [ $collection2, 'et', true, 'no-LangStringLiteral' ],
+            [ $collection2, '-', false, 'no-LangStringLiteral' ],
+            [ $collection2, '-', true, 'no-LangStringLiteral' ]
         ];
     }
 }

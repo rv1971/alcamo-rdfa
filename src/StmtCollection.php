@@ -81,7 +81,9 @@ class StmtCollection extends ReadonlyCollection
      * @brief Find the first statement that is a best match for the desired
      * language, if any
      *
-     * @param Lang|string|null $lang desired language
+     * @param Lang|string|null $lang desired language. If '-' (and hence not a
+     * valid language tag), the first language-agnostic statement (if any) is
+     * returned.
      *
      * @param $disableFallback Do not return a statement with a different
      * primary language subtag as a fallback. Language-agnostic statements or
@@ -103,10 +105,6 @@ class StmtCollection extends ReadonlyCollection
             return $this->first();
         }
 
-        if (!($lang instanceof Lang)) {
-            $lang = Lang::newFromString($lang);
-        }
-
         $bestMatch = null;
         $bestMatchLevel = -1;
 
@@ -116,6 +114,14 @@ class StmtCollection extends ReadonlyCollection
             $objectLang = $object instanceof HavingLangInterface
                 ? $object->getLang()
                 : null;
+
+            if ($lang == '-') {
+                if (!isset($objectLang)) {
+                    return $stmt;
+                } else {
+                    continue;
+                }
+            }
 
             if (!isset($objectLang)) {
                 /* Language-agnostic statement. */
