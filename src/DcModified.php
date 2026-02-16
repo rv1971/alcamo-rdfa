@@ -21,4 +21,9 @@ class DcModified extends AbstractDcStmt
         self::PROP_NS_PREFIX . ':' . self::PROP_LOCAL_NAME;
 
     public const LITERAL_CLASS = DateTimeLiteral::class;
+
+    public function format(string $format): string
+    {
+        return $this->getObject()->format($format);
+    }
 }
