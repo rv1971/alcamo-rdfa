@@ -32,4 +32,9 @@ class DateTimeLiteral extends AbstractLiteral
     {
         return $this->value_->format(static::FORMAT);
     }
+
+    public function format(string $format): string
+    {
+        return $this->value_->format($format);
+    }
 }

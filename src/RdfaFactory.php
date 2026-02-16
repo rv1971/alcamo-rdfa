@@ -30,7 +30,7 @@ class RdfaFactory implements RdfaFactoryInterface
 
     /// Map of property URI to statement class.
     public const PROP_URI_TO_STMT_CLASS = [
-        DcAbstract::PROP_URI              => DcAbstract::class,
+        DcAbstract::PROP_URI             => DcAbstract::class,
         DcAccessRights::PROP_URI         => DcAccessRights::class,
         DcAlternative::PROP_URI          => DcAlternative::class,
         DcAudience::PROP_URI             => DcAudience::class,
