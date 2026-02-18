@@ -19,7 +19,7 @@ class DateTimeLiteral extends AbstractLiteral
      *
      * @param $datatypeUri Datatype IRI.
      */
-    public function __construct($value, $datatypeUri = null)
+    public function __construct($value = null, $datatypeUri = null)
     {
         parent::__construct(
             $value instanceof \DateTime ? $value : new \DateTime($value),

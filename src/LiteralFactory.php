@@ -99,7 +99,7 @@ class LiteralFactory implements LiteralFactoryInterface
 
             return (new $class($value, $datatypeUri))->getValue();
         } else {
-            return $value;
+            return (string)$value;
         }
     }
 }

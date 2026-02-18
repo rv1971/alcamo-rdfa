@@ -16,7 +16,7 @@ class BooleanLiteral extends AbstractLiteral
      *
      * @param $datatypeUri Datatype IRI. [Default `xsd:boolean`]
      */
-    public function __construct($value, $datatypeUri = null)
+    public function __construct($value = null, $datatypeUri = null)
     {
         parent::__construct(
             is_bool($value)

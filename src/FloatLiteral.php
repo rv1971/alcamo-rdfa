@@ -16,7 +16,7 @@ class FloatLiteral extends AbstractLiteral
      *
      * @param $datatypeUri Datatype IRI. [default `xsd:double`]
      */
-    public function __construct($value, $datatypeUri = null)
+    public function __construct($value = null, $datatypeUri = null)
     {
         parent::__construct(
             (float)$value,

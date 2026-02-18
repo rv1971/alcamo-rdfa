@@ -98,6 +98,16 @@ class LiteralFactoryTest extends TestCase
                 'true'
             ],
             [
+                null,
+                BooleanLiteral::DATATYPE_URI,
+                null,
+                BooleanLiteral::class,
+                false,
+                self::XSD_NS . 'boolean',
+                'false',
+                'false'
+            ],
+            [
                 new \DateTime('2026-02-03T11:04:42+01:00'),
                 null,
                 null,
@@ -188,12 +198,32 @@ class LiteralFactoryTest extends TestCase
                 '2.73'
             ],
             [
+                null,
+                FloatLiteral::DATATYPE_URI,
+                null,
+                FloatLiteral::class,
+                0.0,
+                self::XSD_NS . 'double',
+                '0',
+                '0'
+            ],
+            [
                 0,
                 null,
                 null,
                 IntegerLiteral::class,
                 0,
                 self::XSD_NS . 'integer',
+                '0',
+                '0'
+            ],
+            [
+                null,
+                self::XSD_NS . 'short',
+                null,
+                IntegerLiteral::class,
+                0,
+                self::XSD_NS . 'short',
                 '0',
                 '0'
             ],
@@ -258,6 +288,16 @@ class LiteralFactoryTest extends TestCase
                 'bar'
             ],
             [
+                null,
+                self::XSD_NS . 'NOTATION',
+                null,
+                StringLiteral::class,
+                '',
+                self::XSD_NS . 'NOTATION',
+                '',
+                ''
+            ],
+            [
                 'Foo',
                 null,
                 'pt-BR',
@@ -287,7 +327,16 @@ class LiteralFactoryTest extends TestCase
                 "FOO-BAR",
                 "FOO-BAR"
             ],
-
+            [
+                null,
+                'http://schema.example.org#Bar',
+                'la-VA',
+                LangStringLiteral::class,
+                '',
+                'http://schema.example.org#Bar',
+                '',
+                '""@la-VA'
+            ]
         ];
     }
 

@@ -16,7 +16,7 @@ class IntegerLiteral extends AbstractLiteral
      *
      * @param $datatypeUri Datatype IRI. [default `xsd:integer`]
      */
-    public function __construct($value, $datatypeUri = null)
+    public function __construct($value = null, $datatypeUri = null)
     {
         parent::__construct((int)$value, $datatypeUri ?? static::DATATYPE_URI);
     }

@@ -20,9 +20,15 @@ class LangStringLiteral extends AbstractLiteral
      *
      * @param $datatypeUri Datatype IRI. [Default `xsd:langString`]
      */
-    public function __construct($value, $lang = null, $datatypeUri = null)
-    {
-        parent::__construct($value, $datatypeUri ?? static::DATATYPE_URI);
+    public function __construct(
+        $value = null,
+        $lang = null,
+        $datatypeUri = null
+    ) {
+        parent::__construct(
+            (string)$value,
+            $datatypeUri ?? static::DATATYPE_URI
+        );
 
         if (isset($lang)) {
             $this->lang_ =

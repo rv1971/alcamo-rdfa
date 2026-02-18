@@ -37,7 +37,7 @@ abstract class AbstractLiteral implements LiteralInterface
      *
      * @param $datatypeUri Datatype IRI. [Default `xsd:string`]
      */
-    public function __construct($value, $datatypeUri = null)
+    public function __construct($value = null, $datatypeUri = null)
     {
         /* Unwrap values wrapped into another literal class. This happens, for
          * instance, when OwlVersionInfo gets a LangStringLiteral (from an XML
