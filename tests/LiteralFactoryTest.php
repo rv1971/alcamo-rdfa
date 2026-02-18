@@ -4,6 +4,7 @@ namespace alcamo\rdfa;
 
 use alcamo\binary_data\BinaryString;
 use alcamo\time\Duration;
+use alcamo\uri\Uri;
 use PHPUnit\Framework\TestCase;
 
 class LiteralFactoryTest extends TestCase
@@ -432,6 +433,16 @@ class LiteralFactoryTest extends TestCase
                 self::XSD_NS . 'base64Binary',
                 'EjRWerw=',
                 'EjRWerw='
+            ],
+            [
+                'http://www.example.edu',
+                self::XSD_NS . 'anyURI',
+                null,
+                AnyUriLiteral::class,
+                new Uri('http://www.example.edu'),
+                self::XSD_NS . 'anyURI',
+                'http://www.example.edu',
+                'http://www.example.edu'
             ]
         ];
     }

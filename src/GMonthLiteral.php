@@ -24,9 +24,11 @@ class GMonthLiteral extends DateTimeLiteral
         $now = new \DateTime();
 
         parent::__construct(
-            $value instanceof \DateTime ? $value : new \DateTime(
-                (new \DateTime())->format("Y-$value-d")
-            ),
+            $value instanceof \DateTime
+                ? $value
+                : (isset($value)
+                   ? new \DateTime((new \DateTime())->format("Y-$value-d"))
+                   : new \DateTime()),
             $datatypeUri ?? static::DATATYPE_URI
         );
     }

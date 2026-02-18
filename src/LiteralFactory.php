@@ -9,8 +9,13 @@ namespace alcamo\rdfa;
  */
 class LiteralFactory implements LiteralFactoryInterface
 {
-    /// Mapping of RDF data type IRIs to classes
+    /**
+     * @brief Mapping of RDF data type IRIs to classes
+     *
+     * This mapping includes all primitive types.
+     */
     public const DATATYPE_URI_TO_CLASS = [
+        AnyUriLiteral::DATATYPE_URI         => AnyUriLiteral::class,
         Base64BinaryLiteral::DATATYPE_URI   => Base64BinaryLiteral::class,
         BooleanLiteral::DATATYPE_URI        => BooleanLiteral::class,
         DateLiteral::DATATYPE_URI           => DateLiteral::class,
@@ -43,7 +48,10 @@ class LiteralFactory implements LiteralFactoryInterface
         self::XSD_NS . 'unsignedShort'      => IntegerLiteral::class,
 
         self::XSD_NS . 'decimal'            => FloatLiteral::class,
-        self::XSD_NS . 'float'              => FloatLiteral::class
+        self::XSD_NS . 'float'              => FloatLiteral::class,
+
+        self::XSD_NS . 'NOTATION'           => StringLiteral::class,
+        self::XSD_NS . 'QName'              => StringLiteral::class
     ];
 
     /**

@@ -22,9 +22,11 @@ class GDayLiteral extends DateTimeLiteral
     public function __construct($value = null, $datatypeUri = null)
     {
         parent::__construct(
-            $value instanceof \DateTime ? $value : new \DateTime(
-                (new \DateTime())->format("Y-m-$value")
-            ),
+            $value instanceof \DateTime
+                ? $value
+                : (isset($value)
+                   ? new \DateTime((new \DateTime())->format("Y-m-$value"))
+                   : new \DateTime()),
             $datatypeUri ?? static::DATATYPE_URI
         );
     }
