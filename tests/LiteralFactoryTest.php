@@ -148,6 +148,16 @@ class LiteralFactoryTest extends TestCase
                 'P40D'
             ],
             [
+                null,
+                DurationLiteral::DATATYPE_URI,
+                null,
+                DurationLiteral::class,
+                new Duration('P0Y'),
+                self::XSD_NS . 'duration',
+                'P',
+                'P'
+            ],
+            [
                 'PT42.123S',
                 self::XSD_NS . 'duration',
                 null,

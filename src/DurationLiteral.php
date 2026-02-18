@@ -18,7 +18,7 @@ class DurationLiteral extends AbstractLiteral
      *
      * @param $datatypeUri Datatype IRI. [Default `xsd:duration`]
      */
-    public function __construct($value, $datatypeUri = null)
+    public function __construct($value = null, $datatypeUri = null)
     {
         parent::__construct(
             $value instanceof Duration ? $value : new Duration($value),
