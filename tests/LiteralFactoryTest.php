@@ -30,7 +30,16 @@ class LiteralFactoryTest extends TestCase
 
         $this->assertSame($expectedLiteralType, get_class($literal));
 
-        if (is_object($expectedValue)) {
+        if ($expectedValue instanceof \DateTimeInterface) {
+            $diff = $expectedValue->diff($literal->getValue(), true);
+
+            $this->assertSame(0, $diff->y);
+            $this->assertSame(0, $diff->m);
+            $this->assertSame(0, $diff->d);
+            $this->assertSame(0, $diff->h);
+            $this->assertSame(0, $diff->i);
+            $this->assertTrue($diff->s < 5);
+        } elseif (is_object($expectedValue)) {
             $this->assertEquals($expectedValue, $literal->getValue());
         } else {
             $this->assertSame($expectedValue, $literal->getValue());
@@ -44,7 +53,19 @@ class LiteralFactoryTest extends TestCase
         $this->assertSame($expectedString, (string)$literal);
 
         if (isset($datatypeUri)) {
-            if (is_object($expectedValue)) {
+            if ($expectedValue instanceof \DateTimeInterface) {
+                $diff = $expectedValue->diff(
+                    $literalFactory->convertValue($value, $datatypeUri),
+                    true
+                );
+
+                $this->assertSame(0, $diff->y);
+                $this->assertSame(0, $diff->m);
+                $this->assertSame(0, $diff->d);
+                $this->assertSame(0, $diff->h);
+                $this->assertSame(0, $diff->i);
+                $this->assertTrue($diff->s < 5);
+            } elseif (is_object($expectedValue)) {
                 $this->assertEquals(
                     $expectedValue,
                     $literalFactory->convertValue($value, $datatypeUri)
@@ -66,6 +87,10 @@ class LiteralFactoryTest extends TestCase
 
     public function basicsProvider(): array
     {
+        $year = (new \DateTime())->format('Y');
+        $month = (new \DateTime())->format('m');
+        $day = (new \DateTime())->format('d');
+
         return [
             [
                 true,
@@ -336,6 +361,56 @@ class LiteralFactoryTest extends TestCase
                 'http://schema.example.org#Bar',
                 '',
                 '""@la-VA'
+            ],
+            [
+                '1971',
+                self::XSD_NS . 'gYear',
+                null,
+                GYearLiteral::class,
+                new \DateTime('1971'),
+                self::XSD_NS . 'gYear',
+                '1971',
+                '1971'
+            ],
+            [
+                '1975-12',
+                self::XSD_NS . 'gYearMonth',
+                null,
+                GYearMonthLiteral::class,
+                new \DateTime('1975-12'),
+                self::XSD_NS . 'gYearMonth',
+                '1975-12',
+                '1975-12'
+            ],
+            [
+                7,
+                self::XSD_NS . 'gMonth',
+                null,
+                GMonthLiteral::class,
+                new \DateTime("$year-07-$day"),
+                self::XSD_NS . 'gMonth',
+                '07',
+                '07'
+            ],
+            [
+                '12-8',
+                self::XSD_NS . 'gMonthDay',
+                null,
+                GMonthDayLiteral::class,
+                new \DateTime("$year-12-08"),
+                self::XSD_NS . 'gMonthDay',
+                '12-08',
+                '12-08'
+            ],
+            [
+                17,
+                self::XSD_NS . 'gDay',
+                null,
+                GDayLiteral::class,
+                new \DateTime("$year-$month-17"),
+                self::XSD_NS . 'gDay',
+                '17',
+                '17'
             ]
         ];
     }
