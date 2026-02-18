@@ -5,6 +5,7 @@
     "license": "Apache-2.0",
     "require": {
         "php": "7.3 - 8.0",
+        "alcamo/binary-data": "^0.6",
         "alcamo/collection": "^0.2",
         "alcamo/time": "^0.2",
         "alcamo/uri": "^0.2",

@@ -2,6 +2,7 @@
 
 namespace alcamo\rdfa;
 
+use alcamo\binary_data\BinaryString;
 use alcamo\time\Duration;
 use PHPUnit\Framework\TestCase;
 
@@ -411,6 +412,26 @@ class LiteralFactoryTest extends TestCase
                 self::XSD_NS . 'gDay',
                 '17',
                 '17'
+            ],
+            [
+                'ab12CD',
+                self::XSD_NS . 'hexBinary',
+                null,
+                HexBinaryLiteral::class,
+                BinaryString::newFromHex('ab12cd'),
+                self::XSD_NS . 'hexBinary',
+                'AB12CD',
+                'AB12CD'
+            ],
+            [
+                'EjRWerw=',
+                self::XSD_NS . 'base64Binary',
+                null,
+                Base64BinaryLiteral::class,
+                BinaryString::newFromHex('1234567abc'),
+                self::XSD_NS . 'base64Binary',
+                'EjRWerw=',
+                'EjRWerw='
             ]
         ];
     }
