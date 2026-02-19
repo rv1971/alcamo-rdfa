@@ -190,6 +190,41 @@ class RdfaData extends ReadonlyCollection
         }
     }
 
+    /// First statement for property URI or CURIE, if any
+    public function getFirstStmt(string $prop): ?StmtInterface
+    {
+        $stmts = $this[$prop];
+
+        return isset($stmts) ? $stmts->first() : null;
+    }
+
+    /// Object of first statement for property URI or CURIE, if any
+    public function getFirstObject(string $prop): ?LiteralOrNodeInterface
+    {
+        $stmts = $this[$prop];
+
+        return isset($stmts) ? $stmts->first()->getObject() : null;
+    }
+
+    /**
+     * @brief Value or URI of object of first statement for property URI or
+     * CURIE, if any
+     */
+    public function getFirstValueOrUri(string $prop)
+    {
+        $stmts = $this[$prop];
+
+        if (!isset($stmts)) {
+            return null;
+        }
+
+        $object = $stmts->first()->getObject();
+
+        return $object instanceof Node
+            ? $object->getUri()
+            : $object->getValue();
+    }
+
     /// Mapping of property CURIEs to URIs
     public function getCurieToUri(): array
     {

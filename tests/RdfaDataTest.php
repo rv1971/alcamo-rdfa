@@ -46,7 +46,37 @@ class RdfaDataTest extends TestCase implements NamespaceConstantsInterface
                     )
                 );
             }
+
+            $this->assertSame(
+                $rdfaData[$prop]->first(),
+                $rdfaData->getFirstStmt($prop)
+            );
+
+            $this->assertSame(
+                $rdfaData[$prop]->first()->getObject(),
+                $rdfaData->getFirstObject($prop)
+            );
+
+            $this->assertSame(
+                $rdfaData[$prop]->first()->getObject()
+                    instanceof LiteralInterface
+                    ? $rdfaData[$prop]->first()->getObject()->getValue()
+                    : $rdfaData[$prop]->first()->getObject()->getUri(),
+                $rdfaData->getFirstValueOrUri($prop)
+            );
         }
+
+        $this->assertNull(
+            $rdfaData->getFirstStmt('http://www.example.com/nil')
+        );
+
+        $this->assertNull(
+            $rdfaData->getFirstObject('http://www.example.com/nil')
+        );
+
+        $this->assertNull(
+            $rdfaData->getFirstValueOrUri('http://www.example.com/nil')
+        );
     }
 
     public function newFromIterableProvider(): array
