@@ -85,6 +85,22 @@ class LiteralFactoryTest extends TestCase
         } else {
             $this->assertNull($literal->getLang());
         }
+
+        if (
+            in_array(
+                $expectedLiteralType,
+                [
+                    GDayLiteral::class,
+                    GMonthLiteral::class,
+                    GYearLiteral::class,
+                    IntegerLiteral::class
+                ]
+            )
+        ) {
+            $this->assertSame((int)(string)$literal, $literal->toInt());
+        } elseif ($expectedLiteralType == BooleanLiteral::class) {
+            $this->assertSame((int)$literal->getValue(), $literal->toInt());
+        }
     }
 
     public function basicsProvider(): array

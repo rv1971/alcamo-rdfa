@@ -20,4 +20,9 @@ class IntegerLiteral extends AbstractLiteral
     {
         parent::__construct((int)$value, $datatypeUri ?? static::DATATYPE_URI);
     }
+
+    public function toInt(): int
+    {
+        return $this->value_;
+    }
 }

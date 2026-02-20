@@ -31,4 +31,9 @@ class BooleanLiteral extends AbstractLiteral
     {
         return $this->value_ ? 'true' : 'false';
     }
+
+    public function toInt(): int
+    {
+        return $this->value_;
+    }
 }

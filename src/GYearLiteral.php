@@ -13,4 +13,9 @@ class GYearLiteral extends DateTimeLiteral
 
     /// Format content as ISO 8601 string without timezone
     public const FORMAT = 'Y';
+
+    public function toInt(): int
+    {
+        return $this->value_->format('Y');
+    }
 }

@@ -30,4 +30,9 @@ class GDayLiteral extends DateTimeLiteral
             $datatypeUri ?? static::DATATYPE_URI
         );
     }
+
+    public function toInt(): int
+    {
+        return $this->value_->format('d');
+    }
 }
