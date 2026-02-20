@@ -7,7 +7,8 @@ namespace alcamo\rdfa;
  *
  * @date Last reviewed 2026-02-05
  */
-class IntegerLiteral extends AbstractLiteral
+class IntegerLiteral extends AbstractLiteral implements
+    ConvertibleToIntInterface
 {
     public const DATATYPE_URI = self::XSD_NS . 'integer';
 

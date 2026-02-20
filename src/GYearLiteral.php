@@ -7,7 +7,7 @@ namespace alcamo\rdfa;
  *
  * @date Last reviewed 2026-02-18
  */
-class GYearLiteral extends DateTimeLiteral
+class GYearLiteral extends DateTimeLiteral implements ConvertibleToIntInterface
 {
     public const DATATYPE_URI = self::XSD_NS . 'gYear';
 

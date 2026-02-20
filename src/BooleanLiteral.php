@@ -7,7 +7,8 @@ namespace alcamo\rdfa;
  *
  * @date Last reviewed 2026-02-05
  */
-class BooleanLiteral extends AbstractLiteral
+class BooleanLiteral extends AbstractLiteral implements
+    ConvertibleToIntInterface
 {
     public const DATATYPE_URI = self::XSD_NS . 'boolean';
 

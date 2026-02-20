@@ -7,7 +7,8 @@ namespace alcamo\rdfa;
  *
  * @date Last reviewed 2026-02-18
  */
-class GMonthLiteral extends DateTimeLiteral
+class GMonthLiteral extends DateTimeLiteral implements
+    ConvertibleToIntInterface
 {
     public const DATATYPE_URI = self::XSD_NS . 'gMonth';
 
