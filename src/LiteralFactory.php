@@ -31,6 +31,8 @@ class LiteralFactory implements LiteralFactoryInterface
         IntegerLiteral::DATATYPE_URI        => IntegerLiteral::class,
         LanguageLiteral::DATATYPE_URI       => LanguageLiteral::class,
         MediaTypeLiteral::DATATYPE_URI      => MediaTypeLiteral::class,
+        NonNegativeIntegerLiteral::DATATYPE_URI
+            => NonNegativeIntegerLiteral::class,
         StringLiteral::DATATYPE_URI         => StringLiteral::class,
         TimeLiteral::DATATYPE_URI           => TimeLiteral::class,
 
@@ -38,14 +40,13 @@ class LiteralFactory implements LiteralFactoryInterface
         self::XSD_NS . 'int'                => IntegerLiteral::class,
         self::XSD_NS . 'long'               => IntegerLiteral::class,
         self::XSD_NS . 'negativeInteger'    => IntegerLiteral::class,
-        self::XSD_NS . 'nonNegativeInteger' => IntegerLiteral::class,
         self::XSD_NS . 'nonPositiveInteger' => IntegerLiteral::class,
-        self::XSD_NS . 'positiveInteger'    => IntegerLiteral::class,
+        self::XSD_NS . 'positiveInteger'    => NonNegativeIntegerLiteral::class,
         self::XSD_NS . 'short'              => IntegerLiteral::class,
-        self::XSD_NS . 'unsignedByte'       => IntegerLiteral::class,
-        self::XSD_NS . 'unsignedInt'        => IntegerLiteral::class,
-        self::XSD_NS . 'unsignedLong'       => IntegerLiteral::class,
-        self::XSD_NS . 'unsignedShort'      => IntegerLiteral::class,
+        self::XSD_NS . 'unsignedByte'       => NonNegativeIntegerLiteral::class,
+        self::XSD_NS . 'unsignedInt'        => NonNegativeIntegerLiteral::class,
+        self::XSD_NS . 'unsignedLong'       => NonNegativeIntegerLiteral::class,
+        self::XSD_NS . 'unsignedShort'      => NonNegativeIntegerLiteral::class,
 
         self::XSD_NS . 'decimal'            => FloatLiteral::class,
         self::XSD_NS . 'float'              => FloatLiteral::class,

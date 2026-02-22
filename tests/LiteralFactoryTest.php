@@ -261,6 +261,16 @@ class LiteralFactoryTest extends TestCase
                 '0'
             ],
             [
+                44,
+                self::XSD_NS . 'nonNegativeInteger',
+                null,
+                NonNegativeIntegerLiteral::class,
+                44,
+                self::XSD_NS . 'nonNegativeInteger',
+                '44',
+                '44'
+            ],
+            [
                 8.1,
                 self::XSD_NS . 'byte',
                 null,
