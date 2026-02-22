@@ -22,17 +22,17 @@ class PositiveGYearLiteral extends GYearLiteral
      *           name='PositiveGYear'
      *           xml:id='PositiveGYear'>
      *         <restriction base='gYear'>
-     *           <xs:minInclusive value='1'/>
+     *           <minInclusive value='1'/>
      *         </restriction>
      *       </simpleType>
      *     </schema>
      */
-    public const DATATYPE_URI = 'data:,%3C%3Fxml%20version=1.0%3F%3E'
-        . '%3Cschema%20xmlns=http://www.w3.org/2001/XMLSchema%20'
-        . 'targetNamespace=tag:rv1971%40web.de,2021:alcamo:ns:base%23%3E'
-        . '%3CsimpleType%20name=PositiveGYear%20xml:id=PositiveGYear%3E'
-        . '%3Crestriction%20base=gYear%3E%3Cxs:minInclusive%20value=1/%3E'
-        . '%3C/restriction%3E%3C/simpleType%3E%3C/schema%3E#PositiveGYear';
+    public const DATATYPE_URI = "data:,%3C%3Fxml%20version='1.0'%3F%3E"
+        . "%3Cschema%20xmlns='http://www.w3.org/2001/XMLSchema'%20"
+        . "targetNamespace='tag:rv1971%40web.de,2021:alcamo:ns:base%23'%3E"
+        . "%3CsimpleType%20name='PositiveGYear'%20xml:id='PositiveGYear'%3E"
+        . "%3Crestriction%20base='gYear'%3E%3CminInclusive%20value='0'/%3E"
+        . "%3C/restriction%3E%3C/simpleType%3E%3C/schema%3E#PositiveGYear";
 
     /**
      * @param $value DateTime|int|string DateTime, datetime string, or
@@ -42,15 +42,14 @@ class PositiveGYearLiteral extends GYearLiteral
      */
     public function __construct($value = null, $datatypeUri = null)
     {
+        /** @throw alcamo::exception::OutOfRange if $value is a negative
+         *  year. */
         if ($value instanceof \Datetime) {
             OutOfRange::throwIfNegative($value->format('Y'));
         } else {
             OutOfRange::throwIfNegative($value);
         }
 
-        parent::__construct(
-            $value,
-            $datatypeUri ?? static::DATATYPE_URI
-        );
+        parent::__construct($value, $datatypeUri ?? static::DATATYPE_URI);
     }
 }

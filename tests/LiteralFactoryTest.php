@@ -357,6 +357,16 @@ class LiteralFactoryTest extends TestCase
                 ''
             ],
             [
+                '00123456789123456789',
+                DigitsStringLiteral::DATATYPE_URI,
+                null,
+                DigitsStringLiteral::class,
+                '00123456789123456789',
+                DigitsStringLiteral::DATATYPE_URI,
+                '00123456789123456789',
+                '00123456789123456789'
+            ],
+            [
                 'Foo',
                 null,
                 'pt-BR',

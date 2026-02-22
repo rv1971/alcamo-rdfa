@@ -21,6 +21,7 @@ class NonNegativeIntegerLiteral extends AbstractLiteral implements
      */
     public function __construct($value = null, $datatypeUri = null)
     {
+        /** @throw alcamo::exception::OutOfRange if $value is negative. */
         OutOfRange::throwIfNegative($value);
 
         parent::__construct((int)$value, $datatypeUri ?? static::DATATYPE_URI);

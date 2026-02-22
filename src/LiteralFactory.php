@@ -20,6 +20,7 @@ class LiteralFactory implements LiteralFactoryInterface
         BooleanLiteral::DATATYPE_URI        => BooleanLiteral::class,
         DateLiteral::DATATYPE_URI           => DateLiteral::class,
         DateTimeLiteral::DATATYPE_URI       => DateTimeLiteral::class,
+        DigitsStringLiteral::DATATYPE_URI   => DigitsStringLiteral::class,
         DurationLiteral::DATATYPE_URI       => DurationLiteral::class,
         FloatLiteral::DATATYPE_URI          => FloatLiteral::class,
         GDayLiteral::DATATYPE_URI           => GDayLiteral::class,
