@@ -11,6 +11,8 @@ use alcamo\exception\OutOfRange;
  */
 class PositiveGYearLiteral extends GYearLiteral
 {
+    use HavingInlineXsdTrait;
+
     /**
      * `data:` URI representation of the `PositiveGYear` fragment of
      *

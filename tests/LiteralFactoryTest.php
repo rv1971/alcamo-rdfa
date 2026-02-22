@@ -367,6 +367,16 @@ class LiteralFactoryTest extends TestCase
                 '00123456789123456789'
             ],
             [
+                ';7123456=2602>4711?',
+                FourBitStringLiteral::DATATYPE_URI,
+                null,
+                FourBitStringLiteral::class,
+                ';7123456=2602>4711?',
+                FourBitStringLiteral::DATATYPE_URI,
+                ';7123456=2602>4711?',
+                ';7123456=2602>4711?'
+            ],
+            [
                 'Foo',
                 null,
                 'pt-BR',

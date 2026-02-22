@@ -23,6 +23,7 @@ class LiteralFactory implements LiteralFactoryInterface
         DigitsStringLiteral::DATATYPE_URI   => DigitsStringLiteral::class,
         DurationLiteral::DATATYPE_URI       => DurationLiteral::class,
         FloatLiteral::DATATYPE_URI          => FloatLiteral::class,
+        FourBitStringLiteral::DATATYPE_URI  => FourBitStringLiteral::class,
         GDayLiteral::DATATYPE_URI           => GDayLiteral::class,
         GMonthDayLiteral::DATATYPE_URI      => GMonthDayLiteral::class,
         GMonthLiteral::DATATYPE_URI         => GMonthLiteral::class,
