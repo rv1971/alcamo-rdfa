@@ -33,6 +33,7 @@ class LiteralFactory implements LiteralFactoryInterface
         MediaTypeLiteral::DATATYPE_URI      => MediaTypeLiteral::class,
         NonNegativeIntegerLiteral::DATATYPE_URI
             => NonNegativeIntegerLiteral::class,
+        PositiveGYearLiteral::DATATYPE_URI  => PositiveGYearLiteral::class,
         StringLiteral::DATATYPE_URI         => StringLiteral::class,
         TimeLiteral::DATATYPE_URI           => TimeLiteral::class,
 

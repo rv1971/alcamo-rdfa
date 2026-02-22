@@ -21,10 +21,22 @@ class DateTimeLiteral extends AbstractLiteral
      */
     public function __construct($value = null, $datatypeUri = null)
     {
-        parent::__construct(
-            $value instanceof \DateTime ? $value : new \DateTime($value),
-            $datatypeUri ?? static::DATATYPE_URI
-        );
+        /* PHP does not interpret negative dates according to
+         * https://www.w3.org/TR/xmlschema-2/#date */
+        if (!($value instanceof \Datetime)) {
+            if (ltrim($value)[0] == '-') {
+                $value = new \DateTime(ltrim($value, " \n\r\t\v\x00-"));
+                $value->setDate(
+                    -$value->format('Y'),
+                    $value->format('m'),
+                    $value->format('d')
+                );
+            } else {
+                $value = new \DateTime($value);
+            }
+        }
+
+        parent::__construct($value, $datatypeUri ?? static::DATATYPE_URI);
     }
 
     /// Return content using as ISO 8601 string with timezone

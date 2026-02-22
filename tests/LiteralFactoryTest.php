@@ -38,9 +38,12 @@ class LiteralFactoryTest extends TestCase
             $this->assertSame(0, $diff->y);
             $this->assertSame(0, $diff->m);
             $this->assertSame(0, $diff->d);
-            $this->assertSame(0, $diff->h);
-            $this->assertSame(0, $diff->i);
-            $this->assertTrue($diff->s < 5);
+
+            if ($expectedValue->format('Y')[0] != '-') {
+                $this->assertSame(0, $diff->h);
+                $this->assertSame(0, $diff->i);
+                $this->assertTrue($diff->s < 5);
+            }
         } elseif (is_object($expectedValue)) {
             $this->assertEquals($expectedValue, $literal->getValue());
         } else {
@@ -64,9 +67,12 @@ class LiteralFactoryTest extends TestCase
                 $this->assertSame(0, $diff->y);
                 $this->assertSame(0, $diff->m);
                 $this->assertSame(0, $diff->d);
-                $this->assertSame(0, $diff->h);
-                $this->assertSame(0, $diff->i);
-                $this->assertTrue($diff->s < 5);
+
+                if ($expectedValue->format('Y')[0] != '-') {
+                    $this->assertSame(0, $diff->h);
+                    $this->assertSame(0, $diff->i);
+                    $this->assertTrue($diff->s < 5);
+                }
             } elseif (is_object($expectedValue)) {
                 $this->assertEquals(
                     $expectedValue,
@@ -161,14 +167,14 @@ class LiteralFactoryTest extends TestCase
                 '2026-02-04T16:05:12+00:00'
             ],
             [
-                '2026-02-05',
+                '-0063-11-08',
                 self::XSD_NS . 'date',
                 null,
                 DateLiteral::class,
-                new \DateTime('2026-02-05'),
+                (new \DateTime())->setDate(-63, 11, 8),
                 self::XSD_NS . 'date',
-                '2026-02-05',
-                '2026-02-05'
+                '-0063-11-08',
+                '-0063-11-08'
             ],
             [
                 '15:01:02',
@@ -261,6 +267,16 @@ class LiteralFactoryTest extends TestCase
                 '0'
             ],
             [
+                8.1,
+                self::XSD_NS . 'byte',
+                null,
+                IntegerLiteral::class,
+                8,
+                self::XSD_NS . 'byte',
+                '8',
+                '8'
+            ],
+            [
                 44,
                 self::XSD_NS . 'nonNegativeInteger',
                 null,
@@ -271,14 +287,14 @@ class LiteralFactoryTest extends TestCase
                 '44'
             ],
             [
-                8.1,
-                self::XSD_NS . 'byte',
+                1970,
+                PositiveGYearLiteral::DATATYPE_URI,
                 null,
-                IntegerLiteral::class,
-                8,
-                self::XSD_NS . 'byte',
-                '8',
-                '8'
+                PositiveGYearLiteral::class,
+                new \DateTime('1970'),
+                PositiveGYearLiteral::DATATYPE_URI,
+                '1970',
+                '1970'
             ],
             [
                 "Don't panic",
@@ -389,6 +405,16 @@ class LiteralFactoryTest extends TestCase
                 self::XSD_NS . 'gYear',
                 '1971',
                 '1971'
+            ],
+            [
+                (new \DateTime())->setDate(-7, $month, $day),
+                self::XSD_NS . 'gYear',
+                null,
+                GYearLiteral::class,
+                (new \DateTime())->setDate(-7, $month, $day),
+                self::XSD_NS . 'gYear',
+                '-0007',
+                '-0007'
             ],
             [
                 '1975-12',
