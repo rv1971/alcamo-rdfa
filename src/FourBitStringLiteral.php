@@ -44,9 +44,12 @@ class FourBitStringLiteral extends StringLiteral
         . "%3C/restriction%3E%3C/simpleType%3E%3C/schema%3E#FourBitString";
 
     /// Create from equivalent hexadecimal string
-    public static function newFromHex(string $value): self
+    public static function newFromHex(string $value, $datatypeUri = null): self
     {
-        return new static(strtr($value, 'ABCDEFabcdef', ':;<=>?:;<=>?'));
+        return new static(
+            strtr($value, 'ABCDEFabcdef', ':;<=>?:;<=>?'),
+            $datatypeUri
+        );
     }
 
     /**
