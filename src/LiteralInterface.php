@@ -19,6 +19,9 @@ interface LiteralInterface extends HavingDigestInterface, LiteralOrNodeInterface
     public const XH_NS  = 'http://www.w3.org/1999/xhtml';
     public const XSD_NS = 'http://www.w3.org/2001/XMLSchema#';
 
+    /// Namespace for additional datatypes defined in this package
+    public const ALCAMO_NS = 'tag:rv1971%40web.de,2021:alcamo:ns:base#';
+
     /// Value as an appropriate PHP type, not necessarily stringable
     public function getValue();
 

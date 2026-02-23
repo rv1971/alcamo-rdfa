@@ -13,6 +13,9 @@ class PositiveGYearLiteral extends GYearLiteral
 {
     use HavingInlineXsdTrait;
 
+    /// Extended name of the underlying datatype
+    public const DATATYPE_XNAME = [ self::ALCAMO_NS, 'PositiveGYear' ];
+
     /**
      * `data:` URI representation of the `PositiveGYear` fragment of
      *

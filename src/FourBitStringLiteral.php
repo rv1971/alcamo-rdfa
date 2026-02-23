@@ -16,6 +16,9 @@ class FourBitStringLiteral extends StringLiteral
 {
     use HavingInlineXsdTrait;
 
+    /// Extended name of the underlying datatype
+    public const DATATYPE_XNAME = [ self::ALCAMO_NS, 'FourBitString' ];
+
     /**
      * `data:` URI representation of the `FourBitString` fragment of
      *
