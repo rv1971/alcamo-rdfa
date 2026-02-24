@@ -9,12 +9,18 @@ namespace alcamo\rdfa;
  */
 class MediaTypeLiteral extends AbstractLiteral
 {
-    public const DATATYPE_URI = self::XH_NS . 'ContentType';
+    /**
+     * Sadly, `xh11d:ContentType` defined in
+     * https://www.w3.org/MarkUp/SCHEMA/xhtml-datatypes-1.xsd cannot be used
+     * because it has no ID and therefore cannot be reference via a simple
+     * URI.
+     */
+    public const DATATYPE_URI = self::XSD_NS . 'string';
 
     /*
      * @param $value MediaType|string MediaType or media type string.
      *
-     * @param $datatypeUri Datatype IRI. [Default `xh:ContentType`]
+     * @param $datatypeUri Datatype IRI. [Default `xsd:string`]
      */
     public function __construct($value, $datatypeUri = null)
     {

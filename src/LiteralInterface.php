@@ -16,7 +16,6 @@ use Psr\Http\Message\UriInterface;
 interface LiteralInterface extends HavingDigestInterface, LiteralOrNodeInterface
 {
     public const RDF_NS = 'http://www.w3.org/1999/02/22-rdf-syntax-ns#';
-    public const XH_NS  = 'http://www.w3.org/1999/xhtml';
     public const XSD_NS = 'http://www.w3.org/2001/XMLSchema#';
 
     /// Namespace for additional datatypes defined in this package
