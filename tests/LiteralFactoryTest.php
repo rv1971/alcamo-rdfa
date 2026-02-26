@@ -50,25 +50,12 @@ class LiteralFactoryTest extends TestCase
         $this->assertSame($expectedString, (string)$literal);
 
         if (isset($datatypeUri)) {
-            if ($expectedValue instanceof \DateTimeInterface) {
-                $diff = $expectedValue->diff(
-                    $literalFactory->convertValue($value, $datatypeUri),
-                    true
-                );
-
-                $this->assertSame(0, $diff->y);
-                $this->assertSame(0, $diff->m);
-                $this->assertSame(0, $diff->d);
-
-                if ($expectedValue->format('Y')[0] != '-') {
-                    $this->assertSame(0, $diff->h);
-                    $this->assertSame(0, $diff->i);
-                    $this->assertTrue($diff->s < 5);
-                }
-            } elseif (is_object($expectedValue)) {
-                $this->assertEquals(
-                    $expectedValue,
-                    $literalFactory->convertValue($value, $datatypeUri)
+            if (is_object($expectedValue)) {
+                $this->assertTrue(
+                    (new $expectedLiteralType(
+                        $literalFactory->convertValue($value, $datatypeUri)
+                    ))
+                        ->equals(new $expectedLiteralType($expectedValue))
                 );
             } else {
                 $this->assertSame(
@@ -319,14 +306,76 @@ class LiteralFactoryTest extends TestCase
                 '44'
             ],
             [
-                1970,
+                1913,
                 PositiveGYearLiteral::DATATYPE_URI,
                 null,
                 PositiveGYearLiteral::class,
-                new \DateTime('1970'),
+                new \DateTime('1913-10-11'),
                 PositiveGYearLiteral::DATATYPE_URI,
-                '1970',
-                '1970'
+                '1913',
+                '1913'
+            ],
+            [
+                313,
+                PositiveGYearLiteral::DATATYPE_URI,
+                null,
+                PositiveGYearLiteral::class,
+                new \DateTime('0313-02-13'),
+                PositiveGYearLiteral::DATATYPE_URI,
+                '0313',
+                '0313'
+            ],
+            [
+                '1918+01:00',
+                PositiveGYearLiteral::DATATYPE_URI,
+                null,
+                PositiveGYearLiteral::class,
+                new \DateTime('1918-02-24+01:00'),
+                PositiveGYearLiteral::DATATYPE_URI,
+                '1918',
+                '1918'
+            ],
+            [
+                '856',
+                PositiveGYearLiteral::DATATYPE_URI,
+                null,
+                PositiveGYearLiteral::class,
+                new \DateTime('0856-02-04'),
+                PositiveGYearLiteral::DATATYPE_URI,
+                '0856',
+                '0856'
+            ],
+            [
+                -753,
+                self::XSD_NS . 'gYear',
+                null,
+                GYearLiteral::class,
+                (new \DateTime())->setDate(-753, 1, 1),
+                GYearLiteral::DATATYPE_URI,
+                '-0753',
+                '-0753'
+            ],
+            [
+                '-753Z',
+                self::XSD_NS . 'gYear',
+                null,
+                GYearLiteral::class,
+                (new \DateTime())->setDate(-753, 1, 1)
+                    ->setTimeZone(new \DateTimeZone('+0000')),
+                GYearLiteral::DATATYPE_URI,
+                '-0753',
+                '-0753'
+            ],
+            [
+                '-753-0200',
+                self::XSD_NS . 'gYear',
+                null,
+                GYearLiteral::class,
+                (new \DateTime())->setDate(-753, 1, 1)
+                    ->setTimeZone(new \DateTimeZone('-0200')),
+                GYearLiteral::DATATYPE_URI,
+                '-0753',
+                '-0753'
             ],
             [
                 "Don't panic",

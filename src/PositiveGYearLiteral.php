@@ -47,14 +47,10 @@ class PositiveGYearLiteral extends GYearLiteral
      */
     public function __construct($value = null, $datatypeUri = null)
     {
+        parent::__construct($value, $datatypeUri ?? static::DATATYPE_URI);
+
         /** @throw alcamo::exception::OutOfRange if $value is a negative
          *  year. */
-        if ($value instanceof \Datetime) {
-            OutOfRange::throwIfNegative($value->format('Y'));
-        } else {
-            OutOfRange::throwIfNegative($value);
-        }
-
-        parent::__construct($value, $datatypeUri ?? static::DATATYPE_URI);
+        OutOfRange::throwIfNegative($this->format('Y'));
     }
 }
