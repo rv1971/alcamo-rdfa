@@ -7,12 +7,9 @@ namespace alcamo\rdfa;
  *
  * @date Last reviewed 2026-02-05
  */
-class IntegerLiteral extends AbstractLiteral implements
-    ConvertibleToIntInterface
+class IntegerLiteral extends DecimalLiteral
 {
     public const DATATYPE_URI = self::XSD_NS . 'integer';
-
-    public const PRIMITIVE_DATATYPE_URI = self::DATATYPE_URI;
 
     /**
      * @param $value int|string Integer or integer string.
@@ -22,10 +19,5 @@ class IntegerLiteral extends AbstractLiteral implements
     public function __construct($value = null, $datatypeUri = null)
     {
         parent::__construct((int)$value, $datatypeUri ?? static::DATATYPE_URI);
-    }
-
-    public function toInt(): int
-    {
-        return $this->value_;
     }
 }

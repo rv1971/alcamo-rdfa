@@ -3,20 +3,20 @@
 namespace alcamo\rdfa;
 
 /**
- * @brief RDF floating point number literal
+ * @brief RDF float floating point number literal
  *
  * @date Last reviewed 2026-02-05
  */
 class FloatLiteral extends AbstractLiteral
 {
-    public const DATATYPE_URI = self::XSD_NS . 'double';
+    public const DATATYPE_URI = self::XSD_NS . 'float';
 
     public const PRIMITIVE_DATATYPE_URI = self::DATATYPE_URI;
 
     /**
-     * @param $value double|float|string Floating point number or string.
+     * @param $value float|string Floating point number or string.
      *
-     * @param $datatypeUri Datatype IRI. [default `xsd:double`]
+     * @param $datatypeUri Datatype IRI.
      */
     public function __construct($value = null, $datatypeUri = null)
     {

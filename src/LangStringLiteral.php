@@ -49,4 +49,21 @@ class LangStringLiteral extends AbstractLiteral
         return "\"$this->value_\"" .
             (isset($this->lang_) ? "@$this->lang_" : '');
     }
+
+
+    /**
+     * @copydoc alcamo::rdfa::LiteralInterface::equals()
+     *
+     * If $literal is also a LangString and has a different language, the
+     * literals are considered different. Otherwise the rules of
+     * alcamo::rdfa::LiteralInterface::equals() apply.
+     */
+    public function equals(LiteralInterface $literal): bool
+    {
+        if ($literal instanceof self && $literal->lang_ != $this->lang_) {
+            return false;
+        }
+
+        return parent::equals($literal);
+    }
 }

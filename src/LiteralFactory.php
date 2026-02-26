@@ -12,7 +12,9 @@ class LiteralFactory implements LiteralFactoryInterface
     /**
      * @brief Mapping of RDF data type IRIs to classes
      *
-     * This mapping includes all primitive types.
+     * This mapping includes all primitive types and all builtin types dnot
+     * derived from `string`. The types derived from `string` do not need to
+     * be mentioned because StringLiteral is the fallback literal type anyway.
      */
     public const DATATYPE_URI_TO_CLASS = [
         AnyUriLiteral::DATATYPE_URI         => AnyUriLiteral::class,
@@ -20,7 +22,9 @@ class LiteralFactory implements LiteralFactoryInterface
         BooleanLiteral::DATATYPE_URI        => BooleanLiteral::class,
         DateLiteral::DATATYPE_URI           => DateLiteral::class,
         DateTimeLiteral::DATATYPE_URI       => DateTimeLiteral::class,
+        DecimalLiteral::DATATYPE_URI        => DecimalLiteral::class,
         DigitsStringLiteral::DATATYPE_URI   => DigitsStringLiteral::class,
+        DoubleLiteral::DATATYPE_URI         => DoubleLiteral::class,
         DurationLiteral::DATATYPE_URI       => DurationLiteral::class,
         FloatLiteral::DATATYPE_URI          => FloatLiteral::class,
         FourBitStringLiteral::DATATYPE_URI  => FourBitStringLiteral::class,
@@ -35,7 +39,9 @@ class LiteralFactory implements LiteralFactoryInterface
         MediaTypeLiteral::DATATYPE_URI      => MediaTypeLiteral::class,
         NonNegativeIntegerLiteral::DATATYPE_URI
             => NonNegativeIntegerLiteral::class,
+        NotationLiteral::DATATYPE_URI       => NotationLiteral::class,
         PositiveGYearLiteral::DATATYPE_URI  => PositiveGYearLiteral::class,
+        QNameLiteral::DATATYPE_URI          => QNameLiteral::class,
         StringLiteral::DATATYPE_URI         => StringLiteral::class,
         TimeLiteral::DATATYPE_URI           => TimeLiteral::class,
 
@@ -49,13 +55,7 @@ class LiteralFactory implements LiteralFactoryInterface
         self::XSD_NS . 'unsignedByte'       => NonNegativeIntegerLiteral::class,
         self::XSD_NS . 'unsignedInt'        => NonNegativeIntegerLiteral::class,
         self::XSD_NS . 'unsignedLong'       => NonNegativeIntegerLiteral::class,
-        self::XSD_NS . 'unsignedShort'      => NonNegativeIntegerLiteral::class,
-
-        self::XSD_NS . 'decimal'            => FloatLiteral::class,
-        self::XSD_NS . 'float'              => FloatLiteral::class,
-
-        self::XSD_NS . 'NOTATION'           => StringLiteral::class,
-        self::XSD_NS . 'QName'              => StringLiteral::class
+        self::XSD_NS . 'unsignedShort'      => NonNegativeIntegerLiteral::class
     ];
 
     /**

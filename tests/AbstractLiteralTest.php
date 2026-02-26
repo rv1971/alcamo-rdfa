@@ -24,6 +24,7 @@ class AbstractLiteralTest extends TestCase
         $literal3 = new FourbitStringLiteral('222');
         $literal4 = new StringLiteral('222');
         $literal5 = new LangStringLiteral('222');
+        $literal5a = new LangStringLiteral('222', 'ar');
 
         $literal6 = new AnyUriLiteral('222');
 
@@ -36,6 +37,11 @@ class AbstractLiteralTest extends TestCase
         $literalB = new GYearLiteral(new \DateTime('2026-02-27Z'));
         $literalC = new GYearLiteral(new \DateTime('2026-02-26+07:00'));
         $literalD = new PositiveGYearLiteral(new \DateTime('2026-12-31Z'));
+
+        $literalE = new DecimalLiteral(23);
+        $literalF = new IntegerLiteral(23);
+        $literalG = new FloatLiteral(23);
+        $literalH = new DoubleLiteral(23);
 
         return [
             [ $literal1, $literal2, false ],
@@ -52,13 +58,19 @@ class AbstractLiteralTest extends TestCase
             [ $literal3, $literal6, false ],
             [ $literal4, $literal6, false ],
             [ $literal5, $literal6, false ],
+            [ $literal5, $literal5a, false ],
 
             [ $literal7, $literal8, true ],
             [ $literal7, $literal9, false ],
 
             [ $literalA, $literalB, true ],
             [ $literalA, $literalC, false ],
-            [ $literalA, $literalD, true ]
+            [ $literalA, $literalD, true ],
+
+            [ $literalE, $literalF, true ],
+            [ $literalE, $literalG, false ],
+            [ $literalE, $literalH, false ],
+            [ $literalG, $literalH, false ]
         ];
     }
 }

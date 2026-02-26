@@ -214,17 +214,17 @@ class LiteralFactoryTest extends TestCase
                 null,
                 FloatLiteral::class,
                 3.14,
-                self::XSD_NS . 'double',
+                self::XSD_NS . 'float',
                 '3.14',
                 '3.14'
             ],
             [
                 '2.73',
-                self::XSD_NS . 'float',
+                self::XSD_NS . 'double',
                 null,
-                FloatLiteral::class,
+                DoubleLiteral::class,
                 2.73,
-                self::XSD_NS . 'float',
+                self::XSD_NS . 'double',
                 '2.73',
                 '2.73'
             ],
@@ -234,9 +234,49 @@ class LiteralFactoryTest extends TestCase
                 null,
                 FloatLiteral::class,
                 0.0,
-                self::XSD_NS . 'double',
+                self::XSD_NS . 'float',
                 '0',
                 '0'
+            ],
+            [
+                17.0,
+                DecimalLiteral::DATATYPE_URI,
+                null,
+                DecimalLiteral::class,
+                17,
+                self::XSD_NS . 'decimal',
+                '17',
+                '17'
+            ],
+            [
+                17.3,
+                DecimalLiteral::DATATYPE_URI,
+                null,
+                DecimalLiteral::class,
+                17.3,
+                self::XSD_NS . 'decimal',
+                '17.3',
+                '17.3'
+            ],
+            [
+                "18",
+                DecimalLiteral::DATATYPE_URI,
+                null,
+                DecimalLiteral::class,
+                18,
+                self::XSD_NS . 'decimal',
+                '18',
+                '18'
+            ],
+            [
+                "18.99",
+                DecimalLiteral::DATATYPE_URI,
+                null,
+                DecimalLiteral::class,
+                18.99,
+                self::XSD_NS . 'decimal',
+                '18.99',
+                '18.99'
             ],
             [
                 0,
@@ -339,14 +379,24 @@ class LiteralFactoryTest extends TestCase
                 'bar'
             ],
             [
-                null,
+                'foo:bar',
                 self::XSD_NS . 'NOTATION',
                 null,
-                StringLiteral::class,
-                '',
+                NotationLiteral::class,
+                'foo:bar',
                 self::XSD_NS . 'NOTATION',
-                '',
-                ''
+                'foo:bar',
+                'foo:bar'
+            ],
+            [
+                'baz',
+                self::XSD_NS . 'QName',
+                null,
+                QNameLiteral::class,
+                'baz',
+                self::XSD_NS . 'QName',
+                'baz',
+                'baz'
             ],
             [
                 '00123456789123456789',
