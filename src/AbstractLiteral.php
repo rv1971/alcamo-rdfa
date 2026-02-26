@@ -17,8 +17,23 @@ use Psr\Http\Message\UriInterface;
  */
 abstract class AbstractLiteral implements LiteralInterface
 {
-    /// Must be defined in derived classes
+    /**
+    * @brief URI of default datatype
+    *
+    * Must be defined in derived classes.
+    */
     public const DATATYPE_URI = null;
+
+    /**
+    * @brief URI of underlying primitive datatype
+    *
+    * Must be defined in derived classes.
+    *
+    * The constructors do not check whether a datatype given as a parameter is
+    * indeed derived from this because this would create a considerable
+    * ovwerhead.
+    */
+    public const PRIMITIVE_DATATYPE_URI = null;
 
     /// Return static::DATATYPE_URI as an Uri object
     public static function getClassDatatypeUri(): UriInterface
@@ -76,5 +91,11 @@ abstract class AbstractLiteral implements LiteralInterface
     public function getDigest(): string
     {
         return $this;
+    }
+
+    public function equals(LiteralInterface $literal): bool
+    {
+        return $literal::PRIMITIVE_DATATYPE_URI == $this::PRIMITIVE_DATATYPE_URI
+            && $literal->value_ == $this->value_;
     }
 }

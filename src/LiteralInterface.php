@@ -31,4 +31,18 @@ interface LiteralInterface extends HavingDigestInterface, LiteralOrNodeInterface
 
     /// String representation of value
     public function __toString(): string;
+
+    /**
+     * @brief Whether $this and $literal are considered equal
+     *
+     * This is the case if:
+     * - both PHP classes have the same PRIMITIVE_DATATYPE_URI
+     * - AND the values are equal.
+     *
+     * Indeed, [XML Schema Part 2](https://www.w3.org/TR/xmlschema-2/#equal)
+     * states that *the value spaces of all primitive datatypes are
+     * disjoint*. Hence the underlying primitive datatype makes a difference
+     * while the actual dtatatype does not.
+     */
+    public function equals(self $literal): bool;
 }

@@ -17,6 +17,8 @@ class MediaTypeLiteral extends AbstractLiteral
      */
     public const DATATYPE_URI = self::XSD_NS . 'string';
 
+    public const PRIMITIVE_DATATYPE_URI = self::DATATYPE_URI;
+
     /*
      * @param $value MediaType|string MediaType or media type string.
      *

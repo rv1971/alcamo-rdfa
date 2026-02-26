@@ -11,6 +11,8 @@ class DateTimeLiteral extends AbstractLiteral
 {
     public const DATATYPE_URI = self::XSD_NS . 'dateTime';
 
+    public const PRIMITIVE_DATATYPE_URI = self::DATATYPE_URI;
+
     /// Format used in __toString()
     public const FORMAT = 'c';
 
@@ -48,5 +50,18 @@ class DateTimeLiteral extends AbstractLiteral
     public function format(string $format): string
     {
         return $this->value_->format($format);
+    }
+
+    /**
+     * @copydoc alcamo::rdfa::LiteralInterface::equals()
+     *
+     * The DateTime values in this literal class are considered equal if the
+     * relavant components, including the timezone, are equal.
+     */
+    public function equals(LiteralInterface $literal): bool
+    {
+        return $literal::PRIMITIVE_DATATYPE_URI == $this::PRIMITIVE_DATATYPE_URI
+            && $literal->format(static::FORMAT . 'O')
+            == $this->value_->format(static::FORMAT . 'O');
     }
 }

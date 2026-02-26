@@ -11,6 +11,8 @@ class LanguageLiteral extends AbstractLiteral
 {
     public const DATATYPE_URI = self::XSD_NS . 'language';
 
+    public const PRIMITIVE_DATATYPE_URI = self::XSD_NS . 'string';
+
     /*
      * @param $value Lang|string Lang or language string.
      *

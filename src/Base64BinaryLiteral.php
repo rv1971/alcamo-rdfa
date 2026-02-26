@@ -13,6 +13,8 @@ class Base64BinaryLiteral extends AbstractLiteral
 {
     public const DATATYPE_URI = self::XSD_NS . 'base64Binary';
 
+    public const PRIMITIVE_DATATYPE_URI = self::DATATYPE_URI;
+
     /**
      * @param $value BinaryString|string BinaryString or base64 string.
      *

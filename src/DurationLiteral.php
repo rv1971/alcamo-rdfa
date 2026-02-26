@@ -13,6 +13,8 @@ class DurationLiteral extends AbstractLiteral
 {
     public const DATATYPE_URI = self::XSD_NS . 'duration';
 
+    public const PRIMITIVE_DATATYPE_URI = self::DATATYPE_URI;
+
     /**
      * @param $value Duration|string Duration or duration string.
      *

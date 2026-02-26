@@ -14,6 +14,8 @@ class AnyUriLiteral extends AbstractLiteral
 {
     public const DATATYPE_URI = self::XSD_NS . 'anyURI';
 
+    public const PRIMITIVE_DATATYPE_URI = self::DATATYPE_URI;
+
     /**
      * @param $value UriInterface|string UriInterface or URI string.
      *

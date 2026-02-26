@@ -9,8 +9,7 @@ use alcamo\exception\OutOfRange;
  *
  * @date Last reviewed 2026-02-22
  */
-class NonNegativeIntegerLiteral extends AbstractLiteral implements
-    ConvertibleToIntInterface
+class NonNegativeIntegerLiteral extends IntegerLiteral
 {
     public const DATATYPE_URI = self::XSD_NS . 'nonNegativeInteger';
 
@@ -25,10 +24,5 @@ class NonNegativeIntegerLiteral extends AbstractLiteral implements
         OutOfRange::throwIfNegative($value);
 
         parent::__construct((int)$value, $datatypeUri ?? static::DATATYPE_URI);
-    }
-
-    public function toInt(): int
-    {
-        return $this->value_;
     }
 }

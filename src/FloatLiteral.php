@@ -11,6 +11,8 @@ class FloatLiteral extends AbstractLiteral
 {
     public const DATATYPE_URI = self::XSD_NS . 'double';
 
+    public const PRIMITIVE_DATATYPE_URI = self::DATATYPE_URI;
+
     /**
      * @param $value double|float|string Floating point number or string.
      *

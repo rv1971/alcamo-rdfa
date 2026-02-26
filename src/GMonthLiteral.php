@@ -12,6 +12,8 @@ class GMonthLiteral extends DateTimeLiteral implements
 {
     public const DATATYPE_URI = self::XSD_NS . 'gMonth';
 
+    public const PRIMITIVE_DATATYPE_URI = self::DATATYPE_URI;
+
     /// Format content as ISO 8601 string without timezone
     public const FORMAT = 'm';
 

@@ -32,20 +32,12 @@ class LiteralFactoryTest extends TestCase
 
         $this->assertSame($expectedLiteralType, get_class($literal));
 
-        if ($expectedValue instanceof \DateTimeInterface) {
-            $diff = $expectedValue->diff($literal->getValue(), true);
+        $this->assertTrue($literal->equals($literal));
 
-            $this->assertSame(0, $diff->y);
-            $this->assertSame(0, $diff->m);
-            $this->assertSame(0, $diff->d);
-
-            if ($expectedValue->format('Y')[0] != '-') {
-                $this->assertSame(0, $diff->h);
-                $this->assertSame(0, $diff->i);
-                $this->assertTrue($diff->s < 5);
-            }
-        } elseif (is_object($expectedValue)) {
-            $this->assertEquals($expectedValue, $literal->getValue());
+        if (is_object($expectedValue)) {
+            $this->assertTrue(
+                $literal->equals(new $expectedLiteralType($expectedValue))
+            );
         } else {
             $this->assertSame($expectedValue, $literal->getValue());
         }

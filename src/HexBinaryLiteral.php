@@ -13,6 +13,8 @@ class HexBinaryLiteral extends AbstractLiteral
 {
     public const DATATYPE_URI = self::XSD_NS . 'hexBinary';
 
+    public const PRIMITIVE_DATATYPE_URI = self::DATATYPE_URI;
+
     /**
      * @param $value BinaryString|string BinaryString or hex string.
      *

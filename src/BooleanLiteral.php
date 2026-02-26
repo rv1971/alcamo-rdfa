@@ -12,6 +12,8 @@ class BooleanLiteral extends AbstractLiteral implements
 {
     public const DATATYPE_URI = self::XSD_NS . 'boolean';
 
+    public const PRIMITIVE_DATATYPE_URI = self::DATATYPE_URI;
+
     /**
      * @param @param $value bool|string Boolean or boolean string.
      *

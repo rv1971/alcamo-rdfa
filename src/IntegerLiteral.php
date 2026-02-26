@@ -12,6 +12,8 @@ class IntegerLiteral extends AbstractLiteral implements
 {
     public const DATATYPE_URI = self::XSD_NS . 'integer';
 
+    public const PRIMITIVE_DATATYPE_URI = self::DATATYPE_URI;
+
     /**
      * @param $value int|string Integer or integer string.
      *

@@ -11,6 +11,8 @@ class LangStringLiteral extends AbstractLiteral
 {
     public const DATATYPE_URI = self::RDF_NS . 'langString';
 
+    public const PRIMITIVE_DATATYPE_URI = self::XSD_NS . 'string';
+
     private $lang_; ///< ?Lang
 
     /**
