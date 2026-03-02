@@ -18,6 +18,6 @@ class IntegerLiteral extends DecimalLiteral
      */
     public function __construct($value = null, $datatypeUri = null)
     {
-        parent::__construct((int)$value, $datatypeUri ?? static::DATATYPE_URI);
+        parent::__construct((int)$value, $datatypeUri);
     }
 }

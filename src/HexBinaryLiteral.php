@@ -26,7 +26,7 @@ class HexBinaryLiteral extends AbstractLiteral
             $value instanceof BinaryString
                 ? $value
                 : BinaryString::newFromHex($value),
-            $datatypeUri ?? static::DATATYPE_URI
+            $datatypeUri
         );
     }
 }

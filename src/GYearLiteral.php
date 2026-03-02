@@ -63,7 +63,7 @@ class GYearLiteral extends DateTimeLiteral implements ConvertibleToIntInterface
                 );
         }
 
-        parent::__construct($value, $datatypeUri ?? static::DATATYPE_URI);
+        parent::__construct($value, $datatypeUri);
     }
 
     public function toInt(): int

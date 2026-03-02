@@ -22,7 +22,7 @@ class LanguageLiteral extends AbstractLiteral
     {
         parent::__construct(
             $value instanceof Lang ? $value : Lang::newFromString($value),
-            $datatypeUri ?? static::DATATYPE_URI
+            $datatypeUri
         );
     }
 }

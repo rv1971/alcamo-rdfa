@@ -32,7 +32,7 @@ class GMonthLiteral extends DateTimeLiteral implements
                 : (isset($value)
                    ? new \DateTime((new \DateTime())->format("Y-$value-d"))
                    : new \DateTime()),
-            $datatypeUri ?? static::DATATYPE_URI
+            $datatypeUri
         );
     }
 

@@ -30,7 +30,7 @@ class MediaTypeLiteral extends AbstractLiteral
             $value instanceof MediaType
                 ? $value
                 : MediaType::newFromString($value),
-            $datatypeUri ?? static::DATATYPE_URI
+            $datatypeUri
         );
     }
 }

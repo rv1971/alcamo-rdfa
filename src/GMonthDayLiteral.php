@@ -29,7 +29,7 @@ class GMonthDayLiteral extends DateTimeLiteral
                 : (isset($value)
                    ? new \DateTime((new \DateTime())->format("Y-$value"))
                    : new \DateTime()),
-            $datatypeUri ?? static::DATATYPE_URI
+            $datatypeUri
         );
     }
 }

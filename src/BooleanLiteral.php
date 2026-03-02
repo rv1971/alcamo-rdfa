@@ -25,7 +25,7 @@ class BooleanLiteral extends AbstractLiteral implements
             is_bool($value)
                 ? $value
                 : ((string)$value === 'true' || (string)$value === '1'),
-            $datatypeUri ?? static::DATATYPE_URI
+            $datatypeUri
         );
     }
 

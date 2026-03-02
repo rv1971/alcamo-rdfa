@@ -23,6 +23,6 @@ class NonNegativeIntegerLiteral extends IntegerLiteral
         /** @throw alcamo::exception::OutOfRange if $value is negative. */
         OutOfRange::throwIfNegative($value);
 
-        parent::__construct((int)$value, $datatypeUri ?? static::DATATYPE_URI);
+        parent::__construct((int)$value, $datatypeUri);
     }
 }

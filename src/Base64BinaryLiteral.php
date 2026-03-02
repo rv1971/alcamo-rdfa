@@ -26,7 +26,7 @@ class Base64BinaryLiteral extends AbstractLiteral
             $value instanceof BinaryString
                 ? $value
                 : new BinaryString(base64_decode($value, true)),
-            $datatypeUri ?? static::DATATYPE_URI
+            $datatypeUri
         );
     }
 

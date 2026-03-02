@@ -23,7 +23,7 @@ class DecimalLiteral extends AbstractLiteral implements
     {
         parent::__construct(
             (float)(int)$value == (float)$value ? (int)$value : (float)$value,
-            $datatypeUri ?? static::DATATYPE_URI
+            $datatypeUri
         );
     }
 

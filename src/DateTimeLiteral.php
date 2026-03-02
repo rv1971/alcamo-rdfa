@@ -40,7 +40,7 @@ class DateTimeLiteral extends AbstractLiteral
             }
         }
 
-        parent::__construct($value, $datatypeUri ?? static::DATATYPE_URI);
+        parent::__construct($value, $datatypeUri);
     }
 
     /// Return content using as ISO 8601 string with timezone

@@ -29,7 +29,7 @@ class GDayLiteral extends DateTimeLiteral implements ConvertibleToIntInterface
                 : (isset($value)
                    ? new \DateTime((new \DateTime())->format("Y-m-$value"))
                    : new \DateTime()),
-            $datatypeUri ?? static::DATATYPE_URI
+            $datatypeUri
         );
     }
 

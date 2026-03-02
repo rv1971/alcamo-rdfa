@@ -24,7 +24,7 @@ class DurationLiteral extends AbstractLiteral
     {
         parent::__construct(
             $value instanceof Duration ? $value : new Duration($value),
-            $datatypeUri ?? static::DATATYPE_URI
+            $datatypeUri
         );
     }
 }

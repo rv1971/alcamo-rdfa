@@ -68,7 +68,7 @@ class FourBitStringLiteral extends StringLiteral
                 ->setMessageContext([ 'value' => $value ]);
         }
 
-        parent::__construct($value, $datatypeUri ?? static::DATATYPE_URI);
+        parent::__construct($value, $datatypeUri);
     }
 
     /// Equivalent hexadecimal string

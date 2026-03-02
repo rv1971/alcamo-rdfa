@@ -20,9 +20,6 @@ class StringLiteral extends AbstractLiteral
      */
     public function __construct($value = null, $datatypeUri = null)
     {
-        parent::__construct(
-            (string)$value,
-            $datatypeUri ?? static::DATATYPE_URI
-        );
+        parent::__construct((string)$value, $datatypeUri);
     }
 }

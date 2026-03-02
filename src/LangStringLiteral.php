@@ -27,10 +27,7 @@ class LangStringLiteral extends AbstractLiteral
         $lang = null,
         $datatypeUri = null
     ) {
-        parent::__construct(
-            (string)$value,
-            $datatypeUri ?? static::DATATYPE_URI
-        );
+        parent::__construct((string)$value, $datatypeUri);
 
         if (isset($lang)) {
             $this->lang_ =

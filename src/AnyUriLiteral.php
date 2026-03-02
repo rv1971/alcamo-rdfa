@@ -25,7 +25,7 @@ class AnyUriLiteral extends AbstractLiteral
     {
         parent::__construct(
             $value instanceof UriInterface ? $value : new Uri($value),
-            $datatypeUri ?? static::DATATYPE_URI
+            $datatypeUri
         );
     }
 }

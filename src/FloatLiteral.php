@@ -20,9 +20,6 @@ class FloatLiteral extends AbstractLiteral
      */
     public function __construct($value = null, $datatypeUri = null)
     {
-        parent::__construct(
-            (float)$value,
-            $datatypeUri ?? static::DATATYPE_URI
-        );
+        parent::__construct((float)$value, $datatypeUri);
     }
 }
