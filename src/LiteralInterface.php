@@ -32,6 +32,8 @@ interface LiteralInterface extends HavingDigestInterface, LiteralOrNodeInterface
     /// String representation of value
     public function __toString(): string;
 
+    public function getDigest(): string;
+
     /**
      * @brief Whether $this and $literal are considered equal
      *
