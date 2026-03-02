@@ -19,7 +19,7 @@ class DigitsStringLiteral extends StringLiteral
     use HavingInlineXsdTrait;
 
     /// Extended name of the underlying datatype
-    public const DATATYPE_XNAME = [ self::ALCAMO_NS, 'DigitsString' ];
+    public const DATATYPE_XNAME = [ self::ALCAMO_BASE_NS, 'DigitsString' ];
 
     /**
      * `data:` URI representation of the `DigitsString` fragment of
