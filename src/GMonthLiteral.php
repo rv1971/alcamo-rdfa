@@ -24,16 +24,27 @@ class GMonthLiteral extends DateTimeLiteral implements
      */
     public function __construct($value = null, $datatypeUri = null)
     {
-        $now = new \DateTime();
+        switch (true) {
+            case $value instanceof \DateTime:
+                $dateTime = $value;
+                break;
 
-        parent::__construct(
-            $value instanceof \DateTime
-                ? $value
-                : (isset($value)
-                   ? new \DateTime((new \DateTime())->format("Y-$value-d"))
-                   : new \DateTime()),
-            $datatypeUri
-        );
+            case !isset($value) || $value === '':
+                $dateTime = new \DateTime();
+                break;
+
+            case is_int($value):
+                $dateTime = \DateTime::createFromFormat('m', $value);
+                break;
+
+            default:
+                $dateTime = \DateTime::createFromFormat(
+                    ctype_digit($value) ? 'm' : 'me',
+                    $value
+                );
+        }
+
+        parent::__construct($dateTime, $datatypeUri);
     }
 
     public function toInt(): int

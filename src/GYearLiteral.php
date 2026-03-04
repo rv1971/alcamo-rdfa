@@ -26,44 +26,49 @@ class GYearLiteral extends DateTimeLiteral implements ConvertibleToIntInterface
     {
         switch (true) {
             case $value instanceof \DateTime:
+                $dateTime = $value;
                 break;
 
             case !isset($value) || $value === '':
-                $value = new \DateTime();
+                $dateTime = new \DateTime();
                 break;
 
             case is_int($value):
-                $value = new \DateTime(
-                    ($value < 0 ? '-' : '')
-                        . str_pad(abs($value), 4, '0', STR_PAD_LEFT) . '-01-01'
+                $dateTime = new \DateTime();
+
+                $dateTime->setDate(
+                    $value,
+                    $dateTime->format('m'),
+                    $dateTime->format('d')
                 );
+
                 break;
 
             default:
-                $value = trim($value);
+                $value = (string)$value;
 
                 if ($value[0] == '-') {
-                    $sign = '-';
+                    $sign = -1;
                     $value = substr($value, 1);
                 } else {
-                    $sign = '';
+                    $sign = 1;
                 }
 
-                $yearLength = strspn($value, '0123456789');
-
-                $value = new \DateTime(
-                    $sign
-                        . str_pad(
-                            substr($value, 0, $yearLength),
-                            4,
-                            '0',
-                            STR_PAD_LEFT
-                        )
-                        . '-01-01' . substr($value, $yearLength)
+                $dateTime = \DateTime::createFromFormat(
+                    ctype_digit($value) ? 'Y' : 'Ye',
+                    $value
                 );
+
+                if ($sign < 0) {
+                    $dateTime->setDate(
+                        -$dateTime->format('Y'),
+                        $dateTime->format('m'),
+                        $dateTime->format('d')
+                    );
+                }
         }
 
-        parent::__construct($value, $datatypeUri);
+        parent::__construct($dateTime, $datatypeUri);
     }
 
     public function toInt(): int

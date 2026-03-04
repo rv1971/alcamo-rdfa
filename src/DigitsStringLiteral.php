@@ -19,7 +19,7 @@ class DigitsStringLiteral extends StringLiteral
     use HavingInlineXsdTrait;
 
     /// Extended name of the underlying datatype
-    public const DATATYPE_XNAME = [ self::ALCAMO_BASE_NS, 'DigitsString' ];
+    public const DATATYPE_XNAME = self::ALCAMO_BASE_NS . ' DigitsString';
 
     /**
      * `data:` URI representation of the `DigitsString` fragment of
@@ -44,15 +44,8 @@ class DigitsStringLiteral extends StringLiteral
         . "%3Crestriction%20base='string'%3E%3Cpattern%20value='%5Cd*'/%3E"
         . "%3C/restriction%3E%3C/simpleType%3E%3C/schema%3E#DigitsString";
 
-    /**
-     * @param $value stringable. Any leading and trailing whitespace is removed.
-     *
-     * @param $datatypeUri Datatype IRI. [default `xsd:string`]
-     */
     public function __construct($value = null, $datatypeUri = null)
     {
-        $value = trim($value);
-
         if (!ctype_digit($value)) {
             /** @throw alcamo::exception::SyntaxError if $value contains
              *  non-digit characters. */

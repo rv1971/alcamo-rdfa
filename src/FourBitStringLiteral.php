@@ -17,7 +17,7 @@ class FourBitStringLiteral extends StringLiteral
     use HavingInlineXsdTrait;
 
     /// Extended name of the underlying datatype
-    public const DATATYPE_XNAME = [ self::ALCAMO_BASE_NS, 'FourBitString' ];
+    public const DATATYPE_XNAME = self::ALCAMO_BASE_NS . ' FourBitString';
 
     /**
      * `data:` URI representation of the `FourBitString` fragment of
@@ -52,15 +52,8 @@ class FourBitStringLiteral extends StringLiteral
         );
     }
 
-    /**
-     * @param $value stringable. Any leading and trailing whitespace is removed.
-     *
-     * @param $datatypeUri Datatype IRI. [default `xsd:string`]
-     */
     public function __construct($value = null, $datatypeUri = null)
     {
-        $value = trim($value);
-
         if (!ctype_xdigit(strtr($value, ':;<=>?', 'ABCDEF'))) {
             /** @throw alcamo::exception::SyntaxError if $value contains
              *  non-four-bit characters. */

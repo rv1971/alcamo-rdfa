@@ -23,13 +23,25 @@ class GMonthDayLiteral extends DateTimeLiteral
      */
     public function __construct($value = null, $datatypeUri = null)
     {
-        parent::__construct(
-            $value instanceof \DateTime
-                ? $value
-                : (isset($value)
-                   ? new \DateTime((new \DateTime())->format("Y-$value"))
-                   : new \DateTime()),
-            $datatypeUri
-        );
+        switch (true) {
+            case $value instanceof \DateTime:
+                $dateTime = $value;
+                break;
+
+            case !isset($value) || $value === '':
+                $dateTime = new \DateTime();
+                break;
+
+            default:
+                /* Simply try parsing $value with timezone; if this fails, try
+                 * without. */
+                $dateTime = \DateTime::createFromFormat('m-de', $value);
+
+                if ($dateTime === false) {
+                    $dateTime = \DateTime::createFromFormat('m-d', $value);
+                }
+        }
+
+        parent::__construct($dateTime, $datatypeUri);
     }
 }

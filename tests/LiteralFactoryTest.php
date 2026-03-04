@@ -35,6 +35,10 @@ class LiteralFactoryTest extends TestCase
         $this->assertTrue($literal->equals($literal));
 
         if (is_object($expectedValue)) {
+            if (!$literal->equals(new $expectedLiteralType($expectedValue))) {
+                var_dump($literal->getValue(), $expectedValue);
+            }
+
             $this->assertTrue(
                 $literal->equals(new $expectedLiteralType($expectedValue))
             );
@@ -361,7 +365,7 @@ class LiteralFactoryTest extends TestCase
                 null,
                 GYearLiteral::class,
                 (new \DateTime())->setDate(-753, 1, 1)
-                    ->setTimeZone(new \DateTimeZone('+0000')),
+                    ->setTimeZone(new \DateTimeZone('Z')),
                 GYearLiteral::DATATYPE_URI,
                 '-0753',
                 '-0753'
@@ -538,6 +542,16 @@ class LiteralFactoryTest extends TestCase
                 '1975-12'
             ],
             [
+                '-2500-03+0100',
+                self::XSD_NS . 'gYearMonth',
+                null,
+                GYearMonthLiteral::class,
+                (new \DateTime('1970-03+01:00'))->setDate(-2500, $month, $day),
+                self::XSD_NS . 'gYearMonth',
+                '-2500-03',
+                '-2500-03'
+            ],
+            [
                 7,
                 self::XSD_NS . 'gMonth',
                 null,
@@ -546,6 +560,16 @@ class LiteralFactoryTest extends TestCase
                 self::XSD_NS . 'gMonth',
                 '07',
                 '07'
+            ],
+            [
+                '5-07:00',
+                self::XSD_NS . 'gMonth',
+                null,
+                GMonthLiteral::class,
+                new \DateTime("$year-05-$day-07:00"),
+                self::XSD_NS . 'gMonth',
+                '05',
+                '05'
             ],
             [
                 '12-8',
@@ -558,11 +582,31 @@ class LiteralFactoryTest extends TestCase
                 '12-08'
             ],
             [
+                '05-31+02:00',
+                self::XSD_NS . 'gMonthDay',
+                null,
+                GMonthDayLiteral::class,
+                new \DateTime("$year-05-31+02:00"),
+                self::XSD_NS . 'gMonthDay',
+                '05-31',
+                '05-31'
+            ],
+            [
                 17,
                 self::XSD_NS . 'gDay',
                 null,
                 GDayLiteral::class,
                 new \DateTime("$year-$month-17"),
+                self::XSD_NS . 'gDay',
+                '17',
+                '17'
+            ],
+            [
+                '17+0100',
+                self::XSD_NS . 'gDay',
+                null,
+                GDayLiteral::class,
+                new \DateTime("$year-$month-17+01:00"),
                 self::XSD_NS . 'gDay',
                 '17',
                 '17'

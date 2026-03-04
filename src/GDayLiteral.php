@@ -23,14 +23,27 @@ class GDayLiteral extends DateTimeLiteral implements ConvertibleToIntInterface
      */
     public function __construct($value = null, $datatypeUri = null)
     {
-        parent::__construct(
-            $value instanceof \DateTime
-                ? $value
-                : (isset($value)
-                   ? new \DateTime((new \DateTime())->format("Y-m-$value"))
-                   : new \DateTime()),
-            $datatypeUri
-        );
+        switch (true) {
+            case $value instanceof \DateTime:
+                $dateTime = $value;
+                break;
+
+            case !isset($value) || $value === '':
+                $dateTime = new \DateTime();
+                break;
+
+            case is_int($value):
+                $dateTime = \DateTime::createFromFormat('d', $value);
+                break;
+
+            default:
+                $dateTime = \DateTime::createFromFormat(
+                    ctype_digit($value) ? 'd' : 'de',
+                    $value
+                );
+        }
+
+        parent::__construct($dateTime, $datatypeUri);
     }
 
     public function toInt(): int

@@ -33,7 +33,7 @@ class DigitsStringLiteralTest extends TestCase
     {
         $this->expectException(SyntaxError::class);
 
-        $this->expectExceptionMessage('"-12" contains non-digits');
+        $this->expectExceptionMessage('-12 contains non-digits');
 
         new DigitsStringLiteral(-12);
     }
