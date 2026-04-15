@@ -546,7 +546,7 @@ class LiteralFactoryTest extends TestCase
                 self::XSD_NS . 'gYearMonth',
                 null,
                 GYearMonthLiteral::class,
-                (new \DateTime('1970-03+01:00'))->setDate(-2500, $month, $day),
+                (new \DateTime('1970-03+01:00'))->setDate(-2500, 3, 1),
                 self::XSD_NS . 'gYearMonth',
                 '-2500-03',
                 '-2500-03'
