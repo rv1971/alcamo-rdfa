@@ -26,7 +26,7 @@ class DateTimeLiteral extends AbstractLiteral
         /* PHP does not interpret negative dates according to
          * https://www.w3.org/TR/xmlschema-2/#date */
         if (!($value instanceof \Datetime)) {
-            if (isset($value[0]) && $value[0] == '-') {
+            if ((string)$value && ((string)$value)[0] == '-') {
                 $value = new \DateTime(substr($value, 1));
                 $value->setDate(
                     -$value->format('Y'),
