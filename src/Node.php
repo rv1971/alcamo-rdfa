@@ -2,6 +2,7 @@
 
 namespace alcamo\rdfa;
 
+use alcamo\rdf_literal\{Lang, LiteralOrNodeInterface};
 use alcamo\uri\Uri;
 use Psr\Http\Message\UriInterface;
 

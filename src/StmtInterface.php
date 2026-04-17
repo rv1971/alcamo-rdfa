@@ -2,6 +2,7 @@
 
 namespace alcamo\rdfa;
 
+use alcamo\rdf_literal\{HavingDigestInterface, LiteralOrNodeInterface};
 use alcamo\xml\NamespaceConstantsInterface;
 
 /**

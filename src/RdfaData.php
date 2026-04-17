@@ -4,6 +4,7 @@ namespace alcamo\rdfa;
 
 use alcamo\collection\{ReadonlyCollection, StringIndexedReadArrayAccessTrait};
 use alcamo\exception\DataValidationFailed;
+use alcamo\rdf_literal\LiteralOrNodeInterface;
 use Ds\Set;
 
 /**

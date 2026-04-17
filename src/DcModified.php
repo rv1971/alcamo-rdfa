@@ -2,6 +2,8 @@
 
 namespace alcamo\rdfa;
 
+use alcamo\rdf_literal\DateTimeLiteral;
+
 /**
  * @brief dc:modified RDFa statement
  *

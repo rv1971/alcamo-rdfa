@@ -2,6 +2,8 @@
 
 namespace alcamo\rdfa;
 
+use alcamo\rdf_literal\MediaTypeLiteral;
+
 /**
  * @brief dc:format RDFa statement
  *

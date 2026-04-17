@@ -3,6 +3,15 @@
 namespace alcamo\rdfa;
 
 use alcamo\exception\{DataValidationFailed, InvalidEnumerator, InvalidType};
+use alcamo\rdf_literal\{
+    DateTimeLiteral,
+    DurationLiteral,
+    Lang,
+    LangStringLiteral,
+    LanguageLiteral,
+    MediaType,
+    MediaTypeLiteral
+};
 use alcamo\time\Duration;
 use alcamo\xml\NamespaceConstantsInterface;
 use PHPUnit\Framework\TestCase;

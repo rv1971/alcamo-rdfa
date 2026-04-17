@@ -3,6 +3,7 @@
 namespace alcamo\rdfa;
 
 use alcamo\exception\DataValidationFailed;
+use alcamo\rdf_literal\{LangStringLiteral, LiteralInterface};
 use alcamo\xml\NamespaceConstantsInterface;
 use Ds\Set;
 use PHPUnit\Framework\TestCase;

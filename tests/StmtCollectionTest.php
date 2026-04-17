@@ -3,6 +3,7 @@
 namespace alcamo\rdfa;
 
 use alcamo\exception\DataValidationFailed;
+use alcamo\rdf_literal\LangStringLiteral;
 use PHPUnit\Framework\TestCase;
 
 class StmtCollectionTest extends TestCase

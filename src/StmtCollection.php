@@ -4,6 +4,7 @@ namespace alcamo\rdfa;
 
 use alcamo\collection\ReadonlyCollection;
 use alcamo\exception\DataValidationFailed;
+use alcamo\rdf_literal\HavingLangInterface;
 
 /**
  * @brief Collection of RDFa statements

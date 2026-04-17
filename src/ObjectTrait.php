@@ -2,6 +2,12 @@
 
 namespace alcamo\rdfa;
 
+use alcamo\rdf_literal\{
+    HavingDigestInterface,
+    LiteralFactory,
+    LiteralOrNodeInterface
+};
+
 /**
  * @brief Object of an RDFa statement and methods to access it
  *

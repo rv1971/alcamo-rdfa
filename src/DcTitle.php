@@ -2,6 +2,8 @@
 
 namespace alcamo\rdfa;
 
+use alcamo\rdf_literal\LangStringLiteral;
+
 /**
  * @brief dc:title RDFa statement
  *

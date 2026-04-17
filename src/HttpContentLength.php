@@ -2,6 +2,8 @@
 
 namespace alcamo\rdfa;
 
+use alcamo\rdf_literal\NonNegativeIntegerLiteral;
+
 /**
  * @brief content-length RDFa statement
  *
@@ -20,5 +22,5 @@ class HttpContentLength extends AbstractHttpStmt
     public const PROP_CURIE =
         self::PROP_NS_PREFIX . ':' . self::PROP_LOCAL_NAME;
 
-    public const LITERAL_CLASS = IntegerLiteral::class;
+    public const LITERAL_CLASS = NonNegativeIntegerLiteral::class;
 }

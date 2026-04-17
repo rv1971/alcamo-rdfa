@@ -2,6 +2,7 @@
 
 namespace alcamo\rdfa;
 
+use alcamo\rdf_literal\StringLiteral;
 use alcamo\xml\NamespaceConstantsInterface;
 use PHPUnit\Framework\TestCase;
 

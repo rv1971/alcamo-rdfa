@@ -2,6 +2,8 @@
 
 namespace alcamo\rdfa;
 
+use alcamo\rdf_literal\{LiteralFactory, LiteralOrNodeInterface};
+
 /**
  * @brief Simple RDFa statement
  *

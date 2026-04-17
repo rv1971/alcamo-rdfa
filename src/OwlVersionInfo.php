@@ -2,6 +2,8 @@
 
 namespace alcamo\rdfa;
 
+use alcamo\rdf_literal\StringLiteral;
+
 /**
  * @brief owl:versionInfo RDFa statement
  *

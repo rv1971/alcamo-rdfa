@@ -2,7 +2,7 @@
 
 namespace alcamo\rdfa;
 
-use alcamo\time\Duration;
+use alcamo\rdf_literal\DurationLiteral;
 
 /**
  * @brief Expires RDFa statement

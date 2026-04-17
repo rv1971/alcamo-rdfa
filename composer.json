@@ -7,9 +7,7 @@
         "php": "7.3 - 8.0",
         "alcamo/binary-data": "^0.6",
         "alcamo/collection": "^0.2",
-        "alcamo/time": "^0.2",
-        "alcamo/uri": "^0.2",
-        "alcamo/xml": "^0.1"
+        "alcamo/rdf-literal": "^0.1"
     },
     "autoload": {
 	"psr-4": {

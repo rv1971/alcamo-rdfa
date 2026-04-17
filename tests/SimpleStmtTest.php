@@ -2,6 +2,7 @@
 
 namespace alcamo\rdfa;
 
+use alcamo\rdf_literal\IntegerLiteral;
 use PHPUnit\Framework\TestCase;
 
 class SimpleStmtTest extends TestCase
