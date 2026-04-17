@@ -65,6 +65,10 @@ abstract class AbstractLiteral implements LiteralInterface
                ? $datatypeUri
                : new Uri($datatypeUri))
             : static::getClassDatatypeUri();
+
+        if (isset($value)) {
+            $this->validateValue();
+        }
     }
 
     public function getValue()
@@ -97,5 +101,10 @@ abstract class AbstractLiteral implements LiteralInterface
     {
         return $literal::PRIMITIVE_DATATYPE_URI == $this::PRIMITIVE_DATATYPE_URI
             && $literal->value_ == $this->value_;
+    }
+
+    /// Validate the object just after construction
+    protected function validateValue(): void
+    {
     }
 }

@@ -11,44 +11,22 @@ use alcamo\exception\OutOfRange;
  */
 class PositiveGYearLiteral extends GYearLiteral
 {
-    use HavingInlineXsdTrait;
+    use CustomTypeLiteralTrait;
+
+    /// Local name of the udnerlying datatype
+    public const DATATYPE_LOCAL_NAME = 'PositiveGYear';
 
     /// Extended name of the underlying datatype
-    public const DATATYPE_XNAME = self::ALCAMO_BASE_NS . ' PositiveGYear';
+    public const DATATYPE_XNAME =
+        self::ALCAMO_BASE_NS . ' ' . self::DATATYPE_LOCAL_NAME;
 
-    /**
-     * `data:` URI representation of the `PositiveGYear` fragment of
-     *
-     *     <?xml version='1.0'?>
-     *     <schema
-     *         xmlns='http://www.w3.org/2001/XMLSchema'
-     *         targetNamespace='tag:rv1971@web.de,2021:alcamo:ns:base#'>
-     *       <simpleType
-     *           name='PositiveGYear'
-     *           xml:id='PositiveGYear'>
-     *         <restriction base='gYear'>
-     *           <minInclusive value='1'/>
-     *         </restriction>
-     *       </simpleType>
-     *     </schema>
-     */
-    public const DATATYPE_URI = "data:,%3C%3Fxml%20version='1.0'%3F%3E"
-        . "%3Cschema%20xmlns='http://www.w3.org/2001/XMLSchema'%20"
-        . "targetNamespace='tag:rv1971%40web.de,2021:alcamo:ns:base%23'%3E"
-        . "%3CsimpleType%20name='PositiveGYear'%20xml:id='PositiveGYear'%3E"
-        . "%3Crestriction%20base='gYear'%3E%3CminInclusive%20value='0'/%3E"
-        . "%3C/restriction%3E%3C/simpleType%3E%3C/schema%3E#PositiveGYear";
+    /// Absolute path of the XSD file containing the type
+    public const XSD_FILENAME = __DIR__ . DIRECTORY_SEPARATOR
+        . '..' . DIRECTORY_SEPARATOR
+        . 'xsd' . DIRECTORY_SEPARATOR . 'alcamo.rdfa.xsd';
 
-    /**
-     * @param $value DateTime|int|string DateTime, datetime string, or
-     * integer, representing a positive gregorian year.
-     *
-     * @param $datatypeUri Datatype IRI.
-     */
-    public function __construct($value = null, $datatypeUri = null)
+    protected function validateValue(): void
     {
-        parent::__construct($value, $datatypeUri);
-
         /** @throw alcamo::exception::OutOfRange if $value is a negative
          *  year. */
         OutOfRange::throwIfNegative($this->format('Y'));

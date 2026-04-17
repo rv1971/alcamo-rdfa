@@ -19,7 +19,10 @@ interface LiteralInterface extends HavingDigestInterface, LiteralOrNodeInterface
     public const XSD_NS = 'http://www.w3.org/2001/XMLSchema#';
 
     /// Namespace for additional datatypes defined in this package
-    public const ALCAMO_BASE_NS = 'tag:rv1971@web.de,2021:alcamo:ns:base#';
+    public const ALCAMO_BASE_NS = 'tag:rv1971@web.de,2021:alcamo:ns:rdfa#';
+
+    /// Get class default datatype
+    public static function getClassDatatypeUri(): UriInterface;
 
     /// Value as an appropriate PHP type, not necessarily stringable
     public function getValue();

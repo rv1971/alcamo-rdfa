@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+
+<xsd:schema
+    xmlns="tag:rv1971@web.de,2021:alcamo:ns:rdfa#"
+    xmlns:dc="http://purl.org/dc/terms/"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="tag:rv1971@web.de,2021:alcamo:ns:rdfa#"
+    dc:title="Simple types for the alcamo-rdfa package"
+    dc:creator="RV1971 &lt;rv1971@web.de&gt;"
+    dc:created="2026-04-17"
+    dc:modified="2026-04-17"
+    xml:lang="en">
+  <xsd:simpleType
+      name="FourBitString"
+      xml:id="FourBitString"
+      rdfs:label="String made of four-bit characters">
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value="[0-?]*"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:simpleType
+      name="DigitsString"
+      xml:id="DigitsString"
+      rdfs:label="String made of decimal digits">
+    <xsd:restriction base="FourBitString">
+      <xsd:pattern value="\d*"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:simpleType
+      name="BitsString"
+      xml:id="BitsString"
+      rdfs:label="String made of the digits 0 and 1">
+    <xsd:restriction base="DigitsString">
+      <xsd:pattern value="[01]*"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <simpleType
+      name='PositiveGYear'
+      xml:id='PositiveGYear'
+      rdfs:label="Positive year">
+    <restriction base='gYear'>
+      <minInclusive value='1'/>
+    </restriction>
+  </simpleType>
+</xsd:schema>

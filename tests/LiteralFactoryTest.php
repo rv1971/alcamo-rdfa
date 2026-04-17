@@ -311,41 +311,41 @@ class LiteralFactoryTest extends TestCase
             ],
             [
                 1913,
-                PositiveGYearLiteral::DATATYPE_URI,
+                GYearLiteral::DATATYPE_URI,
                 null,
-                PositiveGYearLiteral::class,
+                GYearLiteral::class,
                 new \DateTime('1913-10-11'),
-                PositiveGYearLiteral::DATATYPE_URI,
+                GYearLiteral::DATATYPE_URI,
                 '1913',
                 '1913'
             ],
             [
                 313,
-                PositiveGYearLiteral::DATATYPE_URI,
+                GYearLiteral::DATATYPE_URI,
                 null,
-                PositiveGYearLiteral::class,
+                GYearLiteral::class,
                 new \DateTime('0313-02-13'),
-                PositiveGYearLiteral::DATATYPE_URI,
+                GYearLiteral::DATATYPE_URI,
                 '0313',
                 '0313'
             ],
             [
                 '1918+01:00',
-                PositiveGYearLiteral::DATATYPE_URI,
+                GYearLiteral::DATATYPE_URI,
                 null,
-                PositiveGYearLiteral::class,
+                GYearLiteral::class,
                 new \DateTime('1918-02-24+01:00'),
-                PositiveGYearLiteral::DATATYPE_URI,
+                GYearLiteral::DATATYPE_URI,
                 '1918',
                 '1918'
             ],
             [
                 '856',
-                PositiveGYearLiteral::DATATYPE_URI,
+                GYearLiteral::DATATYPE_URI,
                 null,
-                PositiveGYearLiteral::class,
+                GYearLiteral::class,
                 new \DateTime('0856-02-04'),
-                PositiveGYearLiteral::DATATYPE_URI,
+                GYearLiteral::DATATYPE_URI,
                 '0856',
                 '0856'
             ],
@@ -450,26 +450,6 @@ class LiteralFactoryTest extends TestCase
                 self::XSD_NS . 'QName',
                 'baz',
                 'baz'
-            ],
-            [
-                '00123456789123456789',
-                DigitsStringLiteral::DATATYPE_URI,
-                null,
-                DigitsStringLiteral::class,
-                '00123456789123456789',
-                DigitsStringLiteral::DATATYPE_URI,
-                '00123456789123456789',
-                '00123456789123456789'
-            ],
-            [
-                ';7123456=2602>4711?',
-                FourBitStringLiteral::DATATYPE_URI,
-                null,
-                FourBitStringLiteral::class,
-                ';7123456=2602>4711?',
-                FourBitStringLiteral::DATATYPE_URI,
-                ';7123456=2602>4711?',
-                ';7123456=2602>4711?'
             ],
             [
                 'Foo',

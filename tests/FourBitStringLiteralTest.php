@@ -7,19 +7,6 @@ use PHPUnit\Framework\TestCase;
 
 class FourBitStringLiteralTest extends TestCase
 {
-    public function testCreateXsdText(): void
-    {
-        $this->assertSame(
-            "<?xml version='1.0'?>"
-                . "<schema xmlns='http://www.w3.org/2001/XMLSchema' "
-                . "targetNamespace='tag:rv1971@web.de,2021:alcamo:ns:base#'>"
-                . "<simpleType name='FourBitString' xml:id='FourBitString'>"
-                . "<restriction base='string'><pattern value='[0-?]*'/>"
-                . "</restriction></simpleType></schema>",
-            FourBitStringLiteral::createXsdText()
-        );
-    }
-
     public function testBasics(): void
     {
         $literal = FourBitStringLiteral::newFromHex('123fedcba456');
