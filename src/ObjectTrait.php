@@ -4,6 +4,8 @@ namespace alcamo\rdfa;
 
 use alcamo\rdf_literal\{
     HavingDigestInterface,
+    HavingLangInterface,
+    Lang,
     LiteralFactory,
     LiteralOrNodeInterface
 };
@@ -48,6 +50,13 @@ trait ObjectTrait
     {
         return $this->object_ instanceof HavingDigestInterface
             ? $this->object_->getDigest()
+            : $this;
+    }
+
+    public function getLang(): ?Lang
+    {
+        return $this->object_ instanceof HavingLangInterface
+            ? $this->object_->getLang()
             : $this;
     }
 

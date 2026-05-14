@@ -2,7 +2,11 @@
 
 namespace alcamo\rdfa;
 
-use alcamo\rdf_literal\{HavingDigestInterface, LiteralOrNodeInterface};
+use alcamo\rdf_literal\{
+    HavingDigestInterface,
+    HavingLangInterface,
+    LiteralOrNodeInterface
+};
 use alcamo\xml\NamespaceConstantsInterface;
 
 /**
@@ -22,7 +26,10 @@ use alcamo\xml\NamespaceConstantsInterface;
  *
  * @date Last reviewed 2025-10-15
  */
-interface StmtInterface extends HavingDigestInterface, NamespaceConstantsInterface
+interface StmtInterface extends
+    HavingDigestInterface,
+    HavingLangInterface,
+    NamespaceConstantsInterface
 {
     /// Namespace name of the property
     public function getPropNsName(): string;

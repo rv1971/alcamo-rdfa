@@ -110,21 +110,17 @@ class StmtCollection extends ReadonlyCollection
         $bestMatchLevel = -1;
 
         foreach ($this as $stmt) {
-            $object = $stmt->getObject();
-
-            $objectLang = $object instanceof HavingLangInterface
-                ? $object->getLang()
-                : null;
+            $stmtLang = $stmt->getLang();
 
             if ($lang == '-') {
-                if (!isset($objectLang)) {
+                if (!isset($stmtLang)) {
                     return $stmt;
                 } else {
                     continue;
                 }
             }
 
-            if (!isset($objectLang)) {
+            if (!isset($stmtLang)) {
                 /* Language-agnostic statement. */
 
                 if ($bestMatchLevel < 0) {
@@ -136,13 +132,13 @@ class StmtCollection extends ReadonlyCollection
             }
 
             /* If a perfect match is found, return it immediately. */
-            if ($objectLang == $lang) {
+            if ($stmtLang == $lang) {
                 return $stmt;
             }
 
             /* Otherwise, save the current statement if is better than the
              * best match found so far. */
-            $matchLevel = $objectLang->countCommonSubtags($lang);
+            $matchLevel = $stmtLang->countCommonSubtags($lang);
 
             if ($matchLevel > $bestMatchLevel) {
                 $bestMatch = $stmt;
