@@ -4,7 +4,7 @@ namespace alcamo\rdfa;
 
 use alcamo\collection\ReadonlyCollection;
 use alcamo\exception\DataValidationFailed;
-use alcamo\rdf_literal\HavingLangInterface;
+use alcamo\rdf_literal\{HavingLangInterface, Lang};
 
 /**
  * @brief Collection of RDFa statements
@@ -95,59 +95,6 @@ class StmtCollection extends ReadonlyCollection
         $lang = null,
         ?bool $disableFallback = null
     ): ?StmtInterface {
-        /** Return `null` if the collection is empty. */
-        if (!$this->data_) {
-            return null;
-        }
-
-        /** Return the first statement if $lang is `null` or the empty
-         *  string. */
-        if (!isset($lang) || $lang == '') {
-            return $this->first();
-        }
-
-        $bestMatch = null;
-        $bestMatchLevel = -1;
-
-        foreach ($this as $stmt) {
-            $stmtLang = $stmt->getLang();
-
-            if ($lang == '-') {
-                if (!isset($stmtLang)) {
-                    return $stmt;
-                } else {
-                    continue;
-                }
-            }
-
-            if (!isset($stmtLang)) {
-                /* Language-agnostic statement. */
-
-                if ($bestMatchLevel < 0) {
-                    $bestMatch = $stmt;
-                    $bestMatchLevel = 0;
-                }
-
-                continue;
-            }
-
-            /* If a perfect match is found, return it immediately. */
-            if ($stmtLang == $lang) {
-                return $stmt;
-            }
-
-            /* Otherwise, save the current statement if is better than the
-             * best match found so far. */
-            $matchLevel = $stmtLang->countCommonSubtags($lang);
-
-            if ($matchLevel > $bestMatchLevel) {
-                $bestMatch = $stmt;
-                $bestMatchLevel = $matchLevel;
-            }
-        }
-
-        return $bestMatchLevel >= 0
-            ? $bestMatch
-            : ($disableFallback ? null : $this->first());
+        return Lang::findBestMatch($this->data_, $lang, $disableFallback);
     }
 }
