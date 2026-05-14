@@ -261,12 +261,12 @@ class RdfaData extends ReadonlyCollection implements HavingLabelInterface
         return isset($stmts) ? $stmts->findLang($lang, $disableFallback) : null;
     }
 
-    public function getLabel($lang = null, ?int $fallbackFlags = null): ?string
+    public function getLabel($lang = null, ?int $flags = null): ?string
     {
         return $this->findStmtWithLang(
             'rdfs:label',
             $lang,
-            !($fallbackFlags & self::FALLBACK_TO_DIFFERENT_LANG)
+            !($flags & self::FALLBACK_TO_DIFFERENT_LANG)
         );
     }
 

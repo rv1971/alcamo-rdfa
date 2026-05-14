@@ -15,10 +15,10 @@ interface HavingLabelInterface
     /*
      * @param Lang|string|null $lang desired language.
      *
-     * @param $fallbackFlags OR-Combination of the above constants and
-     * potentially other constants defined in the classes that implement
+     * @param $flags OR-Combination of the above constants and potentially
+     * other constants defined in the classes that implement
      * this interface. Such constants should be greater than 256, to allow for
      * further development of the present interface.
      */
-    public function getLabel($lang = null, ?int $fallbackFlags = null): ?string;
+    public function getLabel($lang = null, ?int $flags = null): ?string;
 }
