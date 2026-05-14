@@ -298,6 +298,36 @@ class RdfaDataTest extends TestCase implements NamespaceConstantsInterface
         ];
     }
 
+    /**
+     * @dataProvider getLabelProvider
+     */
+    public function testGetLabel($lang, $disableFallback, $expectedData): void
+    {
+        $rdfaData = RdfaData::newFromIterable(
+            [
+                [ 'rdfs:label', new LangStringLiteral('cosa', 'it') ],
+                [ 'rdfs:label', new LangStringLiteral('chose', 'fr') ]
+            ]
+        );
+
+        $this->assertSame(
+            $expectedData,
+            $rdfaData->getLabel($lang, $disableFallback)
+        );
+    }
+
+    public function getLabelProvider(): array
+    {
+        return [
+            [ null, null, 'cosa' ],
+            [ 'en', null, null ],
+            [ 'en', RdfaData::FALLBACK_TO_DIFFERENT_LANG, 'cosa' ],
+            [ 'it-US', null, 'cosa' ],
+            [ 'it', RdfaData::FALLBACK_TO_DIFFERENT_LANG, 'cosa' ],
+            [ 'fr-CA', null, 'chose' ]
+        ];
+    }
+
     public function testAddStmt(): void
     {
         $rdfaData = RdfaData::newEmpty();

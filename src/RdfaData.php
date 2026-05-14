@@ -21,7 +21,7 @@ use Ds\Set;
  *
  * @date Last reviewed 2026-02-12
  */
-class RdfaData extends ReadonlyCollection
+class RdfaData extends ReadonlyCollection implements HavingLabelInterface
 {
     use StringIndexedReadArrayAccessTrait;
 
@@ -259,6 +259,15 @@ class RdfaData extends ReadonlyCollection
         $stmts = $this[$prop];
 
         return isset($stmts) ? $stmts->findLang($lang, $disableFallback) : null;
+    }
+
+    public function getLabel($lang = null, ?int $fallbackFlags = null): ?string
+    {
+        return $this->findStmtWithLang(
+            'rdfs:label',
+            $lang,
+            !($fallbackFlags & self::FALLBACK_TO_DIFFERENT_LANG)
+        );
     }
 
     /**
