@@ -11,6 +11,23 @@ use Ds\Set;
  */
 class RdfaData extends AbstractRdfaData
 {
+    public static function newFromData($rdfaData): ?self
+    {
+        switch (true) {
+            case $rdfaData instanceof RdfaData:
+                return $rdfaData;
+
+            case $rdfaData instanceof ImmutableRdfaData:
+                return $rdfaData->toMutable();
+
+            case !$rdfaData:
+                return null;
+
+            default:
+                return RdfaData::newFromIterable($rdfaData);
+        }
+    }
+
     private $propUrisToDelete_; ///< Set
 
     protected function __construct(

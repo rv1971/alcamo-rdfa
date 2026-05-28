@@ -9,20 +9,30 @@ namespace alcamo\rdfa;
  */
 class ImmutableRdfaData extends AbstractRdfaData
 {
+    public static function newFromData($rdfaData): ?self
+    {
+        switch (true) {
+            case $rdfaData instanceof ImmutableRdfaData:
+                return $rdfaData;
+
+            case $rdfaData instanceof RdfaData:
+                return $rdfaData->toImmutable();
+
+            case !$rdfaData:
+                return null;
+
+            default:
+                return ImmutableRdfaData::newFromIterable($rdfaData);
+        }
+    }
+
     public static function newFromIterable(
         iterable $map,
         ?RdfaFactoryInterface $rdfaFactory = null,
         ?int $flags = null
     ): AbstractRdfaData {
-        $rdfaData = parent::newFromIterable($map, $rdfaFactory, $flags);
-
-        $immutableRdfaData = [];
-
-        foreach ($rdfaData as $key => $value) {
-            $immutableRdfaData[$key] = $value->toImmutable();
-        }
-
-        return new static($immutableRdfaData, $rdfaData->getCurieToUri());
+        return RdfaData::newFromIterable($map, $rdfaFactory, $flags)
+            ->toImmutable();
     }
 
     public function toMutable(): RdfaData

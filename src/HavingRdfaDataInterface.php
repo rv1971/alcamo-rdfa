@@ -9,5 +9,5 @@ namespace alcamo\rdfa;
  */
 interface HavingRdfaDataInterface
 {
-    public function getRdfaData(): ?RdfaData;
+    public function getRdfaData(): ?AbstractRdfaData;
 }

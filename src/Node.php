@@ -27,18 +27,7 @@ class Node implements HavingRdfaDataInterface, LiteralOrNodeInterface
     {
         $this->uri_ = $uri instanceof UriInterface ? $uri : new Uri($uri);
 
-        /* This sets $rdfaData_ if $rdfaData is an object or a *nonemtpy*
-         * array. */
-        if ($rdfaData) {
-            $this->rdfaData_ = $rdfaData instanceof RdfaData
-                ? clone $rdfaData
-                : RdfaData::newFromIterable($rdfaData);
-        }
-    }
-
-    public function __clone()
-    {
-        $this->rdfaData_ = clone $this->rdfaData_;
+        $this->rdfaData_ = ImmutableRdfaData::newFromData($rdfaData);
     }
 
     public function getUri(): UriInterface
@@ -46,7 +35,7 @@ class Node implements HavingRdfaDataInterface, LiteralOrNodeInterface
         return $this->uri_;
     }
 
-    public function getRdfaData(): ?RdfaData
+    public function getRdfaData(): ?AbstractRdfaData
     {
         return $this->rdfaData_;
     }

@@ -15,12 +15,7 @@ class NodeTest extends TestCase
 
         $this->assertSame($uri, (string)$node->getUri());
 
-        $this->assertEquals($rdfaData ?: null, $node->getRdfaData());
-
-        if (isset($rdfaData)) {
-            /* Test __clone(). */
-            $this->assertNotSame($rdfaData, $node->getRdfaData());
-        }
+        $this->assertSame($rdfaData ?: null, $node->getRdfaData());
 
         $this->assertSame($uri, (string)$node);
     }
@@ -31,7 +26,7 @@ class NodeTest extends TestCase
             [ 'https://www.example.org', null ],
             [
                 'https://www.example.org/bob',
-                RdfaData::newFromIterable(
+                ImmutableRdfaData::newFromIterable(
                     [ [ 'dc:title', new DcTitle('About me') ] ]
                 )
             ],
