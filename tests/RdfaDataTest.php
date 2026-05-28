@@ -78,6 +78,17 @@ class RdfaDataTest extends TestCase implements NamespaceConstantsInterface
         $this->assertNull(
             $rdfaData->getFirstValueOrUri('http://www.example.com/nil')
         );
+
+        $rdfaData2 =
+            ImmutableRdfaData::newFromIterable($inputData, null, $flags);
+
+        $this->assertEquals($rdfaData, $rdfaData2->toMutable());
+
+        $this->assertEquals($rdfaData, $rdfaData->toImmutable()->toMutable());
+
+        $this->assertEquals($rdfaData2, $rdfaData->toImmutable());
+
+        $this->assertEquals($rdfaData2, $rdfaData2->toMutable()->toImmutable());
     }
 
     public function newFromIterableProvider(): array

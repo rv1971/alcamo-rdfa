@@ -8,6 +8,25 @@ use PHPUnit\Framework\TestCase;
 
 class StmtCollectionTest extends TestCase
 {
+    public function testToImmutable(): void
+    {
+        $collection = new StmtCollection(
+            [
+                new DcTitle('foo'),
+                new DcTitle('bar'),
+                new DcTitle('baz')
+            ]
+        );
+
+        $collection2 = $collection->toImmutable();
+
+        $this->assertInstanceof(ImmutableStmtCollection::class, $collection2);
+
+        $collection3 = $collection2->toMutable();
+
+        $this->assertEquals($collection, $collection3);
+    }
+
     public function testAddException(): void
     {
         $collection = new StmtCollection([ new DcTitle('Hello') ]);
