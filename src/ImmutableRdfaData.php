@@ -9,8 +9,11 @@ namespace alcamo\rdfa;
  */
 class ImmutableRdfaData extends AbstractRdfaData
 {
-    public static function newFromData($rdfaData): ?self
-    {
+    public static function newFromData(
+        $rdfaData,
+        ?RdfaFactoryInterface $rdfaFactory = null,
+        ?int $flags = null
+    ): ?self {
         switch (true) {
             case $rdfaData instanceof ImmutableRdfaData:
                 return $rdfaData;
@@ -22,7 +25,11 @@ class ImmutableRdfaData extends AbstractRdfaData
                 return null;
 
             default:
-                return ImmutableRdfaData::newFromIterable($rdfaData);
+                return ImmutableRdfaData::newFromIterable(
+                    $rdfaData,
+                    $rdfaFactory,
+                    $flags
+                );
         }
     }
 

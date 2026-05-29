@@ -11,8 +11,11 @@ use Ds\Set;
  */
 class RdfaData extends AbstractRdfaData
 {
-    public static function newFromData($rdfaData): ?self
-    {
+    public static function newFromData(
+        $rdfaData,
+        ?RdfaFactoryInterface $rdfaFactory = null,
+        ?int $flags = null
+    ): ?self {
         switch (true) {
             case $rdfaData instanceof RdfaData:
                 return $rdfaData;
@@ -24,7 +27,8 @@ class RdfaData extends AbstractRdfaData
                 return null;
 
             default:
-                return RdfaData::newFromIterable($rdfaData);
+                return
+                    RdfaData::newFromIterable($rdfaData, $rdfaFactory, $flags);
         }
     }
 
