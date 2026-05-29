@@ -35,7 +35,7 @@ class Node implements HavingRdfaDataInterface, LiteralOrNodeInterface
         return $this->uri_;
     }
 
-    public function getRdfaData(): ?AbstractRdfaData
+    public function getRdfaData(): ?ImmutableRdfaData
     {
         return $this->rdfaData_;
     }
