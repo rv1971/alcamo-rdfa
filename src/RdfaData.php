@@ -148,7 +148,9 @@ class RdfaData extends AbstractRdfaData
             if (isset($this->data_[$uri])) {
                 $this->data_[$uri]->addStmtCollection($stmts);
             } else {
-                $this->data_[$uri] = clone $stmts;
+                $this->data_[$uri] = $stmts instanceof StmtCollection
+                    ? clone $stmts
+                    : $stmts->toMutable();
             }
 
             $this->propUrisToDelete_->remove($uri);
@@ -167,6 +169,10 @@ class RdfaData extends AbstractRdfaData
     /// Return a new object with added properties, overwriting existing ones
     public function replace(AbstractRdfaData $rdfaData): self
     {
+        if (!($rdfaData instanceof self)) {
+            $rdfaData = $rdfaData->toMutable();
+        }
+
         $this->data_ = $rdfaData->data_ + $this->data_;
 
         $this->curieToUri_ = $rdfaData->curieToUri_ + $this->curieToUri_;

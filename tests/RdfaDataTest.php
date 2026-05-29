@@ -396,6 +396,11 @@ class RdfaDataTest extends TestCase implements NamespaceConstantsInterface
         foreach ($expectedArray as $key => $value) {
             $this->assertEquals($expectedArray[$key], $rdfaData[$key]);
         }
+
+        $rdfaData2 = RdfaData::newFromIterable($inputData1)
+            ->add(ImmutableRdfaData::newFromIterable($inputData2));
+
+        $this->assertEquals($rdfaData, $rdfaData2);
     }
 
     public function addProvider(): array
@@ -458,6 +463,11 @@ class RdfaDataTest extends TestCase implements NamespaceConstantsInterface
         foreach ($expectedArray as $key => $value) {
             $this->assertEquals($expectedArray[$key], $rdfaData[$key]);
         }
+
+        $rdfaData2 = RdfaData::newFromIterable($inputData1)
+            ->replace(ImmutableRdfaData::newFromIterable($inputData2));
+
+        $this->assertEquals($rdfaData, $rdfaData2);
     }
 
     public function replaceProvider(): array
