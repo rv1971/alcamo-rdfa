@@ -11,6 +11,20 @@ use Ds\Set;
  */
 class RdfaData extends AbstractRdfaData
 {
+    /**
+     * @brief Create from array of RDFa data or RDFa data object or null
+     *
+     * @param RdfaData|ImmutableRdfaData|array|null If array, see
+     * alcamo::rdfa_data::AbstractRdfaData::newFromIterable().
+     *
+     * @param $rdfaFactory See
+     * alcamo::rdfa_data::AbstractRdfaData::newFromIterable().
+     *
+     * @param $flags See
+     * alcamo::rdfa_data::AbstractRdfaData::newFromIterable().
+     *
+     * @return `null` iff $rdfaData is `null`.
+     */
     public static function newFromData(
         $rdfaData,
         ?RdfaFactoryInterface $rdfaFactory = null,
