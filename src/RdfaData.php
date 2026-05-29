@@ -22,14 +22,12 @@ class RdfaData extends AbstractRdfaData
      *
      * @param $flags See
      * alcamo::rdfa_data::AbstractRdfaData::newFromIterable().
-     *
-     * @return `null` iff $rdfaData is `null`.
      */
     public static function newFromData(
         $rdfaData,
         ?RdfaFactoryInterface $rdfaFactory = null,
         ?int $flags = null
-    ): ?self {
+    ): self {
         switch (true) {
             case $rdfaData instanceof RdfaData:
                 return $rdfaData;
@@ -38,11 +36,10 @@ class RdfaData extends AbstractRdfaData
                 return $rdfaData->toMutable();
 
             case !$rdfaData:
-                return null;
+                return self::newEmpty();
 
             default:
-                return
-                    RdfaData::newFromIterable($rdfaData, $rdfaFactory, $flags);
+                return self::newFromIterable($rdfaData, $rdfaFactory, $flags);
         }
     }
 

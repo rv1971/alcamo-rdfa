@@ -15,7 +15,10 @@ class NodeTest extends TestCase
 
         $this->assertSame($uri, (string)$node->getUri());
 
-        $this->assertSame($rdfaData ?: null, $node->getRdfaData());
+        $this->assertEquals(
+            $rdfaData ?: ImmutableRdfaData::newEmpty(),
+            $node->getRdfaData()
+        );
 
         $this->assertSame($uri, (string)$node);
     }

@@ -20,14 +20,12 @@ class ImmutableRdfaData extends AbstractRdfaData
      *
      * @param $flags See
      * alcamo::rdfa_data::AbstractRdfaData::newFromIterable().
-     *
-     * @return `null` iff $rdfaData is `null`.
      */
     public static function newFromData(
         $rdfaData,
         ?RdfaFactoryInterface $rdfaFactory = null,
         ?int $flags = null
-    ): ?self {
+    ): self {
         switch (true) {
             case $rdfaData instanceof ImmutableRdfaData:
                 return $rdfaData;
@@ -36,14 +34,10 @@ class ImmutableRdfaData extends AbstractRdfaData
                 return $rdfaData->toImmutable();
 
             case !$rdfaData:
-                return null;
+                return self::newEmpty();
 
             default:
-                return ImmutableRdfaData::newFromIterable(
-                    $rdfaData,
-                    $rdfaFactory,
-                    $flags
-                );
+                return self::newFromIterable($rdfaData, $rdfaFactory, $flags);
         }
     }
 
