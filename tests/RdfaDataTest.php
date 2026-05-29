@@ -94,17 +94,22 @@ class RdfaDataTest extends TestCase implements NamespaceConstantsInterface
 
         $this->assertEquals($rdfaData, $rdfaData3);
 
-        $rdfaData4 = RdfaData::newFromData($rdfaData);
+        $rdfaData4 = ImmutableRdfaData::newFromData($inputData, null, $flags);
 
-        $this->assertEquals($rdfaData, $rdfaData4);
+        $this->assertEquals($rdfaData->toImmutable(), $rdfaData4);
 
-        $rdfaData5 = RdfaData::newFromData($rdfaData->toImmutable());
+        $rdfaData->getPropUrisToDelete()->add(
+            'http://www.example.com/foo',
+            'http://www.example.com/bar'
+        );
+
+        $rdfaData5 = RdfaData::newFromData($rdfaData);
 
         $this->assertEquals($rdfaData, $rdfaData5);
 
-        $rdfaData6 = ImmutableRdfaData::newFromData($inputData, null, $flags);
+        $rdfaData6 = RdfaData::newFromData($rdfaData->toImmutable());
 
-        $this->assertEquals($rdfaData->toImmutable(), $rdfaData6);
+        $this->assertEquals($rdfaData, $rdfaData6);
 
         $rdfaData7 = ImmutableRdfaData::newFromData($rdfaData6);
 

@@ -5,6 +5,7 @@ namespace alcamo\rdfa;
 use alcamo\collection\{ReadonlyCollection, StringIndexedReadArrayAccessTrait};
 use alcamo\exception\DataValidationFailed;
 use alcamo\rdf_literal\LiteralOrNodeInterface;
+use Ds\Set;
 
 /**
  * @brief Collection of RDFa statements
@@ -129,7 +130,8 @@ abstract class AbstractRdfaData extends ReadonlyCollection implements
         return new static($rdfaData, $curieToUri);
     }
 
-    protected $curieToUri_; ///< array
+    protected $curieToUri_;       ///< array
+    protected $propUrisToDelete_; ///< Set
 
     protected function __construct(
         ?array $rdfaData = null,
@@ -138,6 +140,13 @@ abstract class AbstractRdfaData extends ReadonlyCollection implements
         parent::__construct($rdfaData);
 
         $this->curieToUri_ = (array)$curieToUri;
+
+        $this->propUrisToDelete_ = new Set();
+    }
+
+    public function __clone()
+    {
+        $this->propUrisToDelete_ = clone $this->propUrisToDelete_;
     }
 
     /// Check presence of a property URI or CURIE
@@ -200,6 +209,12 @@ abstract class AbstractRdfaData extends ReadonlyCollection implements
     {
         return $this->curieToUri_;
     }
+
+    /**
+     * The properties with URIs in this set are deleted from an RdfData object
+     * when the present object is used as an argument for replace().
+     */
+    abstract public function getPropUrisToDelete(): Set;
 
     /**
      * @brief Find the first statement that is a best match for the desired

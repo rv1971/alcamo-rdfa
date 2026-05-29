@@ -2,6 +2,8 @@
 
 namespace alcamo\rdfa;
 
+use Ds\Set;
+
 /**
  * @brief Immutable collection of RDFa statements
  *
@@ -50,6 +52,11 @@ class ImmutableRdfaData extends AbstractRdfaData
             ->toImmutable();
     }
 
+    public function getPropUrisToDelete(): Set
+    {
+        return clone $this->propUrisToDelete_;
+    }
+
     public function toMutable(): RdfaData
     {
         $mutable = RdfaData::newEmpty();
@@ -61,6 +68,8 @@ class ImmutableRdfaData extends AbstractRdfaData
         }
 
         $mutable->curieToUri_ = $this->curieToUri_;
+
+        $mutable->propUrisToDelete_ = clone $this->propUrisToDelete_;
 
         return $mutable;
     }

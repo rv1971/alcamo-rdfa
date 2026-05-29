@@ -43,19 +43,10 @@ class RdfaData extends AbstractRdfaData
         }
     }
 
-    private $propUrisToDelete_; ///< Set
-
-    protected function __construct(
-        ?array $rdfaData = null,
-        ?array $curieToUri = null
-    ) {
-        parent::__construct($rdfaData, $curieToUri);
-
-        $this->propUrisToDelete_ = new Set();
-    }
-
     public function __clone()
     {
+        parent::__clone();
+
         $rdfaData = [];
 
         foreach ($this->data_ as $key => $stmts) {
@@ -63,14 +54,8 @@ class RdfaData extends AbstractRdfaData
         }
 
         $this->data_ = $rdfaData;
-
-        $this->propUrisToDelete_ = clone $this->propUrisToDelete_;
     }
 
-    /**
-     * The properties with URIs in this set are deleted from an RdfData object
-     * when the present object is used as an argument for replace().
-     */
     public function getPropUrisToDelete(): Set
     {
         return $this->propUrisToDelete_;
@@ -87,6 +72,8 @@ class RdfaData extends AbstractRdfaData
         }
 
         $immutable->curieToUri_ = $this->curieToUri_;
+
+        $immutable->propUrisToDelete_ = clone $this->propUrisToDelete_;
 
         return $immutable;
     }
@@ -158,10 +145,8 @@ class RdfaData extends AbstractRdfaData
 
         $this->curieToUri_ += $rdfaData->curieToUri_;
 
-        if ($rdfaData instanceof self) {
-            $this->propUrisToDelete_ =
-                $this->propUrisToDelete_->union($rdfaData->propUrisToDelete_);
-        }
+        $this->propUrisToDelete_ =
+            $this->propUrisToDelete_->union($rdfaData->propUrisToDelete_);
 
         return $this;
     }
@@ -177,10 +162,8 @@ class RdfaData extends AbstractRdfaData
 
         $this->curieToUri_ = $rdfaData->curieToUri_ + $this->curieToUri_;
 
-        if ($rdfaData instanceof self) {
-            foreach ($rdfaData->propUrisToDelete_ as $uri) {
-                $this->offsetUnset($uri);
-            }
+        foreach ($rdfaData->propUrisToDelete_ as $uri) {
+            $this->offsetUnset($uri);
         }
 
         foreach ($rdfaData->data_ as $uri => $stmts) {
