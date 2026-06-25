@@ -30,7 +30,7 @@ class RdfaData extends AbstractRdfaData
     ): self {
         switch (true) {
             case $rdfaData instanceof RdfaData:
-                return $rdfaData;
+                return clone $rdfaData;
 
             case $rdfaData instanceof ImmutableRdfaData:
                 return $rdfaData->toMutable();
