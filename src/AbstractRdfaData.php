@@ -47,7 +47,9 @@ abstract class AbstractRdfaData extends ReadonlyCollection implements
      * of RdfaFactory.
      *
      * @param $flags
-     * - If $flags contain alcamo::rdfa::RdfaData::URI_AS_KEY
+
+     * - If $flags contain alcamo::rdfa::RdfaData::URI_AS_KEY, $map is indexed
+     *   by URIs rather than keys.
      */
     public static function newFromIterable(
         iterable $map,
