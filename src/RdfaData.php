@@ -129,8 +129,12 @@ class RdfaData extends AbstractRdfaData
      *
      * @return $this
      */
-    public function add(AbstractRdfaData $rdfaData): self
+    public function add($rdfaData): self
     {
+        if (!($rdfaData instanceof self)) {
+            $rdfaData = static::newFromData($rdfaData);
+        }
+
         foreach ($rdfaData->data_ as $uri => $stmts) {
             if (isset($this->data_[$uri])) {
                 $this->data_[$uri]->addStmtCollection($stmts);
@@ -152,10 +156,10 @@ class RdfaData extends AbstractRdfaData
     }
 
     /// Return a new object with added properties, overwriting existing ones
-    public function replace(AbstractRdfaData $rdfaData): self
+    public function replace($rdfaData): self
     {
         if (!($rdfaData instanceof self)) {
-            $rdfaData = $rdfaData->toMutable();
+            $rdfaData = static::newFromData($rdfaData);
         }
 
         $this->data_ = $rdfaData->data_ + $this->data_;
