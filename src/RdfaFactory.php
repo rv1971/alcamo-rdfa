@@ -49,6 +49,8 @@ class RdfaFactory implements RdfaFactoryInterface
         DcSource::PROP_URI               => DcSource::class,
         DcTitle::PROP_URI                => DcTitle::class,
         DcType::PROP_URI                 => DcType::class,
+        ExifXResolution::PROP_URI        => ExifXResolution::class,
+        ExifYResolution::PROP_URI        => ExifYResolution::class,
         HttpCacheControl::PROP_URI       => HttpCacheControl::class,
         HttpContentDisposition::PROP_URI => HttpContentDisposition::class,
         HttpContentLength::PROP_URI      => HttpContentLength::class,

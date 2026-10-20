@@ -25,7 +25,7 @@ class RdfaDataTest extends TestCase implements NamespaceConstantsInterface
         $inputData,
         $flags,
         $expectedData,
-        $expecetedCurieToUri
+        $expectedCurieToUri
     ): void {
         $rdfaFactory = new RdfaFactory();
 
@@ -66,6 +66,8 @@ class RdfaDataTest extends TestCase implements NamespaceConstantsInterface
                 $rdfaData->getFirstValueOrUri($prop)
             );
         }
+
+        $this->assertSame($expectedCurieToUri, $rdfaData->getCurieToUri());
 
         $this->assertNull(
             $rdfaData->getFirstStmt('http://www.example.com/nil')
@@ -240,6 +242,25 @@ class RdfaDataTest extends TestCase implements NamespaceConstantsInterface
                 ],
                 [
                     'dc:title' => self::DC_NS . 'title'
+                ]
+            ],
+            [
+                [
+                    [ 'exif:XResolution', 300 ],
+                    [ 'exif:YResolution', '150' ],
+                ],
+                null,
+                [
+                    self::EXIF_NS . 'XResolution' => [
+                        '300' => new ExifXResolution(300)
+                    ],
+                    self::EXIF_NS . 'YResolution' => [
+                        '150' => new ExifYResolution(150)
+                    ]
+                ],
+                [
+                    'exif:XResolution' => self::EXIF_NS . 'XResolution',
+                    'exif:YResolution' => self::EXIF_NS . 'YResolution'
                 ]
             ]
         ];
